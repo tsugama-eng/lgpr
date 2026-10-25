@@ -192,6 +192,23 @@
 
   <!-- ================= GSSからデータを取得して描画するスクリプト ================= -->
   <script>
+    function switchPage(pageId) {
+    // 1. まず、すべてのセクション（class="lab-page"）を非表示にする
+    const pages = document.querySelectorAll('.lab-page');
+    pages.forEach(page => {
+      page.style.display = 'none';
+    });
+
+    // 2. クリックされた特定のセクションだけを表示する
+    const targetPage = document.getElementById(pageId);
+    if (targetPage) {
+      targetPage.style.display = 'block';
+    }
+
+    // 3. (オプション) メニューの「アクティブ状態（色が変わるなど）」のCSSクラスを切り替える
+    // 既存のCSSで「ul.menu li.current」や「a.current」があれば、ここでクラスを付け替えると見た目も完全に連動します
+  }
+
     // 先生のWebアプリ(GAS)のURLに置き換えてください
     const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbwfBywEBBZ1g2qoUSrCLmW9cd3z8tq46VnR0vQZArAsWUWWVmwD53rIGs5AmdHVt50y/exec"; 
 
