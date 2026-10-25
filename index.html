@@ -252,12 +252,7 @@
               lines.map(line => `<p class="member-intro-item">${line}</p>`).join('') + 
               `</div>`;
           }
-    
-          // 津釜先生の固定リンクを安全に追加
-          if (m.name_en === 'Daisuke Tsugama' && !isAlumni && !isCollaborator) {
-            introListHtml += `<p style="font-size:0.9rem; margin-top:5px;">See also: <a target="_blank" href="https://orcid.org">ORCID</a> / <a target="_blank" href="https://researchmap.jp">researchmap</a></p>`;
-          }
-    
+
           // --- ② 経歴（タイムライン）のパース処理 ---
           let timelineHtml = '';
           if (m.intro2 && m.intro2.trim() !== '') {
@@ -319,7 +314,7 @@
                   <div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div>
                   <div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div>
                   <div style="font-size:0.85rem; color:#444; line-height:1.4;">
-                    ${m.title_en || ''}<br>${m.title_ja || ''}
+                    ${m.title_en || ''} //<br>${m.title_ja || ''}
                   </div>
                 </div>
               </div>
