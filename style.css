@@ -1,0 +1,854 @@
+@media screen and (min-width: 750px)
+{
+html
+{ height: 100%;}
+
+*
+{ margin: 0;
+  padding: 0;
+ }
+
+body
+{ font-family:  arial, sans-serif, 'Lato', 'Hiragino Kaku Gothic ProN', 'ÉqÉâÉMÉmäpÉS ProN W3', Meiryo, ÉÅÉCÉäÉI;
+  background: #ffffff;
+}
+
+#title
+{ background-color: #ffffff;
+  border-left: solid 50px #aaffff;"
+}
+
+#title h1
+{ width: 950px;
+  font-size: 220%;
+  padding: 8px 0 0 20px;
+  color:#000000;
+  background-color:#ffffff;
+  float: left;
+}
+
+.hidden
+{ display: none;
+}
+
+#subtitle
+{ font-size:75%;
+}
+
+#title img
+{ height: 115px;
+  margin-top:5px;
+}
+
+#titleborder
+{ height: 3.5px;
+  width: 1150px;
+  background-color: #00aaff;"
+}
+
+ul.menu
+{ margin: -5px 20px 0 15px;
+  height:500px;
+  list-style-type: none;
+  text-align:center;
+  float: left;
+}
+
+ul.menu li
+{ width:100px;
+  height:40px;
+  line-height:40px;
+  margin: -2px 0 0 0;
+  padding: 0 0 0 0;
+  font-size:130%;
+  background-color:#eaffff;
+  border: solid 2px #0088dd;
+}
+
+ul.menu a
+{ color:#000000;
+  text-decoration: none;
+}
+
+ul.menu li:hover
+{ background-color:#00a8e8;
+  cursor:pointer;
+}
+
+ul.menu a:hover
+{ color:#ffffff;
+  text-decoration: none;
+}
+
+ul.menu a.current
+{ color: #ffffff;
+}
+
+ul.menu a.current li
+{ background-color:#004180;
+}
+
+
+div.detail
+{ width: 1000px;
+  margin: 0 0 0 135px;
+}
+
+div.detail p.language_sel
+{ margin: 15px 0 0 0;
+}
+
+div.detail p span.language
+{ padding: 1px 2px 1px 2px;
+  cursor:pointer;
+  color: #888888;
+  border: solid 1px #888888;
+}
+
+div.detail p span.language:hover
+{ cursor:pointer;
+}
+
+#papers p
+{ margin: 15px 0 0 0;
+}
+
+#papers p span
+{ font-size: 120%;
+}
+
+
+div.detail ol
+{ margin: 15px 0 0 45px;
+}
+
+div.detail ol li
+{ font-size: 115%;
+  margin: 0 0 10px 0;
+  text-align: justify;
+}
+
+div.detail ul.link
+{ margin: 15px 0 0 30px;
+}
+
+div.detail ul.link li
+{ font-size: 115%;
+  margin: 0 0 10px 0;
+  text-align: justify;
+}
+
+
+
+div.subhead
+{ margin: 15px 0 0 5px;
+}
+
+div.subhead p
+{ padding: 0 0 0 5px;
+  border-bottom: solid 2px #00aaff;
+  margin: 0 0 10px 0;
+}
+
+div.subhead p span
+{ font-size: 155%;
+}
+
+div.subhead p span#vip1_subtitle
+{ font-size: 100%;
+}
+
+
+div.texts p
+{ text-align: justify;
+  line-height: 200%;
+  margin: 5px 0 10px 15px;
+}
+
+div.texts p span
+{ font-size: 115%;
+}
+
+div.texts2
+{ width: 500px;
+  float:left;
+  margin: 0 0 15px 0;
+}
+
+div.texts2 p
+{ text-align: justify;
+  line-height: 110%;
+  margin: 5px 0 5px 15px;
+}
+
+div.texts2 p span
+{ font-size: 80%;
+}
+
+div.harbin
+{ float:left;
+  margin:15px 0 10px 80px;
+}
+
+div.harbin img, div.icrisat img, div.lgpr_pc img
+{ height: 250px;
+}
+
+div.harbin p, div.icrisat p, div.lgpr_pc p
+{ text-align: center;
+  width:auto;
+  margin:-5px 0 0 0;
+}
+
+div.icrisat
+{ float:left;
+  margin:15px 0 25px 100px;
+}
+
+div.lgpr_pc
+{ float:right;
+  margin:15px 0 0 20px;
+}
+
+
+p.pagetop
+{ clear:both;
+  margin: 0 0 20px 12px;
+}
+
+p.pagetop a
+{ font-size: 120%;
+}
+
+p.showhide
+{ display: none;
+}
+
+
+.gmap
+{ margin: 0 0 0 20px;
+  width: 600px;
+  height: 450px;
+}
+
+#intro_ja, #mm_ja, #contact_ja, #pm_ja, #aspara_ja, #vip1_ja, #others_ja
+{ display: none;
+}
+
+div.texts ul
+{ margin: 15px 0 0 20px;
+}
+
+div.texts ul li
+{ font-size: 130%;
+  margin:0 0 10px 0;
+}
+
+div.texts ul li.ja
+{ font-size: 130%;
+  margin:0 0 20px 0;
+}
+
+img.nationalflag
+{ height: 22px;
+  margin: 0 0 -2px 0;
+  padding: 0 0 0 0;
+  border: solid 1px #000000;
+}
+
+div.texts a.portrait
+{ clear: both;
+  float: left;
+  margin: 0 15px 0 8px;
+  position: absolute;
+}
+
+div.texts a.portrait img
+{ width: 250px;
+}
+
+div.texts2 a.portrait
+{ clear: both;
+  float: left;
+  margin: 0 15px 0 8px;
+  position: absolute;
+}
+
+div.texts2 a.portrait img
+{ width: 100px;
+}
+
+
+#tsugama_mfln, #tsugama_cover
+{ margin: 0 0 0 -5px;
+}
+
+div.self_intro
+{ float:left;
+  width:245px;
+  margin:260px 0 0 8px;
+  padding: 0 5px 0 0;
+  position:absolute;
+  border-right: solid 1.5px #88ddff;
+  border-bottom: solid 1.5px #88ddff;
+}
+
+div.self_intro p
+{ line-height:140%;
+  font-size:105%;
+  margin: 0 0 15px 0;
+}
+
+p.self_intro span
+{
+  line-height:100%;
+}
+
+p.self_intro2
+{ clear:left;
+  padding:5px 0 0 262px;
+  font-size:125%;
+}
+
+p.self_intro3
+{ clear:left;
+  padding:20px 0 0 262px;
+  font-size:300%;
+}
+
+p.self_intro4
+{ padding:0 0 0 100px;
+  font-size:120%;
+}
+
+table
+{ margin: 0 0 0 265px;
+}
+
+td
+{ padding: 0 5px 5px 5px;
+  vertical-align: top;
+  font-size: 105%;
+  line-height: 175%;
+}
+
+
+
+h3
+{ font-size: 140%;
+  padding: 15px 0 0 0px;
+  margin: 5px 0 8px 15px;}
+
+a, a:hover
+{ outline: none;
+  text-decoration: underline;
+  color: #225588;}
+
+a:hover
+{ outline: none;
+  text-decoration: underline;
+  color: #882255;
+}
+
+img.manhattan
+{ width: 270px;
+  margin: 0 0 0 20px;
+}
+
+img.pm_field
+{ width: 270px;
+  margin: 10px 0 0 20px;
+}
+
+img.aspara_sex
+{ width: 220px;
+  margin: 10px 0 0 20px;
+
+}
+
+img.aspara_col
+{ width: 180px;
+  margin: 10px 0 0 20px;
+}
+
+img.vip1_loc
+{ width: 410px;
+  margin: 50px 0 0 10px;
+}
+
+img.vip1_ovv
+{ width: 440px;
+  margin: 70px 0 0 10px;
+}
+
+img.brapa_exp
+{ width: 330px;
+  margin: 0 0 0 20px;
+}
+
+#others_en ul, #others_ja ul
+{ margin: 20px 0 0 35px;
+}
+
+}
+
+
+
+
+
+
+
+@media screen and (max-width: 750px)
+{
+html
+{ height: 100%;}
+
+*
+{ margin: 0;
+  padding: 0;
+ }
+
+body
+{ font-family: arial, sans-serif, 'Lato', 'Hiragino Kaku Gothic ProN', 'ÉqÉâÉMÉmäpÉS ProN W3', Meiryo, ÉÅÉCÉäÉI;
+  background: #ffffff;
+}
+
+#title
+{ background-color: #ffffff;
+  border-left: solid 15px #aaffff;"
+}
+
+#title h1
+{ font-size: 125%;
+  padding: 0 0 0 5px;
+  color:#000000;
+  background-color:#ffffff;
+  float: left;
+  vertical-align: center;
+  line-height:140%;
+}
+
+#subtitle
+{ font-size:88%;
+  margin:-10px 0 0 0;
+}
+
+.extra
+{ display: none;
+}
+
+
+
+#title img
+{ height: 80px;
+  padding: 5px 0 0 5px;
+}
+
+#titleborder
+{ height: 3px;
+  width: 98%;
+  background-color: #00aaff;"
+}
+
+ul.menu
+{ margin: 5px 0 10px 5px;
+  list-style-type: none;
+  text-align:center;
+  float: left;
+}
+
+ul.menu li
+{ width:65px;
+  line-height:27px;
+  margin: 0 0 0 -2px;
+  font-size:100%;
+  background-color:#eaffff;
+  border: solid 2px #0088dd;
+  float: left;
+}
+
+ul.menu a
+{ color:#000000;
+  text-decoration: none;
+  float: left;
+}
+
+ul.menu li:hover
+{ background-color:#00a8e8;
+  cursor:pointer;
+}
+
+ul.menu a:hover
+{ color:#ffffff;
+  text-decoration: none;
+}
+
+ul.menu a.current
+{ color: #ffffff;
+}
+
+ul.menu a.current li
+{ background-color:#004180;
+}
+
+
+div.detail
+{ clear: left;
+  margin: 8px 2% 0 2%;
+}
+
+div.detail p.language_sel
+{ display: none;
+}
+
+div.detail p span.language
+{ padding: 1px 2px 1px 2px;
+  cursor:pointer;
+  color: #888888;
+  border: solid 1px #888888;
+  font-size: 95%;
+}
+
+div.detail p span.language:hover
+{ cursor:pointer;
+}
+
+#papers p span
+{ font-size: 95%;
+}
+
+div.detail ol
+{ margin: 5px 0 0 35px;
+}
+
+div.detail ol li
+{ font-size: 88%;
+  margin: 0 0 10px 0;
+  text-align: justify;
+}
+
+div.detail ul.link
+{ margin: 15px 0 0 20px;
+}
+
+div.detail ul.link li
+{ font-size: 91%;
+  margin: 0 0 10px 0;
+  text-align: justify;
+}
+
+div.subhead p
+{ padding: 0 0 0 5px;
+  border-bottom: solid 2px #00aaff;
+  margin: 0 0 5px 0;
+}
+
+div.subhead p span
+{ font-size: 120%;
+}
+
+div.subhead p span#vip1_subtitle
+{ font-size: 88%;
+}
+
+
+#intro_en, #mm_en, #contact_en, #intro_ja, #mm_ja, #contact_ja, #pm_en, #aspara_en, #vip1_en, #others_en, #pm_ja, #aspara_ja, #vip1_ja, #others_ja
+{ display: none;
+}
+
+div.texts p
+{ text-align: justify;
+  line-height: 165%;
+  margin: 5px 0 10px 5px;
+}
+
+div.texts p span
+{ font-size: 95%;
+}
+
+div.texts2 p
+{ width: 125px;
+}
+
+
+div.texts ul
+{ margin: 15px 0 0 20px;
+}
+
+div.texts ul li
+{ font-size: 105%;
+  margin:0 0 10px 0;
+}
+
+div.texts ul li.ja
+{ font-size: 110%;
+  margin:0 0 20px 0;
+}
+
+
+div.icrisat img, div.lgpr_pc img
+{ height: 150px;
+}
+
+div.labvideo p, div.icrisat p, div.lgpr_pc p
+{ text-align: center;
+  width:auto;
+  margin:-3px 0 0 0;
+  line-height: 125%;
+}
+
+
+div.lgpr_pc
+{ float:right;
+  margin:10px 0 0 10px;
+}
+
+
+p.pagetop
+{ display: none;
+}
+
+p.showhide
+{ clear: left;
+  margin: 5px 0 15px 5px;
+}
+
+p.showhide span
+{ clear: left;
+  margin: 0 15px 0 0;
+  font-size: 105%;
+  text-decoration: underline;
+  color: #225588;
+}
+
+p.showhide span:hover
+{ cursor: pointer;
+  color: #882255;
+}
+
+#intro_hide, #mm_hide, #contact_hide, #pm_hide, #aspara_hide, #vip1_hide, #others_hide
+{ display: none;
+}
+
+
+.gmap
+{ margin: 0 0 0 5px;
+  width: 300px;
+  height: 225px
+}
+
+#updates p span
+{ font-size: 80%;
+}
+
+img.nationalflag
+{ height: 17px;
+  margin: 0 0 -3px 0;
+  padding: 0 0 0 0;
+  border: solid 1px #000000;
+}
+
+div.texts a.portrait
+{ float: left;
+  margin: 0 15px 0 0;
+  position: absolute;
+}
+
+div.texts a.portrait img
+{ width: 125px;
+}
+
+div.texts2 a.portrait
+{ clear: both;
+  float: left;
+  margin: 0 15px 0 8px;
+  position: absolute;
+}
+
+div.texts2 a.portrait img
+{ width: 50px;
+}
+
+
+
+div.self_intro
+{ float:left;
+  width:120px;
+  margin:130px 0 0 0;
+  padding: 0 5px 0 0;
+  position:absolute;
+  border-right: solid 1px #88ddff;
+  border-bottom: solid 1px #88ddff;
+}
+
+div.self_intro p
+{ line-height:140%;
+  font-size:75%;
+  margin: 0 0 10px 0;
+}
+
+p.self_intro span
+{
+  line-height:100%;
+}
+
+p.self_intro2
+{ clear:left;
+  padding:5px 0 0 130px;
+  font-size:80%;
+}
+
+p.self_intro3
+{ clear:left;
+  padding:5px 0 0 150px;
+  font-size:200%;
+}
+
+p.self_intro4
+{ padding:5px 0 0 50px;
+  font-size:80%;
+}
+
+table
+{ margin: 20px 0 20px 130px;
+}
+
+td
+{ padding: 0 0 0 2px;
+  vertical-align: top;
+  font-size: 75%;
+  line-height: 175%;
+}
+
+td.table_year
+{ width: 30px;
+}
+
+
+h3
+{ font-size: 140%;
+  padding: 15px 0 0 0px;
+  margin: 5px 0 8px 15px;}
+
+a, a:hover
+{ outline: none;
+  text-decoration: underline;
+  color: #225588;}
+
+a:hover
+{ outline: none;
+  text-decoration: underline;
+  color: #882255;
+}
+
+
+img.manhattan
+{ width: 180px;
+  margin: 0 0 0 5px;
+}
+
+img.pm_field
+{ width: 180px;
+  margin: 10px 0 0 5px;
+}
+
+img.aspara_sex
+{ width: 150px;
+  margin: 0 0 0 5px;
+}
+
+img.aspara_col
+{ width: 150px;
+  margin: 10px 0 0 5px;
+}
+
+img.vip1_loc
+{ width: 175px;
+  margin: 0 0 0 5px;
+}
+
+img.vip1_ovv
+{ width: 175px;
+  margin: 10px 0 0 5px;
+}
+
+img.brapa_exp
+{ width: 175px;
+  margin: 0 0 0 5px;
+}
+
+}
+
+
+@keyframes imgPassToLeft {
+	0%     {   left:   0%;opacity:0;}
+	2%     {   left:   0%;opacity:1;}
+	14.66% {   left:   0%;opacity:1;}
+	16.65% { left:   0%;opacity:0;}
+	16.66% {   left:-100%;opacity:0;}
+	18.66% {   left:-100%;opacity:1;} 
+	31.33% {   left:-100%;opacity:1;}
+	33.32% { left:-100%;opacity:0;}
+	33.33% {   left:-200%;opacity:0;}
+	35.33% {   left:-200%;opacity:1;}
+	48%    {   left:-200%;opacity:1;}
+	49.99% { left:-200%;opacity:0;}
+	50%    {   left:-300%;opacity:0;}
+	52%    {   left:-300%;opacity:1;}
+	64.66% {   left:-300%;opacity:1;} 
+	66.65% { left:-300%;opacity:0;}
+	66.66% {   left:-400%;opacity:0;}
+	68.66% {   left:-400%;opacity:1;}
+	81.33% {   left:-400%;opacity:1;}
+	83.32% { left:-400%;opacity:0;}
+	83.33% {  left:-500%;opacity:0;}
+	85.33% {   left:-500%;opacity:1;}
+	98%    {   left:-500%;opacity:1;}
+	99.99% { left:-500%;opacity:0;}
+	100%   { left:0%;opacity:0;}
+}
+@-webkit-keyframes imgPassToLeft {
+	0%     {   left:   0%;opacity:0;}
+	2%     {   left:   0%;opacity:1;}
+	14.66% {   left:   0%;opacity:1;}
+	16.65% { left:   0%;opacity:0;}
+	16.66% {   left:-100%;opacity:0;}
+	18.66% {   left:-100%;opacity:1;} 
+	31.33% {   left:-100%;opacity:1;}
+	33.32% { left:-100%;opacity:0;}
+	33.33% {   left:-200%;opacity:0;}
+	35.33% {   left:-200%;opacity:1;}
+	48%    {   left:-200%;opacity:1;}
+	49.99% { left:-200%;opacity:0;}
+	50%    {   left:-300%;opacity:0;}
+	52%    {   left:-300%;opacity:1;}
+	64.66% {   left:-300%;opacity:1;} 
+	66.65% { left:-300%;opacity:0;}
+	66.66% {   left:-400%;opacity:0;}
+	68.66% {   left:-400%;opacity:1;}
+	81.33% {   left:-400%;opacity:1;}
+	83.32% { left:-400%;opacity:0;}
+	83.33% {  left:-500%;opacity:0;}
+	85.33% {   left:-500%;opacity:1;}
+	98%    {   left:-500%;opacity:1;}
+	99.99% { left:-500%;opacity:0;}
+	100%   { left:0%;opacity:0;}
+}
+@keyframes transbullet{
+	0%      {left: -750%}
+	16.66%  {left: -625%}
+	33.33%  {left: -500%}
+	50%     {left: -375%}
+	66.66%  {left: -250%}
+	83.33%  {left: -125%}
+	100%    {left: -750%}
+}
+@-webkit-keyframes transbullet6{
+	0%      {left: -750%}
+	16.66%  {left: -625%}
+	33.33%  {left: -500%}
+	50%     {left: -375%}
+	66.66%  {left: -250%}
+	83.33%  {left: -125%}
+	100%    {left: -750%}
+}
