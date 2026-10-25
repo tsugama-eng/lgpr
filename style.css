@@ -1,3 +1,128 @@
+/* メンバーセクション全体のコンテナ */
+.member-container {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  margin-top: 20px;
+  font-family: sans-serif;
+}
+
+/* メンバー1人分のカード */
+.member-card {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 30px;
+  border-bottom: 1px solid #eee;
+  padding-bottom: 30px;
+}
+
+/* メディア（写真・国旗）エリア */
+.member-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* プロフィール写真（ホバーでフェードイン/アウトするモダンな実装） */
+.portrait-container {
+  position: relative;
+  width: 150px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.portrait-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+/* 通常時はメイン画像(pic2)。ホバーされると消えて下の画像(pic3)が見える */
+.portrait-container img.main-pic {
+  z-index: 2;
+}
+.portrait-container:hover img.main-pic {
+  opacity: 0;
+}
+
+.nationalflag {
+  width: 40px;
+  height: auto;
+  border: 1px solid #ddd;
+}
+
+/* プロフィール詳細エリア */
+.member-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 名前と役職のヘッダー */
+.member-header {
+  border-left: 4px solid #333;
+  padding-left: 15px;
+}
+.member-name-en { font-size: 1.4rem; font-weight: bold; margin-right: 10px; }
+.member-title-en { font-size: 0.9rem; color: #666; }
+.member-name-ja { font-size: 1.1rem; color: #444; margin-left: 10px; }
+.member-title-ja { font-size: 0.85rem; color: #777; }
+
+/* 自己紹介テキスト */
+.member-intro-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
+}
+.member-intro-item { margin: 0; font-size: 0.95rem; line-height: 1.5; }
+
+/* 経歴タイムライン */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+.timeline-row { display: flex; gap: 20px; line-height: 1.4; }
+.timeline-year { font-weight: bold; min-width: 90px; color: #333; }
+.timeline-desc { color: #555; }
+
+/* 共同研究者・元メンバーのグリッドレイアウト */
+.sub-member-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 20px;
+}
+.sub-member-card {
+  background: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+/* レスポンシブ対応（スマホ表示時は縦1列に） */
+@media (max-width: 768px) {
+  .member-card { grid-template-columns: 1fr; gap: 15px; }
+  .member-media { flex-direction: row; justify-content: space-between; width: 100%; }
+  .timeline-row { flex-direction: column; gap: 2px; margin-bottom: 5px; }
+}
+
+
 @media screen and (min-width: 750px)
 {
 html
@@ -9,7 +134,7 @@ html
  }
 
 body
-{ font-family:  arial, sans-serif, 'Lato', 'Hiragino Kaku Gothic ProN', '�q���M�m�p�S ProN W3', Meiryo, ���C���I;
+{ font-family:  arial, sans-serif, 'Lato', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ;
   background: #ffffff;
 }
 
@@ -409,7 +534,7 @@ html
  }
 
 body
-{ font-family: arial, sans-serif, 'Lato', 'Hiragino Kaku Gothic ProN', '�q���M�m�p�S ProN W3', Meiryo, ���C���I;
+{ font-family: arial, sans-serif, 'Lato', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ;
   background: #ffffff;
 }
 
