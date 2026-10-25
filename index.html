@@ -217,12 +217,10 @@
         const response = await fetch(GAS_WEBAPP_URL);
         const data = await response.json();
     
-        // 1. 最終更新日の反映
         if (document.getElementById('last-update')) {
           document.getElementById('last-update').innerText = "Last update: " + data.lastUpdate;
         }
     
-        // 2. メンバーデータの描画
         const currentDiv = document.getElementById('current-members');
         const colListDiv = document.getElementById('collaborators-list');
         const almListDiv = document.getElementById('alumni-list');
@@ -233,76 +231,110 @@
         data.members.forEach(m => {
           if (m.lab !== 'LGPR') return;
     
-          // 拡張子を除いたIDの生成ロジック（GASのロジックを再現）
           const pic2_id = m.pic2 ? m.pic2.replace(/\..*/, "") : "";
           const pic3_id = m.pic3 ? m.pic3.replace(/\..*/, "") : "";
     
           const isAlumni = m.grade && m.grade.match(/Alumni/i);
           const isCollaborator = m.grade && m.grade.match(/Collaborator/i);
     
-          if (!isAlumni && !isCollaborator) {
-            // ==========================================
-            // 現役メンバー (画像ホバー処理付き)
-            // ==========================================
-            let picHtml = '';
-            // pic3（ホバー前の画像）が存在し、空文字でない場合
-            if (m.pic3 && m.pic3.trim() !== '' && m.pic3.match(/\w/)) {
-              picHtml = `<a target="_blank" href="${m.pic3}" class="portrait"><img id="${pic3_id}" src="${m.pic3}" onmouseout="document.getElementById('${pic2_id}').style.display='inline';"></a>` +
-                        `<a class="portrait"><img id="${pic2_id}" src="${m.pic2}" onmouseover="this.style.display='none';"></a>`;
-            } else {
-              // pic3がない場合はpic2のみを表示（GASの仕様通り、マウスアウト時に自分を再表示するロジック）
-              picHtml = `<a target="_blank" href="${m.pic2}" class="portrait"><img id="${pic2_id}" src="${m.pic2}" onmouseout="this.style.display='inline';"></a>` +
-                        `<a class="portrait"><img src="${m.pic2}" onmouseover="document.getElementById('${pic2_id}').style.display='none';"></a>`;
+          // ==========================================
+          // 【新設】プレーンテキストをHTMLタグに変換する共通処理
+          // ==========================================
+          
+          // ① 自己紹介文（改行を<p>タグに分解、特定のキーワードをレスポンシブ対応に）
+          let formattedIntro1 = '';
+          if (m.intro1) {
+            formattedIntro1 = m.intro1.split('\n')
+              .filter(line => line.trim() !== '')
+              .map(line => {
+                // "Believe:" や "Want to be:" の後ろにレスポンシブ用改行タグを自動挿入
+                let processed = line.replace(/(Believe:|Want to be:|Lifelong)/g, '$1<span class="hidden"><br></span> ');
+                return `<p>${processed}</p>`;
+              }).join('');
+            
+            // ORCID や researchmap のリンクをテキスト情報から自動生成（もしデータがあれば）
+            // ※必要に応じて、スプシ側に専用のURL列を作るとより綺麗に管理できます
+            if (m.name_en === 'Daisuke Tsugama') {
+              formattedIntro1 += `<p>See also:<br><a target="_blank" href="https://orcid.org">ORCID</a> and <a target="_blank" href="https://researchmap.jp">researchmap</a></p>`;
             }
+          }
     
+          // ② 経歴文（「期間 | 内容」の改行テキストを自動的にテーブル要素へ変換）
+          let formattedIntro2 = '';
+          if (m.intro2 && m.intro2.trim() !== '') {
+            let tableRows = m.intro2.split('\n')
+              .filter(line => line.includes('|'))
+              .map(line => {
+                const parts = line.split('|');
+                const year = parts[0].trim().replace('-', '-<span class="hidden"><br></span>'); // 年のハイフンで改行対応
+                const detail = parts[1].trim();
+                return `<tr><td class="table_year"><b>${year}</b></td><td>${detail}</td></tr>`;
+              }).join('');
+            
+            if (tableRows) {
+              formattedIntro2 = `<table>${tableRows}</table>`;
+            }
+          } else {
+            // intro2が空（他のメンバーなど）の場合は、高さを固定するCSS（元コードの再現）
+            formattedIntro2 = `<p style="height:175px;"></p>`;
+          }
+    
+          // 画像ホバーのHTML生成（前述のロジック同様）
+          let picHtml = '';
+          if (m.pic3 && m.pic3.trim() !== '' && m.pic3.match(/\w/)) {
+            picHtml = `<a target="_blank" href="${m.pic3}" class="portrait"><img id="${pic3_id}" src="${m.pic3}" onmouseout="document.getElementById('${pic2_id}').style.display='inline';"></a>` +
+                      `<a class="portrait"><img id="${pic2_id}" src="${m.pic2}" onmouseover="this.style.display='none';"></a>`;
+          } else {
+            picHtml = `<a target="_blank" href="${m.pic2}" class="portrait"><img id="${pic2_id}" src="${m.pic2}" onmouseout="this.style.display='inline';"></a>` +
+                      `<a class="portrait"><img src="${m.pic2}" onmouseover="document.getElementById('${pic2_id}').style.display='none';"></a>`;
+          }
+    
+          // ==========================================
+          // 各セクションへの描画処理
+          // ==========================================
+          if (!isAlumni && !isCollaborator) {
+            // 現役メンバー
             currentDiv.innerHTML += `
               <div class="subhead">
                 <p><span><b>${m.name_en}</b><span style="font-size:80%; margin:0 15px 0 15px;">${m.title_en}</span><span class="extra" style="font-size:100%;">/ </span><span class="hidden"><br></span><b>${m.name_ja}</b><span style="font-size:80%; margin:0 30px 0 15px;">${m.title_ja}</span></span><img src="${m.pic1}" class="nationalflag"></p>
               </div>
               <div class="texts">
-                <div class="self_intro">${m.intro1}</div>
+                <div class="self_intro">${formattedIntro1}</div>
                 ${picHtml}
-                ${m.intro2 || ''}
+                ${formattedIntro2}
                 <div class="extra"><p style="clear:left; margin:15px 0 0 275px;"><a href="#title" style="font-size:120%;">Page Top</a></p></div>
               </div>\n`;
     
           } else if (m.name_en !== 'Daisuke Tsugama' && isCollaborator) {
-            // ==========================================
             // 共同研究者
-            // ==========================================
             hasCol = true;
             colListDiv.innerHTML += `
               <div class="texts2">
                 <a target="_blank" href="${m.pic3}" class="portrait"><img src="${m.pic3}" onmouseout="document.getElementById('${pic2_id}').style.display='inline';"></a>
                 <a class="portrait"><img id="${pic2_id}" src="${m.pic2}" onmouseover="this.style.display='none';"></a>
                 <p class="self_intro4"><b>${m.name_en}</b> / <b>${m.name_ja}</b></p>
-                <p class="self_intro4"><span>${m.title_en}<br>${m.title_ja}<br>${m.intro1}</span></p>
+                <p class="self_intro4"><span>${m.title_en}<br>${m.title_ja}<br>${formattedIntro1}</span></p>
               </div>`;
     
           } else if (isAlumni) {
-            // ==========================================
-            // 元メンバー (出身者)
-            // ==========================================
+            // 元メンバー
             hasAlm = true;
             almListDiv.innerHTML += `
               <div class="texts2">
                 <a target="_blank" href="${m.pic3}" class="portrait"><img src="${m.pic3}" onmouseout="document.getElementById('${pic2_id}').style.display='inline';"></a>
                 <a class="portrait"><img id="${pic2_id}" src="${m.pic2}" onmouseover="this.style.display='none';"></a>
                 <p class="self_intro4"><b>${m.name_en}</b> / <b>${m.name_ja}</b></p>
-                <p class="self_intro4"><span>${m.title_en}<br>${m.title_ja}<br>${m.intro1}</span></p>
+                <p class="self_intro4"><span>${m.title_en}<br>${m.title_ja}<br>${formattedIntro1}</span></p>
               </div>`;
           }
         });
     
-        // 各セクションの表示切り替え（データが存在する場合のみコンテナを表示）
         if (hasCol && document.getElementById('collaborators-container')) {
           document.getElementById('collaborators-container').style.display = 'block';
         }
         if (hasAlm && document.getElementById('alumni-container')) {
           document.getElementById('alumni-container').style.display = 'block';
         }
-    
-        // 3. 論文データの描画（※必要に応じてここにdata.papersのループ処理を追加）
     
       } catch (error) {
         console.error("データの読み込みに失敗しました:", error);
@@ -313,6 +345,7 @@
     }
     
     window.onload = loadLabData;
+
 
   </script>
 </body>
