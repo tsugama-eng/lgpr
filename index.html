@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tsugama Laboratory — For Genomics of Plant Resources</title>
+  <!-- 既存のCSSファイルをそのまま読み込み -->
+  <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+
+  <!-- 固定ヘッダー領域 -->
+  <div class="fixedhead" id="title">
+    <h1>Tsugama Laboratory <span>— For Genomics of Plant Resources 植物資源ゲノミクス研究室</span></h1>
+    <ul class="menu">
+      <li><a href="#ourlab">Our Lab</a></li>
+      <li><a href="#topics">Topics</a></li>
+      <li><a href="#papers">Papers</a></li>
+      <li><a href="#people">People</a></li>
+      <li><a href="#links">Links</a></li>
+    </ul>
+    <div id="titleborder"></div>
+  </div>
+
+  <!-- メインコンテンツ（1ページに集約） -->
+  <div style="margin-top: 180px;"> <!-- 固定ヘッダーの裏に隠れないための余白 -->
+
+    <!-- ① Our Lab セクション -->
+    <div id="ourlab" class="detail">
+      <div class="subhead"><p><span><b>Our Laboratory</b> / <b>研究室について</b></span></p></div>
+      <div class="texts">
+        <p><span>人口増加と環境破壊は世界規模で急速に進んでいます...（既存の固定テキストを配置、またはこれもシート管理可能）</span></p>
+      </div>
+    </div>
+
+    <!-- ② Topics セクション -->
+    <div id="topics" class="detail">
+      <div class="subhead"><p><span><b>Research Topics</b> / <b>研究テーマ</b></span></p></div>
+      <div class="texts" id="topics-content">
+        <!-- ここにシートや個別ファイルからトピックスを動的挿入可能 -->
+      </div>
+    </div>
+
+    <!-- ③ Papers セクション（researchmap等からの出力を想定） -->
+    <div id="papers" class="detail">
+      <div class="subhead"><p><span><b>Selected Papers</b> / <b>論文業績</b></span></p></div>
+      <p><span id="last-update">Last update: 加込中...</span></p>
+      <div class="texts">
+        <ol id="papers-list">
+          <!-- 業績JSでここに<li>を自動追加 -->
+        </ol>
+      </div>
+    </div>
+
+    <!-- ④ People セクション（GSSから動的生成） -->
+    <div id="people" class="detail">
+      <div class="subhead"><p><span><b>Members</b> / <b>メンバー</b></span></p></div>
+      
+      <!-- 現役メンバーの出力先 -->
+      <div id="current-members"></div>
+
+      <!-- 共同研究者の出力先 -->
+      <div id="collaborators-container" style="clear:both; display:none;">
+        <div class="subhead" style="clear:right;"><p><span><b>Collaborators</b> / <b>共同研究者</b></span></p></div>
+        <div id="collaborators-list"></div>
+      </div>
+
+      <!-- 出身者の出力先 -->
+      <div id="alumni-container" style="clear:both; display:none;">
+        <div class="subhead" style="clear:right;"><p><span><b>Alumni</b> / <b>元メンバー</b></span></p></div>
+        <div id="alumni-list"></div>
+      </div>
+    </div>
+
+    <!-- ⑤ Links セクション -->
+    <div id="links" class="detail">
+      <div class="subhead"><p><span><b>Links</b> / <b>リンク</b></span></p></div>
+      <div class="texts">
+        <ul class="link">
+          <li><a href="https://researchmap.jp" target="_blank">Daisuke Tsugama - researchmap</a></li>
+          <!-- 既存のリンク群 -->
+        </ul>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ================= GSSからデータを取得して描画するスクリプト ================= -->
+  <script>
+    // 先生のWebアプリ(GAS)のURLに置き換えてください
+    const GAS_WEBAPP_URL = "https://google.com"; 
+
+    async function loadLabData() {
+      try {
+        const response = await fetch(GAS_WEBAPP_URL);
+        const data = await response.json();
+
+        // 1. 最終更新日の反映
+        document.getElementById('last-update').innerText = "Last update: " + data.lastUpdate;
+
+        // 2. メンバーデータの描画
+        const currentDiv = document.getElementById('current-members');
+        const colListDiv = document.getElementById('collaborators-list');
+        const almListDiv = document.getElementById('alumni-list');
+
+        let hasCol = false;
+        let hasAlm = false;
+
+        data.members.forEach(m => {
+          if (m.lab !== 'LGPR') return;
+
+          // 既存のGAS条件分岐ロジックをJSに移植
+          const isAlumni = m.grade.match(/Alumni/i);
+          const isCollaborator = m.grade.match(/Collaborator/i);
+
+          if (!isAlumni && !isCollaborator) {
+            // 現役メンバー (画像ホバー処理付き)
+            let picHtml = '';
+            if (m.pic3 && m.pic3.trim() !== '') {
+              picHtml = `<a target="_blank" href="${m.pic3}" class="portrait"><img id="${m.pic3_id}" src="${m.pic3}" onmouseout="document.getElementById('${m.pic2_id}').style.display='inline';"></a>
+                         <a class="portrait"><img id="${m.pic2_id}" src="${m.pic2}" onmouseover="this.style.display='none';"></a>`;
+            } else {
+              picHtml = `<a target="_blank" href="${m.pic2}" class="portrait"><img id="${m.pic2_id}" src="${m.pic2}" onmouseout="document.getElementById('${m.pic2_id}').style.display='inline';"></a>
+                         <a class="portrait"><img id="${m.pic2_id}" src="${m.pic2}" onmouseover="this.style.display='none';"></a>`;
+            }
+
+            currentDiv.innerHTML += `
+              <div class="subhead">
+                <p><span><b>${m.name_en}</b><span style="font-size:80%; margin:0 15px 0 15px;">${m.title_en}</span><span class="extra" style="font-size:100%;">/ </span><span class="hidden"><br></span><b>${m.name_ja}</b><span style="font-size:80%; margin:0 30px 0 15px;">${m.title_ja}</span></span><img src="${m.pic1}" class="nationalflag"></p>
+              </div>
+              <div class="texts">
+                <div class="self_intro">${m.intro1}</div>
+                ${picHtml}
+                ${m.intro2}
+                <div class="extra"><p style="clear:left; margin:15px 0 0 275px;"><a href="#title" style="font-size:120%;">Page Top</a></p></div>
+              </div>\n`;
+          } 
+          else if (m.name_en !== 'Daisuke Tsugama' && isCollaborator) {
+            // 共同研究者
+            hasCol = true;
+            colListDiv.innerHTML += `
+              <div class="texts2">
+                <a target="_blank" href="${m.pic3}" class="portrait"><img src="${m.pic3}" onmouseout="document.getElementById('${m.pic2_id}').style.display='inline';"></a>
+                <a class="portrait"><img id="${m.pic2_id}" src="${m.pic2}" onmouseover="this.style.display='none';"></a>
+                <p class="self_intro4"><b>${m.name_en}</b> / <b>${m.name_ja}</b></p>
+                <p class="self_intro4"><span>${m.title_en}<br>${m.title_ja}<br>${m.intro1}</span></p>
+              </div>`;
+          } 
+          else if (isAlumni) {
+            // 出身者
+            hasAlm = true;
+            almListDiv.innerHTML += `
+              <div class="texts2">
+                <a target="_blank" href="${m.pic3}" class="portrait"><img src="${m.pic3}" onmouseout="document.getElementById('${m.pic2_id}').style.display='inline';"></a>
+                <a class="portrait"><img id="${m.pic2_id}" src="${m.pic2}" onmouseover="this.style.display='none';"></a>
+                <p class="self_intro4"><b>${m.name_en}</b> / <b>${m.name_ja}</b></p>
+                <p class="self_intro4"><span>${m.title_en}<br>${m.title_ja}<br>${m.intro1}</span></p>
+              </div>`;
+          }
+        });
+
+        if (hasCol) document.getElementById('collaborators-container').style.display = 'block';
+        if (hasAlm) document.getElementById('alumni-container').style.display = 'block';
+
+        // 3. 論文データの描画（※必要に応じてここにdata.papersのループ処理を追加）
+
+      } catch (error) {
+        console.error("データの読み込みに失敗しました:", error);
+        document.getElementById('last-update').innerText = "データの読み込みエラー";
+      }
+    }
+
+    window.onload = loadLabData;
+  </script>
+</body>
+</html>
