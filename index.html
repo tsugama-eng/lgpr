@@ -1,38 +1,136 @@
-<!DOCTYPE html>
+<!DOCTYPE HTML>
 <html lang="ja">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tsugama Laboratory — For Genomics of Plant Resources</title>
-  <!-- 既存のCSSファイルをそのまま読み込み -->
-  <link rel="stylesheet" href="style.css"> 
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Tsugama Lab (LGPR)</title>
+  <meta name="description" content="Daisuke Tsugama lab for genomics of plant resources" />
+  <meta name="keywords" content="津釜,高野,東京大学,東大,植物,ゲノミクス,ナズナ,アスパラガス,カブ,Brassica rapa,ソバ,ダッタンソバ,チンゲンサイ,ハクサイ,作物,屈性,アスパラ,雌雄,遺伝,ゲノミクス,DNA,核,tsugama,転写因子,タンパク質,tokyo,todai,crop,arabidopsis,asparagus,buckwheat,turnip,gene,genetics,genomics,sex,flower,dioecy,nucleus,nucleus,transcription factor,protein" />
+  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+  <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes">
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="shortcut icon" href="Turnip.ico">
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-153241091-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-153241091-1');
+</script>
+
 </head>
+
 <body>
-
-  <!-- 固定ヘッダー領域 -->
-  <div class="fixedhead" id="title">
-    <h1>Tsugama Laboratory <span>— For Genomics of Plant Resources 植物資源ゲノミクス研究室</span></h1>
-    <ul class="menu">
-      <li><a href="#ourlab">Our Lab</a></li>
-      <li><a href="#topics">Topics</a></li>
-      <li><a href="#papers">Papers</a></li>
-      <li><a href="#people">People</a></li>
-      <li><a href="#links">Links</a></li>
-    </ul>
-    <div id="titleborder"></div>
+  <div id="title">
+     <h1>Tsugama Lab<span class="extra">oratory</span>&nbsp;<span class="hidden"><br></span><span id="subtitle">&mdash; For Genomics of Plant Resources</span><br>植物資源ゲノミクス研究室 (津釜研)&nbsp;&nbsp;&nbsp;<span class="extra" style="font-size:40%;">(C) 2019 Daisuke Tsugama</span></h1>
+     <a target="_blank" href="Turnip.jpg"><img src="Turnip.jpg"></a>
   </div>
+  
+  <p id="titleborder"></p>
+  
+  <div style="clear:left;background-color:#ffffff;">
+     <ul class="menu">
+        <a href="index.html" class="current"><li>Our lab</li></a>
+        <a href="topics.html"><li>Topics</li></a>
+        <a href="papers.html"><li>Papers</li></a>
+        <a href="people.html"><li>People</li></a>
+        <a href="links.html"><li>Links</li></a>
+     </ul>
 
-  <!-- メインコンテンツ（1ページに集約） -->
-  <div style="margin-top: 180px;"> <!-- 固定ヘッダーの裏に隠れないための余白 -->
+     <div id="top" class="detail">
+        <p class="language_sel">
+        <span id="English1" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="document.getElementById('Japanese1').style.color='#888888'; document.getElementById('Japanese1').style.border='solid 1px #888888'; document.getElementById('intro_en').style.display='inline'; document.getElementById('mm_en').style.display='inline'; document.getElementById('contact_en').style.display='inline'; document.getElementById('intro_ja').style.display='none'; document.getElementById('mm_ja').style.display='none'; document.getElementById('contact_ja').style.display='none'; style.color='#0000ff'; style.border='solid 2px #0000ff';">English</span>
+        <span id="Japanese1" class="language" onclick="document.getElementById('English1').style.color='#888888'; document.getElementById('English1').style.border='solid 1px #888888'; document.getElementById('intro_en').style.display='none'; document.getElementById('mm_en').style.display='none'; document.getElementById('contact_en').style.display='none'; document.getElementById('intro_ja').style.display='inline'; document.getElementById('mm_ja').style.display='inline'; document.getElementById('contact_ja').style.display='inline'; style.color='#0000ff'; style.border='solid 2px #0000ff';">Japanese</span>
+        </p>
 
-    <!-- ① Our Lab セクション -->
-    <div id="ourlab" class="detail">
-      <div class="subhead"><p><span><b>Our Laboratory</b> / <b>研究室について</b></span></p></div>
-      <div class="texts">
-        <p><span>人口増加と環境破壊は世界規模で急速に進んでいます...（既存の固定テキストを配置、またはこれもシート管理可能）</span></p>
-      </div>
+        <div class="subhead"><p><span>Introduction</span></p></div>
+
+        <div id="intro_en" class="texts">
+           <p><span>Population growth and environmental degradation have both been rapidly proceeding in the world. It is important to restore vegetation and to develop sustainable food production systems that do not need much labor and agrochemical input. These require good use of plants. Plants are also indispensable as ornaments and sources of diverse tastes and fragrances.</span></p>
+           <p><span>Our laboratory aims to elucidate growth traits, especially stress tolerances, of various plant species, to identify genes relevant to those traits, and to find and/or generate right plants in right places.</span></p>
+           <div style="float:left; margin:10px 20px 10px 15px;">
+              <video controls width="400px" poster="Takano_Tsugama_video_intro_2020_En.jpg"><source src="Takano_Tsugama_video_intro_2020_En.mp4"></video>
+              <p style="line-height:120%"><span>Lab introduction with <a href="http://stress.anesc.u-tokyo.ac.jp/">Tetsuo Takano Lab</a></span><span class="extra", style="font-size: 88%;"><br>(Japanese version may be more helpful to Chinese students)</span></p>
+           </div>
+           <div style="padding:10px 0 10px 0;">
+              <video controls width="400px" poster="Takano_Tsugama_video_intro_2020_Ja.jpg"><source src="Takano_Tsugama_video_intro_2020_Ja.mp4"></video>
+              <p style="line-height:120%;"><span><span class="extra" style="font-size:100%;">&nbsp;&nbsp;</span>Japanese version 日本語版</span></p>
+           </div>
+        </div>
+
+        <div id="intro_ja" class="texts">
+           <p><span>人口増加と環境破壊は世界規模で急速に進んでいます。植生を回復させると共に、労力と資源の要求量の少ない持続可能な生産体系を構築することは重要です。これを実現させるには、植物を上手に使うことが必要です。植物は観賞用としても味・香りの源としても私達の生活に欠かせないものです。</span></p>
+           <p><span>私たちの研究室では、植物の種々の特徴、特にストレス耐性、を明らかにし、それらに関わる遺伝子を特定し、適材適所な植物の開発・利用を進めることを目指しています。</span></p>
+           <div style="float:left; margin:10px 20px 10px 15px;">
+              <video controls width="400px" poster="Takano_Tsugama_video_intro_2020_En.jpg"><source src="Takano_Tsugama_video_intro_2020_En.mp4"></video>
+              <p style="line-height:120%"><span>Lab introduction with <a href="http://stress.anesc.u-tokyo.ac.jp/">Tetsuo Takano Lab</a></span><span class="extra", style="font-size: 88%;"><br>(Japanese version may be more helpful to Chinese students)</span></p>
+           </div>
+           <div style="padding:10px 0 10px 0;">
+              <video controls width="400px" poster="Takano_Tsugama_video_intro_2020_Ja.jpg"><source src="Takano_Tsugama_video_intro_2020_Ja.mp4"></video>
+              <p style="line-height:120%;"><span><span class="extra" style="font-size:100%;">&nbsp;&nbsp;</span>Japanese version 日本語版</span></p>
+           </div>
+        </div>
+
+        <p class="pagetop"><a href="#title">Page Top</a></p>
+        <p class="showhide">
+           <span id="intro_show" onclick="document.getElementById('intro_en').style.display='inline'; document.getElementById('intro_ja').style.display='none'; document.getElementById('intro_hide').style.display='inline'; style.display='none'; document.getElementById('intro_miru').style.display='none';">Show</span>
+           <span id="intro_miru" onclick="document.getElementById('intro_en').style.display='none'; document.getElementById('intro_ja').style.display='inline'; document.getElementById('intro_hide').style.display='inline'; style.display='none'; document.getElementById('intro_show').style.display='none';">見る</span>
+           <span id="intro_hide" onclick="document.getElementById('intro_en').style.display='none'; document.getElementById('intro_ja').style.display='none'; document.getElementById('intro_show').style.display='inline'; document.getElementById('intro_miru').style.display='inline'; style.display='none';">Hide / 隠す</span>
+        </p>
+           
+        <div class="subhead" style="clear:left;"><p><span>Materials and Methods</span></p></div>
+
+        <div id="mm_en" class="texts">
+           <div class="lgpr_pc" align="center">
+              <a target="_blank" href="Dragon_En.jpg"><img src="Dragon_En.jpg"></a><p><span>Powerful machines are available</span></p>
+           </div>
+           <p><span>Our materials include pearl millet, garden asparagus, <i>Arabidopsis thaliana</i>, <i>Brassica rapa</i> and other plant species (see Topics). Any plant materials of your interest are welcome.</span></p>
+           <p><span>Our research is based on plant genomics and molecular biology. These include gene cloning, protein analysis, genome sequencing, genetic analysis, analysis of transgenic and genome-edited plants, etc. For these, we also grow plants in our field and evaluate their traits.</span></p>
+        </div>
+
+        <div id="mm_ja" class="texts">
+           <div class="lgpr_pc" align="center">
+              <a target="_blank" href="Dragon_Ja.jpg"><img src="Dragon_Ja.jpg"></a><p><span>強力なコンピュータが利用可能</span></p>
+           </div>
+           <p><span>トウジンビエ、アスパラガス、シロイヌナズナ、<i>Brassica rapa</i>など、様々な植物種を材料として研究を行っています（Topics参照）。材料は自らの興味に基づいて選定していただいて（基本的には）大丈夫です。</span></p>
+           <p><span>研究はゲノミクス・分生生物学の手法を用いて進めています。これは、遺伝子のクローニング、タンパク質の解析、ゲノム配列の解読、遺伝学的な解析、遺伝子組換えやゲノム編集を用いた植物個体の作出・解析などを含みます。これらのため、圃場における植物の栽培とそれらの性質の評価も行います。</span></p>
+        </div>
+
+        <p class="pagetop"><a href="#title">Page Top</a></p>
+        <p class="showhide">
+           <span id="mm_show" onclick="document.getElementById('mm_en').style.display='inline'; document.getElementById('mm_ja').style.display='none'; document.getElementById('mm_hide').style.display='inline'; style.display='none'; document.getElementById('mm_miru').style.display='none';">Show</span>
+           <span id="mm_miru" onclick="document.getElementById('mm_en').style.display='none'; document.getElementById('mm_ja').style.display='inline'; document.getElementById('mm_hide').style.display='inline'; style.display='none'; document.getElementById('mm_show').style.display='none';">見る</span>
+           <span id="mm_hide" onclick="document.getElementById('mm_en').style.display='none'; document.getElementById('mm_ja').style.display='none'; document.getElementById('mm_show').style.display='inline'; document.getElementById('mm_miru').style.display='inline'; style.display='none';">Hide / 隠す</span>
+        </p>
+
+        <div class="subhead" style="clear:right;"><p><span>Contact Information</span></p></div>
+
+        <div id="contact_en" class="texts">
+           <p><span>Our lab belongs to Asian Natural Environmental Science Center (ANESC), The University of Tokyo. Our lab is also a cooperating laboratory for Major in Applied Biology and Department of Agricultural and Environmental Biology of Graduate School of Agricultural and Life Sciences / Faculty of Agriculture, The University of Tokyo.</span></p>
+           <p><span>Undersraduate students in Major in Applied Biology and Major in International Sustainable Agriculture Development can choose our lab to conduct research for the graduation thesis. Students participating in M.Sc. and Ph.D. courses of Department of Agricultural and Environmental Biology can also join us. A post-doc or a researcher who has no finantial support is not acceptable, but may be helped to apply together for scholarship and/or research grants. Any question is welcome.</span></p>
+           <p style="margin-bottom:3px;"><span>Lab Manager (and PI): Daisuke Tsugama</span></p>
+           <p style="margin-bottom:3px;"><span>E-mail: dtsugama[-at-]anesc.u-tokyo.ac.jp<span class="hidden"><br></span> (replace [-at-] with @)</span></p>
+           <p style="margin-bottom:3px;"><span>Tel: +81-42 463 1618</span></p>
+           <p style="margin-bottom:3px;"><span>Address: 1-1-1 Midori-cho, Nishi-tokyo-shi, Tokyo 188-0002, Japan (in the university research farm)</span></p>
+           <iframe class="gmap" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12954.835647249565!2d139.5316872!3d35.7333768!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ef4ef8ac7dbd%3A0x951b9a8a5816bcbc!2zMS1jaMWNbWUtMS0xIE1pZG9yaWNoxY0sIE5pc2hpdG9reW8sIFTFjWt5xY0tdG8gMTg4LTAwMDI!5e0!3m2!1sen!2sjp!4v1573127341862!5m2!1sen!2sjp" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </div>
+
+        <div id="contact_ja" class="texts">
+           <p><span>私たちの研究室は東京大学アジア生物資源環境研究センターの研究室の一つであり、東京大学大学農学部 応用生物学専修と同大学院農学生命科学研究科 生産・環境生物学専攻の協力講座の一つです。</span></p>
+           <p><span>応用生物学専修と国際開発農学専修の学生さんは、卒論研究実施先として当研究室を選択することができます。生産・環境生物学の修士・博士課程に進学・入学を希望される方も、希望配属先として当研究室を選択することができます。ポスドクや研究員の方は、奨学金や助成金をお持ちでなければ受け入れられませんが、それらに応募するお手伝いは可能です（要相談）。何かあればお気軽にご連絡ください。</span></p>
+           <p style="margin-bottom:3px;"><span>研究室マネージャー (兼PI): 津釜 大侑</span></p>
+           <p style="margin-bottom:3px;"><span>E-mail: dtsugama[-at-]anesc.u-tokyo.ac.jp<span class="hidden"><br></span> ([-at-] を @ で置き換えてください)</span></p>
+           <p style="margin-bottom:3px;"><span>Tel: 042-463-1618</span></p>
+           <p style="margin-bottom:3px;"><span>Address: 〒188-0002 東京都西東京市緑町1-1-1 東京大学生態調和農学機構内 (旧東大農場内 &mdash; 良いところです)</span></p>
+           <iframe class="gmap" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12954.835647249565!2d139.5316872!3d35.7333768!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ef4ef8ac7dbd%3A0x951b9a8a5816bcbc!2zMS1jaMWNbWUtMS0xIE1pZG9yaWNoxY0sIE5pc2hpdG9reW8sIFTFjWt5xY0tdG8gMTg4LTAwMDI!5e0!3m2!1sen!2sjp!4v1573127341862!5m2!1sen!2sjp" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
+        </div>
+
+        <p class="pagetop"><a href="#title">Page Top</a></p>
     </div>
-
+       
     <!-- ② Topics セクション -->
     <div id="topics" class="detail">
       <div class="subhead"><p><span><b>Research Topics</b> / <b>研究テーマ</b></span></p></div>
