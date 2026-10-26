@@ -219,11 +219,12 @@
   }
 
     // Webアプリ(GAS)のURL
-    const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycby7SYlaOmN0Ze7kqtHIDIMf5UQiNNxqY9x0dPAbwgcoI8ctW4MmywrZnYkYI7DE9OkA/exec"; 
+    // const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycby7SYlaOmN0Ze7kqtHIDIMf5UQiNNxqY9x0dPAbwgcoI8ctW4MmywrZnYkYI7DE9OkA/exec"; 
 
     async function loadLabData() {
       try {
-        const response = await fetch(GAS_WEBAPP_URL);
+        // const response = await fetch(GAS_WEBAPP_URL);
+        const response = await fetch("data/content.json");
         const data = await response.json();
     
         if (document.getElementById('last-update')) {
