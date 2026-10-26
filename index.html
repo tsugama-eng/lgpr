@@ -213,9 +213,18 @@
     if (targetPage) {
       targetPage.style.display = 'block';
     }
+　　
+    // 3. メニューの「アクティブ状態」のCSSクラスを切り替える
+    const menuLinks = document.querySelectorAll('.menu a');
+    menuLinks.forEach(link => {
+      link.classList.remove('current');
+    });
 
-    // 3. (オプション) メニューの「アクティブ状態（色が変わるなど）」のCSSクラスを切り替える
-    // 既存のCSSで「ul.menu li.current」や「a.current」があれば、ここでクラスを付け替えると見た目も完全に連動します
+    // クリックされたリンク（href属性が `#pageId` に一致するもの）に 'current' を追加
+    const activeLink = document.querySelector(`.menu a[href="#${pageId}"]`);
+    if (activeLink) {
+      activeLink.classList.add('current');
+    }
   }
 
     async function loadLabData() {
