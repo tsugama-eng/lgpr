@@ -199,7 +199,7 @@
 
   </div>
 
-  <!-- ================= GSSからデータを取得して描画するスクリプト ================= -->
+  <!-- ================= JSONからデータを取得して描画するスクリプト ================= -->
   <script>
     function switchPage(pageId) {
     // 1. まず、すべてのセクション（class="detail"）を非表示にする
@@ -217,9 +217,6 @@
     // 3. (オプション) メニューの「アクティブ状態（色が変わるなど）」のCSSクラスを切り替える
     // 既存のCSSで「ul.menu li.current」や「a.current」があれば、ここでクラスを付け替えると見た目も完全に連動します
   }
-
-    // Webアプリ(GAS)のURL
-    // const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycby7SYlaOmN0Ze7kqtHIDIMf5UQiNNxqY9x0dPAbwgcoI8ctW4MmywrZnYkYI7DE9OkA/exec"; 
 
     async function loadLabData() {
       try {
@@ -289,6 +286,9 @@
     
           // --- ③ 画像エリアのHTML生成（CSSフェード対応版） ---
           let mediaHtml = '<div class="member-media">';
+          if (isAlumni) {
+            mediaHtml = '<div class="member-media" style="display:none;">';
+          }
           if (m.pic2) {
             mediaHtml += `<div class="portrait-container">`;
             if (m.pic3 && m.pic3.trim() !== '' && m.pic3.match(/\w/)) {
