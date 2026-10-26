@@ -12,8 +12,8 @@
       "intro2": "introduction2",
       "pic1": "picture1",
       "pic2": "picture2",
-      "pic2_id": "picture2",
       "pic3": "picture3",
+      "pic2_id": "picture2",
       "pic3_id": "picture3"
     },
     {
@@ -25,10 +25,10 @@
       "title_ja": "准教授",
       "intro1": "Like: Run, coffee, beer, sake, mouflon\nBelieve: \"Chance favors the prepared mind\"\nWant to be: \"Science Guy\"",
       "intro2": "1985-2004 -- Grew in Oyama-shi, Tochigi, and graduated from Utsunomiya High. 栃木県小山市出身、栃木県立宇都宮高校卒\n2004-2008 -- B.S. @ The University of Tokyo. Started research under the supervision of Tetsuo Takano at ANESC. 東京大学教養学部理科二類、農学部 生産生物学専修 アジア生物資源環境研究センターの高野哲夫先生の下で研究を開始。\n2008-2013 -- M.Sc. and Ph.D. @ The University of Univ. Tokyo (@Takano lab). Learned the basics of research. Realized the power of science. 東大 大学院農学生命科学研究科 修士・博士課程 (@高野研)。研究の基礎を学ぶ。\n2013-2015 -- Post-doc @ Sarah M. Assmann lab, Penn State University and @ Lab of Plant Molecular Genetics,The University of Univ. Tokyo (PI: Nobuhiro Tsutsumi). Saw professionalism in colleagues. Job hunting was tough... ポスドク @ ペンシルバニア州立大学のSarah M. Assmann先生の研究室 @ 東大院農学生命科学研究科 植物分子遺伝学研究室 (PI: 堤伸浩先生) 恵まれた環境でした。就活で苦戦...\n2015-2018 -- Assistant professor @ Lab of Crop Physiology, Hokkaido University (PIs: Kiyoshi Masuda and Kaien Fujino). Started crop genomics. 北海道大学大学院農学研究院 作物生理学研究室 助教 上司は増田清先生と藤野介延先生。作物研究開始。\n2019-present -- Associate professor @ ARC-BRESアジア生物資源環境研究センター 准教授<br>See also <a href=\"https://researchmap.jp/tsugama?lang=en\" target=\"_blank\">Researchmap</a>, <a href=\"https://github.com/tsugama-eng\" target=\"_blank\">GitHub</a>, and <a href=\"https://orcid.org/0000-0002-4946-678X\" target=\"_blank\">ORCID</a>.",
-      "pic1": "Japan.PNG",
-      "pic2": "Tsugama_top.jpg",
+      "pic1": "https://lh3.googleusercontent.com/d/17bu7cOXVmhU0SD7AtjdEDZGzZ0ksXXJP",
+      "pic2": "https://lh3.googleusercontent.com/d/1og_-bMih39BnGwgrUUc5Lc1_dEG-a2PT",
+      "pic3": "https://lh3.googleusercontent.com/d/1E9wk0qEMvzb_iIwjUlDOp2YFyAzuvfsB",
       "pic2_id": "Tsugama_top",
-      "pic3": "Tsugama_MFLN.jpg",
       "pic3_id": "Tsugama_MFLN"
     },
     {
@@ -40,10 +40,10 @@
       "title_ja": "博士3年",
       "intro1": "",
       "intro2": "",
-      "pic1": "Egypt.png",
-      "pic2": "shalaby.PNG",
-      "pic2_id": "shalaby",
+      "pic1": "https://lh3.googleusercontent.com/d/1jSPqtOph6FpXk7Zuor82O3TcrHLdHRNb",
+      "pic2": "https://lh3.googleusercontent.com/d/1LEYIKQ8zt-t0_PfjAQesuGSyOCwYLaLr",
       "pic3": "",
+      "pic2_id": "No_image",
       "pic3_id": ""
     },
     {
@@ -55,10 +55,10 @@
       "title_ja": "博士3年",
       "intro1": "",
       "intro2": "2021-2023 -- Obtained M.Sc. in this lab. The masters thesis was on characterization of functions of tomato WRKY genes.\n2023-present -- Ph.D. candidate. Working to evaluate applicability of new genome editing tools to crops and to improve crop genome editing systems.",
-      "pic1": "Japan.PNG",
-      "pic2": "kambara.jpg",
-      "pic2_id": "kambara",
+      "pic1": "https://lh3.googleusercontent.com/d/1b-7VYgCpXNMyzPGDhQho77z-O7zY_faz",
+      "pic2": "https://lh3.googleusercontent.com/d/1YAQdAsZ7Vki_TMNJMrpWHxf7IPpURy6X",
       "pic3": "",
+      "pic2_id": "shalaby",
       "pic3_id": ""
     },
     {
@@ -67,13 +67,13 @@
       "lab": "LGPR",
       "grade": "D3",
       "title_en": "D3",
-      "title_ja": "博士2年",
+      "title_ja": "博士3年",
       "intro1": "Like: Onsen, basketball, travel, sake, cycling 温泉、バスケ、旅行、酒、自転車に乗ること\nBelieve: \"Every cloud has a silver lining\" 雲の上はいつも晴れ",
       "intro2": "2022-2024 -- Obtained M.Sc. in this lab. The masters thesis was on GWAS with ~100 pearl millet elite lines.\n2024-present -- Ph.D. candidate. <a href=\"https://kaken.nii.ac.jp/en/grant/KAKENHI-PROJECT-24KJ0912/\" target=\"_blank\">JSPS Research Fellow (DC1)</a>. Working to improve multiple layers of pearl millet genomics, including a GWAS system, gene characterization and tissue culture for transformation / genome efiting. Workin also to develop a millet gene expression database and NGS data analysis tools.",
-      "pic1": "China.png",
-      "pic2": "No_image.png",
-      "pic2_id": "No_image",
+      "pic1": "https://lh3.googleusercontent.com/d/17bu7cOXVmhU0SD7AtjdEDZGzZ0ksXXJP",
+      "pic2": "https://lh3.googleusercontent.com/d/1W9kh3chc1WLAHsU0JbCN0hmIbfh6-9Nk",
       "pic3": "",
+      "pic2_id": "kambara",
       "pic3_id": ""
     },
     {
@@ -82,13 +82,13 @@
       "lab": "LGPR",
       "grade": "D2",
       "title_en": "D2",
-      "title_ja": "博士1年",
+      "title_ja": "博士2年",
       "intro1": "",
       "intro2": "2025-present -- Ph.D. candidate. Working to develop web browser apps for sequence data analysis for democratizing NGS data.",
-      "pic1": "China.png",
-      "pic2": "No_image.png",
-      "pic2_id": "No_image",
+      "pic1": "https://lh3.googleusercontent.com/d/1Hz-A8TWEcYHOXW96V6S8mB9UMt8rMzJ1",
+      "pic2": "https://lh3.googleusercontent.com/d/1LEYIKQ8zt-t0_PfjAQesuGSyOCwYLaLr",
       "pic3": "",
+      "pic2_id": "No_image",
       "pic3_id": ""
     },
     {
@@ -97,13 +97,13 @@
       "lab": "LGPR",
       "grade": "M2",
       "title_en": "M2",
-      "title_ja": "修士1年",
+      "title_ja": "修士2年",
       "intro1": "",
       "intro2": "2025-present -- Master's student. Working to develop a vector that can drive transgene expression in bacteria, yeast and plants.",
-      "pic1": "",
-      "pic2": "",
-      "pic2_id": "",
+      "pic1": "https://lh3.googleusercontent.com/d/1Hz-A8TWEcYHOXW96V6S8mB9UMt8rMzJ1",
+      "pic2": "https://lh3.googleusercontent.com/d/1LEYIKQ8zt-t0_PfjAQesuGSyOCwYLaLr",
       "pic3": "",
+      "pic2_id": "No_image",
       "pic3_id": ""
     },
     {
@@ -116,9 +116,9 @@
       "intro1": "",
       "intro2": "",
       "pic1": "",
-      "pic2": "takano.jpg",
-      "pic2_id": "takano",
-      "pic3": "takano.jpg",
+      "pic2": "",
+      "pic3": "https://lh3.googleusercontent.com/d/1Kms_5inKfBR6cBy-A46pIcljDHAXkrIV",
+      "pic2_id": "",
       "pic3_id": "takano"
     },
     {
@@ -131,9 +131,9 @@
       "intro1": "For VIP1, pearl millet and other projects 恩師",
       "intro2": "",
       "pic1": "",
-      "pic2": "Cheng_top.jpg",
-      "pic2_id": "Cheng_top",
-      "pic3": "Cheng_family.jpg",
+      "pic2": "https://lh3.googleusercontent.com/d/1Kms_5inKfBR6cBy-A46pIcljDHAXkrIV",
+      "pic3": "https://lh3.googleusercontent.com/d/1KPJykX90kq2eUzvADp0gD-vr2JdSryOA",
+      "pic2_id": "takano",
       "pic3_id": "Cheng_family"
     },
     {
@@ -145,10 +145,10 @@
       "title_ja": "元 共同研究員",
       "intro1": "Assistant professor, Nanjing Agricultural University<br>\n現 南京農業大学 助教",
       "intro2": "",
-      "pic1": "Sri_Lanka.png",
-      "pic2": "No_image.png",
-      "pic2_id": "No_image",
+      "pic1": "",
+      "pic2": "https://lh3.googleusercontent.com/d/16KDbOvcWc3VjXsRvIzffV3LFNKtq0SOh",
       "pic3": "",
+      "pic2_id": "Cheng_top",
       "pic3_id": ""
     },
     {
@@ -162,8 +162,8 @@
       "intro2": "",
       "pic1": "",
       "pic2": "Yoon_top.jpg",
+      "pic3": "https://lh3.googleusercontent.com/d/1mhzPdrqOLNKxA-RiC53JLU8P_6hXaAE8",
       "pic2_id": "Yoon_top",
-      "pic3": "Yoon_kyoto.jpg",
       "pic3_id": "Yoon_kyoto"
     },
     {
@@ -175,11 +175,11 @@
       "title_ja": "元 博士課程学生",
       "intro1": "",
       "intro2": "",
-      "pic1": "Bangladesh.png",
-      "pic2": "qazi.jpg",
+      "pic1": "https://lh3.googleusercontent.com/d/1hxA6pKl401mx8_RvFmhRl_tX6U9p3sY8",
+      "pic2": "https://lh3.googleusercontent.com/d/1vsElbcGt1EDBTj_PdNAXI1QlJ5FIz59t",
+      "pic3": "https://lh3.googleusercontent.com/d/1_3Bew1V9snLUYNqaFcrPjQ0KenEvJwXi",
       "pic2_id": "qazi",
-      "pic3": "",
-      "pic3_id": ""
+      "pic3_id": "Qazi_forest"
     },
     {
       "name_en": "Renan Yang",
@@ -190,10 +190,10 @@
       "title_ja": "元 修士課程学生",
       "intro1": "",
       "intro2": "",
-      "pic1": "China.png",
-      "pic2": "No_image.png",
-      "pic2_id": "No_image",
+      "pic1": "https://lh3.googleusercontent.com/d/1Hz-A8TWEcYHOXW96V6S8mB9UMt8rMzJ1",
+      "pic2": "https://lh3.googleusercontent.com/d/1LEYIKQ8zt-t0_PfjAQesuGSyOCwYLaLr",
       "pic3": "",
+      "pic2_id": "No_image",
       "pic3_id": ""
     },
     {
@@ -205,10 +205,10 @@
       "title_ja": "元 修士課程学生",
       "intro1": "",
       "intro2": "",
-      "pic1": "Japan.PNG",
-      "pic2": "No_image.png",
-      "pic2_id": "No_image",
+      "pic1": "https://lh3.googleusercontent.com/d/17bu7cOXVmhU0SD7AtjdEDZGzZ0ksXXJP",
+      "pic2": "https://lh3.googleusercontent.com/d/1LEYIKQ8zt-t0_PfjAQesuGSyOCwYLaLr",
       "pic3": "",
+      "pic2_id": "No_image",
       "pic3_id": ""
     },
     {
@@ -222,8 +222,8 @@
       "intro2": "",
       "pic1": "",
       "pic2": "",
-      "pic2_id": "",
       "pic3": "",
+      "pic2_id": "",
       "pic3_id": ""
     },
     {
@@ -237,8 +237,8 @@
       "intro2": "",
       "pic1": "",
       "pic2": "",
-      "pic2_id": "",
       "pic3": "",
+      "pic2_id": "",
       "pic3_id": ""
     },
     {
@@ -252,19 +252,13 @@
       "intro2": "",
       "pic1": "",
       "pic2": "",
-      "pic2_id": "",
       "pic3": "",
+      "pic2_id": "",
       "pic3_id": ""
     }
   ],
   "papers": [],
   "links": [
-    {
-      "item": "TAIR (The Arabidopsis Information Resource)",
-      "category": "Web Tools & Databases",
-      "description": "Arabidopsis comprehensive gene information resource シロイヌナズナの遺伝子データベース",
-      "link": "https://www.arabidopsis.org/index.jsp"
-    },
     {
       "item": "TGIF-DB (Terse Genomics Interface for Developing Botany)",
       "category": "Web Tools & Databases",
@@ -282,6 +276,12 @@
       "category": "Web Tools & Databases",
       "description": "Single-page web browser application for a batch comparison between reference and query sequences; HELPA for phasing mixed tracecs is also available リファレンス-クエリ間での遺伝子配列比較とサンガーシーケンシングでの混合シグナルの分離をバッチで行うためのブラウザアプリ",
       "link": "https://tsugama-eng.github.io/sabe-owl/"
+    },
+    {
+      "item": "TAIR (The Arabidopsis Information Resource)",
+      "category": "Web Tools & Databases",
+      "description": "Arabidopsis comprehensive gene information resource シロイヌナズナの遺伝子データベース",
+      "link": "https://www.arabidopsis.org/index.jsp"
     },
     {
       "item": "ARC-BRES アジア生物資源環境研究センター",
