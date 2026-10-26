@@ -385,6 +385,15 @@
         if (hasAlm && document.getElementById('alumni-container')) {
           document.getElementById('alumni-container').style.display = 'block';
         }
+
+        // --- リンクコンテナの表示・非表示制御 ---
+        if (hasTools && document.getElementById('links-tools-container')) {
+          document.getElementById('links-tools-container').style.display = 'block';
+        }
+        if (hasAffiliations && document.getElementById('links-affiliations-container')) {
+          document.getElementById('links-affiliations-container').style.display = 'block';
+        }
+
     
       } catch (error) {
         console.error("データの読み込みに失敗しました:", error);
