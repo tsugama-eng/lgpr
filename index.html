@@ -355,7 +355,30 @@
             `;
           }
         });
-    
+
+        // --- リンクデータのパースとレンダリング処理 ---
+        if (data.links && data.links.length > 0) {
+          data.links.forEach(l => {
+            // HTML組み立て（別タブで安全に開く target="_blank" と rel="noopener" を付与）
+            const linkHtml = `
+              <li style="margin-bottom: 12px;">
+                <a href="${l.link}" target="_blank" rel="noopener" style="font-weight: bold; font-size: 1.05rem;">${l.item}</a>
+                <br>
+                <span style="font-size: 0.9rem; color: #555; margin-left: 5px;">${l.description || ''}</span>
+              </li>
+            `;
+
+            // カテゴリに応じて振り分け
+            if (l.category === "Web Tools & Databases") {
+              hasTools = true;
+              toolsListDiv.innerHTML += linkHtml;
+            } else if (l.category === "Affiliations") {
+              hasAffiliations = true;
+              affListDiv.innerHTML += linkHtml;
+            }
+          });
+        }
+        
         if (hasCol && document.getElementById('collaborators-container')) {
           document.getElementById('collaborators-container').style.display = 'block';
         }
