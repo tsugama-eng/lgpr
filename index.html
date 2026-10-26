@@ -241,7 +241,17 @@
     
         let hasCol = false;
         let hasAlm = false;
-    
+
+        // --- リンク用の出力先とフラグの初期化 ---
+        const toolsListDiv = document.getElementById('links-tools-list');
+        const affListDiv = document.getElementById('links-affiliations-list');
+        
+        toolsListDiv.innerHTML = '';
+        affListDiv.innerHTML = '';
+        
+        let hasTools = false;
+        let hasAffiliations = false;
+        
         // 親要素に共通のコンテナクラスを付与
         currentDiv.className = "member-container";
         colListDiv.className = "sub-member-grid";
