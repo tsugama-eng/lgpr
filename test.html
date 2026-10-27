@@ -75,16 +75,19 @@
     /* メニュー切替用のスタイル調整 */
     .menu a { cursor: pointer; text-decoration: none; }
     .menu a.current li { font-weight: bold; background-color: #eef7ee; }
-        /* 自前グラフ・コラボリスト用の軽量スタイル */
+    /* 自前グラフ・コラボリスト用の軽量スタイル */
     .pure-chart-container {
       display: flex;
       align-items: flex-end;
       justify-content: space-between;
       height: 180px;
       padding-top: 20px;
+      padding-bottom: 5px; /* ラベルの見切れ防止 */
       border-bottom: 2px solid #ccc;
       border-left: 2px solid #ccc;
+      overflow-x: auto; /* 万が一横幅が狭まってもスクロールで対応可能に */
     }
+
     .pure-chart-bar-wrapper {
       display: flex;
       flex-direction: column;
