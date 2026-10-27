@@ -589,7 +589,7 @@
       try {
         let cleanDoi = doiField.replace(/[\[\]"']/g, "").trim();
         if (cleanDoi !== "") {
-          return ` DOI: <a href="https://doi.org{cleanDoi}" target="_blank" rel="noopener">${cleanDoi}</a>`;
+          return ` DOI: <a href="https://doi.org/{cleanDoi}" target="_blank" rel="noopener">${cleanDoi}</a>`;
         }
       } catch(e) {}
       return "";
@@ -609,7 +609,7 @@
 
       const summaryBar = document.getElementById('summary-bar');
       if (summaryBar) {
-        summaryBar.innerHTML = `Summary: Total Papers: <strong>${total}</strong> / International: <strong>${internationalCount} (${intRatio}%)</strong>`;
+        summaryBar.innerHTML = `Summary: Total Papers: <strong>${total}</strong>, International: <strong>${internationalCount} (${intRatio}%)</strong>`;
       }
     }
 
