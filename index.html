@@ -342,13 +342,14 @@
           }
         }
 
-        // --- ⚙️ ヘルパー関数: DOI配列のパースとリンク生成 ---
-        function formatDoi(doiJsonStr) {
-          if (!doiJsonStr) return "";
+        // --- ⚙️ ヘルパー関数: DOI文字列を安全にパースしてアクションリンク化 ---
+        function formatDoi(doiField) {
+          if (!doiField || doiField.trim() === "") return "";
           try {
-            const arr = JSON.parse(doiJsonStr);
-            if (arr && arr.length > 0) {
-              return ` DOI: <a href="https://doi.org{arr[0]}" target="_blank" rel="noopener">${arr[0]}</a>`;
+            // ["10.1016/j.softx.2026.103092"] のような配列形式の文字列から中身だけを抜く
+            let cleanDoi = doiField.replace(/[\[\]"']/g, "").trim();
+            if (cleanDoi !== "") {
+              return ` DOI: <a href="https://doi.org/${cleanDoi}" target="_blank" rel="noopener">${cleanDoi}</a>`;
             }
           } catch(e) {}
           return "";
