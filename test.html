@@ -339,10 +339,12 @@
 
     // 🌍 国際共著者の定義オブジェクト
     const internationalCollaborators = {
-      "john smith": 2020,
-      "li wei": 2021,
-      "anna dupont": 2018,
-      "tetsuo takano": 2000
+      "shashi kumar gupta": 2000,
+      "sintho wahyuning ardie": 2000,
+      "shenkui liu": 2000,
+      "jinping chen": 2000,
+      "": 2000,
+      "shenkui liu": 2000,
     };
 
     // ページ（タブ）切り替え関数
@@ -599,13 +601,6 @@
       return "";
     }
 
-    function renderPapersDashboard(papers) {
-      renderSummaryBar(papers);
-      renderYearsChart(papers);
-      renderCollaborationNetwork(papers);
-      renderPapersListOnly(papers);
-    }
-
     function renderSummaryBar(papers) {
       const total = papers.length;
       let internationalCount = 0;
@@ -617,11 +612,10 @@
       });
       
       const intRatio = total > 0 ? Math.round((internationalCount / total) * 100) : 0;
-      const hIndex = 25; 
 
       const summaryBar = document.getElementById('summary-bar');
       if (summaryBar) {
-        summaryBar.innerHTML = `Summary: Total Papers: <strong>${total}</strong> / h-index: <strong>${hIndex}</strong> / International: <strong>${intRatio}%</strong>`;
+        summaryBar.innerHTML = `Summary: Total Papers: <strong>${total}</strong> / International: <strong>${intRatio}%</strong>`;
       }
     }
 
@@ -669,49 +663,31 @@
       });
     }
 
-    // 👥 完全自前の共著者ランキングロジック（重いVis.jsネットワークの代替）
-    function renderPureCollaborationList(papers) {
-      const container = document.getElementById('pure-collab-container');
-      if (!container) return;
-      container.innerHTML = '';
+    function filterByTopic(topic) {
+      const btns = document.querySelectorAll('.filter-tags .tag-btn');
+      btns.forEach(btn => btn.classList.remove('active'));
+      if (event && event.target) event.target.classList.add('active');
 
-      const authorCounts = {};
-      const ignoreAuthors = ["daisuke tsugama", "tsugama d", "津釜 大侑", "津釜大侑"];
+      let filtered = globalPapersData;
 
-      papers.forEach(p => {
-        let rawAuthors = [];
-        try {
-          const parsed = JSON.parse(p["authors.en"] || p["authors.ja"] || "[]");
-          rawAuthors = parsed.map(o => o.name.trim());
-        } catch(e) {
-          rawAuthors = (p["authors.en"] || p["authors.ja"] || "").split(',').map(n => n.trim());
-        }
-
-        rawAuthors.forEach(name => {
-          if (name && !ignoreAuthors.includes(name.toLowerCase())) {
-            authorCounts[name] = (authorCounts[name] || 0) + 1;
-          }
+      if (topic === 'machine-learning') {
+        filtered = globalPapersData.filter(p => {
+          const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
+          return text.includes('machine learning') || text.includes('llm') || text.includes('機械学習') || text.includes('deep learning');
         });
-      });
-
-      // 共著回数が多い順にソートして上位5名を取得
-      const topCollaborators = Object.entries(authorCounts)
-        .sort((a, b) => b[1] - a[1])
-        .slice(0, 5);
-
-      if (topCollaborators.length === 0) {
-        container.innerHTML = '<li style="color:#999;list-style:none;">共著者データがありません。</li>';
-        return;
+      } else if (topic === 'genomics') {
+        filtered = globalPapersData.filter(p => {
+          const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
+          return text.includes('genome') || text.includes('genomics') || text.includes('ゲノム') || text.includes('sequencing');
+        });
+      } else if (topic === 'international') {
+        filtered = globalPapersData.filter(p => checkIsInternational(p));
       }
 
-      topCollaborators.forEach(([name, count]) => {
-        const li = document.createElement('li');
-        li.className = 'pure-collab-item';
-        li.innerHTML = `<strong>${name}</strong> : 共著 <strong>${count}</strong> 回`;
-        container.appendChild(li);
-      });
+      renderPapersListOnly(filtered);
     }
 
+    
     function renderPapersListOnly(papers) {
       const papersListDiv = document.getElementById('papers-list');
       if (!papersListDiv) return;
@@ -741,30 +717,6 @@
           </li>
         `;
       });
-    }
-
-    function filterByTopic(topic) {
-      const btns = document.querySelectorAll('.filter-tags .tag-btn');
-      btns.forEach(btn => btn.classList.remove('active'));
-      if (event && event.target) event.target.classList.add('active');
-
-      let filtered = globalPapersData;
-
-      if (topic === 'machine-learning') {
-        filtered = globalPapersData.filter(p => {
-          const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
-          return text.includes('machine learning') || text.includes('llm') || text.includes('機械学習') || text.includes('deep learning');
-        });
-      } else if (topic === 'genomics') {
-        filtered = globalPapersData.filter(p => {
-          const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
-          return text.includes('genome') || text.includes('genomics') || text.includes('ゲノム') || text.includes('sequencing');
-        });
-      } else if (topic === 'international') {
-        filtered = globalPapersData.filter(p => checkIsInternational(p));
-      }
-
-      renderPapersListOnly(filtered);
     }
         
     window.onload = loadLabData;
