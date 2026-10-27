@@ -2,18 +2,17 @@
 <html lang="ja">
 
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <title>Tsugama Lab (LGPR)</title>
   <meta name="description" content="Daisuke Tsugama lab for genomics of plant resources" />
   <meta name="keywords" content="津釜,高野,東京大学,東大,植物,ゲノミクス,ナズナ,アスパラガス,カブ,Brassica rapa,ソバ,ダッタンソバ,チンゲンサイ,ハクサイ,作物,屈性,アスパラ,雌雄,遺伝,ゲノミクス,DNA,核,tsugama,転写因子,タンパク質,tokyo,todai,crop,arabidopsis,asparagus,buckwheat,turnip,gene,genetics,genomics,sex,flower,dioecy,nucleus,nucleus,transcription factor,protein" />
-  <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
   <meta name="viewport" content="target-densitydpi=device-dpi, width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=yes">
   <link rel="stylesheet" type="text/css" href="style.css" />
   <link rel="shortcut icon" href="Turnip.ico">
   
-  <!-- 📊 ダッシュボード用外部ライブラリの追加 -->
+  <!-- 📊 ダッシュボード用外部ライブラリの正しいリンクへ修正 -->
   <script src="https://jsdelivr.net"></script>
-  <script src="https://unpkg.com"></script>
+  <script src="https://cloudflare.com"></script>
 
   <!-- スタイルの微調整（ダッシュボード用レイアウト） -->
   <style>
@@ -77,6 +76,9 @@
       background-color: #ffffff;
       border: 1px solid #eee;
     }
+    /* メニュー切替用のスタイル調整 */
+    .menu a { cursor: pointer; text-decoration: none; }
+    .menu a.current li { font-weight: bold; background-color: #eef7ee; }
   </style>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -111,8 +113,8 @@
      <!-- 1. Our Lab セクション -->
      <div id="top" class="detail">
         <p class="language_sel">
-        <span id="English1" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="document.getElementById('Japanese1').style.color='#888888'; document.getElementById('Japanese1').style.border='solid 1px #888888'; document.getElementById('intro_en').style.display='inline'; document.getElementById('mm_en').style.display='inline'; document.getElementById('contact_en').style.display='inline'; document.getElementById('intro_ja').style.display='none'; document.getElementById('mm_ja').style.display='none'; document.getElementById('contact_ja').style.display='none'; style.color='#0000ff'; style.border='solid 2px #0000ff';">English</span>
-        <span id="Japanese1" class="language" onclick="document.getElementById('English1').style.color='#888888'; document.getElementById('English1').style.border='solid 1px #888888'; document.getElementById('intro_en').style.display='none'; document.getElementById('mm_en').style.display='none'; document.getElementById('contact_en').style.display='none'; document.getElementById('intro_ja').style.display='inline'; document.getElementById('mm_ja').style.display='inline'; document.getElementById('contact_ja').style.display='inline'; style.color='#0000ff'; style.border='solid 2px #0000ff';">Japanese</span>
+        <span id="English1" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="document.getElementById('Japanese1').style.color='#888888'; document.getElementById('Japanese1').style.border='solid 1px #888888'; document.getElementById('intro_en').style.display='inline'; document.getElementById('mm_en').style.display='inline'; document.getElementById('contact_en').style.display='inline'; document.getElementById('intro_ja').style.display='none'; document.getElementById('mm_ja').style.display='none'; document.getElementById('contact_ja').style.display='none'; this.style.color='#0000ff'; this.style.border='solid 2px #0000ff';">English</span>
+        <span id="Japanese1" class="language" onclick="document.getElementById('English1').style.color='#888888'; document.getElementById('English1').style.border='solid 1px #888888'; document.getElementById('intro_en').style.display='none'; document.getElementById('mm_en').style.display='none'; document.getElementById('contact_en').style.display='none'; document.getElementById('intro_ja').style.display='inline'; document.getElementById('mm_ja').style.display='inline'; document.getElementById('contact_ja').style.display='inline'; this.style.color='#0000ff'; this.style.border='solid 2px #0000ff';">Japanese</span>
         </p>
 
         <div class="subhead"><p><span>Introduction</span></p></div>
@@ -121,32 +123,32 @@
            <p><span>Our laboratory aims to elucidate growth traits, especially stress tolerances, of various plant species, to identify genes relevant to those traits, and to find and/or generate right plants in right places.</span></p>
            <div style="float:left; margin:10px 20px 10px 15px;">
               <video controls width="400px" poster="Takano_Tsugama_video_intro_2020_En.jpg"><source src="Takano_Tsugama_video_intro_2020_En.mp4"></video>
-              <p style="line-height:120%"><span>Lab introduction with <a href="http://u-tokyo.ac.jp">Tetsuo Takano Lab</a></span><span class="extra", style="font-size: 88%;"><br>(Japanese version may be more helpful to Chinese students)</span></p>
+              <p style="line-height:120%"><span>Lab introduction with <a href="http://u-tokyo.ac.jp">Tetsuo Takano Lab</a></span><span class="extra" style="font-size: 88%;"><br>(Japanese version may be more helpful to Chinese students)</span></p>
            </div>
            <div style="padding:10px 0 10px 0;">
               <video controls width="400px" poster="Takano_Tsugama_video_intro_2020_Ja.jpg"><source src="Takano_Tsugama_video_intro_2020_Ja.mp4"></video>
-              <p style="line-height:120%;"><span><span class="extra" style="font-size:100%;">&nbsp;&nbsp;</span>Japanese version 日本語版</span></p>
+              <p style="line-height:120%;"><span>Japanese version 日本語版</span></p>
            </div>
         </div>
 
-        <div id="intro_ja" class="texts">
+        <div id="intro_ja" class="texts" style="display:none;">
            <p><span>人口増加と環境破壊は世界規模で急速に進んでいます。植生を回復させると共に、労力と資源の要求量の少ない持続可能な生産体系を構築することは重要です。これを実現させるには、植物を上手に使うことが必要です。植物は観賞用としても味・香りの源としても私達の生活に欠かせないものです。</span></p>
            <p><span>私たちの研究室では、植物の種々の特徴、特にストレス耐性、を明らかにし、それらに関わる遺伝子を特定し、適材適所な植物の開発・利用を進めることを目指しています。</span></p>
            <div style="float:left; margin:10px 20px 10px 15px;">
               <video controls width="400px" poster="Takano_Tsugama_video_intro_2020_En.jpg"><source src="Takano_Tsugama_video_intro_2020_En.mp4"></video>
-              <p style="line-height:120%"><span>Lab introduction with <a href="http://u-tokyo.ac.jp">Tetsuo Takano Lab</a></span><span class="extra", style="font-size: 88%;"><br>(Japanese version may be more helpful to Chinese students)</span></p>
+              <p style="line-height:120%"><span>Lab introduction with <a href="http://u-tokyo.ac.jp">Tetsuo Takano Lab</a></span><span class="extra" style="font-size: 88%;"><br>(Japanese version may be more helpful to Chinese students)</span></p>
            </div>
            <div style="padding:10px 0 10px 0;">
               <video controls width="400px" poster="Takano_Tsugama_video_intro_2020_Ja.jpg"><source src="Takano_Tsugama_video_intro_2020_Ja.mp4"></video>
-              <p style="line-height:120%;"><span><span class="extra" style="font-size:100%;">&nbsp;&nbsp;</span>Japanese version 日本語版</span></p>
+              <p style="line-height:120%;"><span>Japanese version 日本語版</span></p>
            </div>
         </div>
 
         <p class="pagetop"><a href="#title">Page Top</a></p>
         <p class="showhide">
-           <span id="intro_show" onclick="document.getElementById('intro_en').style.display='inline'; document.getElementById('intro_ja').style.display='none'; document.getElementById('intro_hide').style.display='inline'; style.display='none'; document.getElementById('intro_miru').style.display='none';">Show</span>
-           <span id="intro_miru" onclick="document.getElementById('intro_en').style.display='none'; document.getElementById('intro_ja').style.display='inline'; document.getElementById('intro_hide').style.display='inline'; style.display='none'; document.getElementById('intro_show').style.display='none';">見る</span>
-           <span id="intro_hide" onclick="document.getElementById('intro_en').style.display='none'; document.getElementById('intro_ja').style.display='none'; document.getElementById('intro_show').style.display='inline'; document.getElementById('intro_miru').style.display='inline'; style.display='none';">Hide / 隠す</span>
+           <span id="intro_show" onclick="document.getElementById('intro_en').style.display='inline'; document.getElementById('intro_ja').style.display='none'; document.getElementById('intro_hide').style.display='inline'; this.style.display='none'; document.getElementById('intro_miru').style.display='none';">Show</span>
+           <span id="intro_miru" onclick="document.getElementById('intro_en').style.display='none'; document.getElementById('intro_ja').style.display='inline'; document.getElementById('intro_hide').style.display='inline'; this.style.display='none'; document.getElementById('intro_show').style.display='none';">見る</span>
+           <span id="intro_hide" onclick="document.getElementById('intro_en').style.display='none'; document.getElementById('intro_ja').style.display='none'; document.getElementById('intro_show').style.display='inline'; document.getElementById('intro_miru').style.display='inline'; this.style.display='none';">Hide / 隠す</span>
         </p>
            
         <div class="subhead" style="clear:left;"><p><span>Research Approach</span></p></div>
@@ -158,16 +160,16 @@
            <p><span>Our research is based on plant genomics and molecular biology. These include gene cloning, protein analysis, genome sequencing, genetic analysis, analysis of transgenic and genome-edited plants, etc. For these, we also grow plants in our field and evaluate their traits.</span></p>
         </div>
 
-        <div id="mm_ja" class="texts">
+         <div id="mm_ja" class="texts" style="display:none;">
           <p><span>ゲノム編集による多様な生物資源の迅速な創出に資するようなシステム・ツールの開発にドライ・ウェットの両面から取り組んでいます。植物分子生物学が元々の専門であり、実験により遺伝子の効果を検証することを重視しています。このため、ドライ解析においては、「実験につながるシーズを発見すること」と、「実験に係る作業仮説を精緻化すること」を重視しています。（しばしば公共の）ビッグデータとLLMを積極利用し、システム生物学的・合成生物学的なアプローチを採ることが増えました。オープンサイエンスも重視しています。</span></p>
           <p><span>トウジンビエ、アスパラガス、シロイヌナズナ、<i>Brassica rapa</i>など、様々な植物種を材料として研究を行っています（Topics参照）。材料は自らの興味に基づいて選定していただいて（基本的には）大丈夫です。</span></p>
         </div>
 
         <p class="pagetop"><a href="#title">Page Top</a></p>
         <p class="showhide">
-           <span id="mm_show" onclick="document.getElementById('mm_en').style.display='inline'; document.getElementById('mm_ja').style.display='none'; document.getElementById('mm_hide').style.display='inline'; style.display='none'; document.getElementById('mm_miru').style.display='none';">Show</span>
-           <span id="mm_miru" onclick="document.getElementById('mm_en').style.display='none'; document.getElementById('mm_ja').style.display='inline'; document.getElementById('mm_hide').style.display='inline'; style.display='none'; document.getElementById('mm_show').style.display='none';">見る</span>
-           <span id="mm_hide" onclick="document.getElementById('mm_en').style.display='none'; document.getElementById('mm_ja').style.display='none'; document.getElementById('mm_show').style.display='inline'; document.getElementById('mm_miru').style.display='inline'; style.display='none';">Hide / 隠す</span>
+           <span id="mm_show" onclick="document.getElementById('mm_en').style.display='inline'; document.getElementById('mm_ja').style.display='none'; document.getElementById('mm_hide').style.display='inline'; this.style.display='none'; document.getElementById('mm_miru').style.display='none';">Show</span>
+           <span id="mm_miru" onclick="document.getElementById('mm_en').style.display='none'; document.getElementById('mm_ja').style.display='inline'; document.getElementById('mm_hide').style.display='inline'; this.style.display='none'; document.getElementById('mm_show').style.display='none';">見る</span>
+           <span id="mm_hide" onclick="document.getElementById('mm_en').style.display='none'; document.getElementById('mm_ja').style.display='none'; document.getElementById('mm_show').style.display='inline'; document.getElementById('mm_miru').style.display='inline'; this.style.display='none';">Hide / 隠す</span>
         </p>
 
         <div class="subhead" style="clear:right;"><p><span>Contact Information</span></p></div>
@@ -179,110 +181,101 @@
            <p style="margin-bottom:3px;"><span>E-mail: tsugama[-at-]g.ecc.u-tokyo.ac.jp<span class="hidden"><br></span> (replace [-at-] with @)</span></p>
            <p style="margin-bottom:3px;"><span>Tel: +81-80 7373 5307</span></p>
            <p style="margin-bottom:3px;"><span>Address: 1-1-1 Midori-cho, Nishi-tokyo-shi, Tokyo 188-0002, Japan (in the university research farm)</span></p>
-           <iframe class="gmap" src="https://google.com" width="600" height="450" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
         </div>
 
-        <div id="contact_ja" class="texts">
+        <div id="contact_ja" class="texts" style="display:none;">
            <p><span>私たちの研究室は東京大学アジア生物資源環境研究センターの研究室の一つであり、東京大学大学農学部 応用生物学専修と同大学院農学生命科学研究科 生産・環境生物学専攻の協力講座の一つです。</span></p>
            <p><span>農業生物学専修と国際開発農学専修の学生さんは、卒論研究実施先として当研究室を選択することができます。生産・環境生物学の修士・博士課程に進学・入学を希望される方も、希望配属先として当研究室を選択することができます。ポスドクや研究員の方は、奨学金や助成金をお持ちでなければ受け入れられませんが、それらに応募するお手伝いは可能です（要相談）。何かあればお気軽にご連絡ください。</span></p>
            <p style="margin-bottom:3px;"><span>連絡先: 津釜 大侑</span></p>
            <p style="margin-bottom:3px;"><span>E-mail: tsugama[-at-]g.ecc.u-tokyo.ac.jp<span class="hidden"><br></span> ([-at-] を @ で置き換えてください)</span></p>
            <p style="margin-bottom:3px;"><span>Tel: 080-7373-5307</span></p>
            <p style="margin-bottom:3px;"><span>Address: 〒188-0002 東京都西東京市緑町1-1-1 東京大学生態調和農学機構内 (旧東大農場内)</span></p>
-           <iframe class="gmap" src="https://google.com" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
         </div>
 
         <p class="pagetop"><a href="#title">Page Top</a></p>
-    </div>
+     </div>
        
-    <!-- ② Topics セクション -->
-    <div id="topics" class="detail" style="display:none;">
-      <div class="subhead"><p><span><b>Research Topics</b> / <b>研究テーマ</b></span></p></div>
-      <div class="texts" id="topics-content"></div>
-    </div>
+     <div id="topics" class="detail" style="display:none;">
+       <div class="subhead"><p><span><b>Research Topics</b> / <b>研究テーマ</b></span></p></div>
+       <div class="texts" id="topics-content">現在コンテンツを準備中、またはデータから自動読み込みされます。</div>
+     </div>
 
-    <!-- ③ People セクション -->
-    <div id="people" class="detail" style="display:none;">
-      <div class="subhead"><p><span><b>Members</b></span></p></div>
-      <div id="current-members"></div>
-      <div id="collaborators-container" style="clear:both; display:none;">
-        <div class="subhead" style="clear:right;"><p><span><b>Collaborators</b></span></p></div>
-        <div id="collaborators-list"></div>
-      </div>
-      <div id="alumni-container" style="clear:both; display:none;">
-        <div class="subhead" style="clear:right;"><p><span><b>Alumni</b></span></p></div>
-        <div id="alumni-list"></div>
-      </div>
-    </div>
+     <div id="people" class="detail" style="display:none;">
+       <div class="subhead"><p><span><b>Members</b></span></p></div>
+       <div id="current-members"></div>
+       <div id="collaborators-container" style="clear:both; display:none;">
+         <div class="subhead" style="clear:right;"><p><span><b>Collaborators</b></span></p></div>
+         <div id="collaborators-list"></div>
+       </div>
+       <div id="alumni-container" style="clear:both; display:none;">
+         <div class="subhead" style="clear:right;"><p><span><b>Alumni</b></span></p></div>
+         <div id="alumni-list"></div>
+       </div>
+     </div>
 
-    <!-- ④ Papers セクション -->
-    <div id="papers" class="detail" style="display:none;">
-      <div class="subhead"><p><span><b>Papers & Research Output</b></span></p></div>
-      <p><span id="last-update">Last update: 書込中...</span></p>
-      
-      <div class="texts">
-        <h3 style="margin-bottom:10px;">▼ Research Dashboard (Quick Overview)</h3>
-        
-        <div class="dashboard-container">
-          <div class="dashboard-card">
-             <h3>[ 共同研究ネットワーク ]</h3>
-             <p style="font-size:0.85rem; color:#666; margin-bottom:5px;">あなたを除いた共著者同士の繋がり（物理演算は最初だけ）</p>
-             <div id="network-container"></div>
-          </div>
-          <div class="dashboard-card">
-             <h3>[ 年次論文数グラフ ]</h3>
-             <canvas id="yearsChart" style="max-height:250px;"></canvas>
-          </div>
-        </div>
+     <div id="papers" class="detail" style="display:none;">
+       <div class="subhead"><p><span><b>Papers & Research Output</b></span></p></div>
+       <p><span id="last-update">Last update: 書込中...</span></p>
+       
+       <div class="texts">
+         <h3 style="margin-bottom:10px;">▼ Research Dashboard (Quick Overview)</h3>
+         
+         <div class="dashboard-container">
+           <div class="dashboard-card">
+              <h3>[ 共同研究ネットワーク ]</h3>
+              <p style="font-size:0.85rem; color:#666; margin-bottom:5px;">共著者同士の繋がり</p>
+              <div id="network-container"></div>
+           </div>
+           <div class="dashboard-card">
+              <h3>[ 年次論文数グラフ ]</h3>
+              <canvas id="yearsChart" style="max-height:250px;"></canvas>
+           </div>
+         </div>
 
-        <div id="summary-bar" class="summary-bar">
-          Summary: Total Papers: -- / h-index: 25 / International: --%
-        </div>
+         <div id="summary-bar" class="summary-bar">
+           Summary: Total Papers: -- / h-index: 25 / International: --%
+         </div>
 
-        <div class="filter-tags">
-          <strong>Filter by Topic:</strong>
-          <button class="tag-btn active" onclick="filterByTopic('all')">#全て</button>
-          <button class="tag-btn" onclick="filterByTopic('machine-learning')">#機械学習 / LLM</button>
-          <button class="tag-btn" onclick="filterByTopic('genomics')">#ゲノミクス</button>
-          <button class="tag-btn" onclick="filterByTopic('international')">#国際共同研究</button>
-        </div>
+         <div class="filter-tags">
+           <strong>Filter by Topic:</strong>
+           <button class="tag-btn active" onclick="filterByTopic('all')">#全て</button>
+           <button class="tag-btn" onclick="filterByTopic('machine-learning')">#機械学習 / LLM</button>
+           <button class="tag-btn" onclick="filterByTopic('genomics')">#ゲノミクス</button>
+           <button class="tag-btn" onclick="filterByTopic('international')">#国際共同研究</button>
+         </div>
 
-        <input type="text" id="paper-search" class="search-box" placeholder="キーワードを入力して論文を検索（タイトル・著者・要旨対象）...">
-
-        <h3>▼ Full Publication List (Latest First)</h3>
-        <ol id="papers-list"></ol>
-      </div>
-    </div>
+         <h3>▼ Full Publication List (Latest First)</h3>
+         <ol id="papers-list"></ol>
+       </div>
+     </div>
     
-    <!-- ⑤ Honors セクション -->
-    <div id="honors" class="detail" style="display:none;">
-      <div class="subhead"><p><span><b>Honors & Achievements</b> / <b>外部資金・受賞</b></span></p></div>
-      <div class="texts">
-        <div id="honors-grants-container" style="margin-bottom: 30px;">
-          <h3 style="border-left: 5px solid #4CAF50; padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Grants & Funding / 外部資金・助成金</h3>
-          <ul id="honors-grants-list" style="line-height: 1.6; padding-left: 20px; margin-left: 10px;"></ul>
-        </div>
-        <div id="honors-awards-container">
-          <h3 style="border-left: 5px solid #2196F3; padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Awards & Recognition / 受賞歴</h3>
-          <ul id="honors-awards-list" style="line-height: 1.6; padding-left: 20px; margin-left: 10px;"></ul>
-        </div>
-      </div>
-    </div>
+     <div id="honors" class="detail" style="display:none;">
+       <div class="subhead"><p><span><b>Honors & Achievements</b> / <b>外部資金・受賞</b></span></p></div>
+       <div class="texts">
+         <div id="honors-grants-container" style="margin-bottom: 30px;">
+           <h3 style="border-left: 5px solid #4CAF50; padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Grants & Funding / 外部資金・助成金</h3>
+           <ul id="honors-grants-list" style="line-height: 1.6; padding-left: 20px; margin-left: 10px;"></ul>
+         </div>
+         <div id="honors-awards-container">
+           <h3 style="border-left: 5px solid #2196F3; padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Awards & Recognition / 受賞歴</h3>
+           <ul id="honors-awards-list" style="line-height: 1.6; padding-left: 20px; margin-left: 10px;"></ul>
+         </div>
+       </div>
+     </div>
     
-    <!-- ⑥ Links セクション -->
-    <div id="links" class="detail" style="display:none;">
-      <div class="subhead"><p><span><b>Links</b></span></p></div>
-      <div class="texts">
-        <div id="links-tools-container" style="display:none; margin-bottom: 30px;">
-          <h3 style="border-left: 5px solid #4CAF50; padding: 20px 0 20px 10px; color: #333;">Web Tools & Databases / データベース・ツール</h3>
-          <ul id="links-tools-list" class="link" style="line-height: 1.6;"></ul>
-        </div>
-        <div id="links-affiliations-container" style="display:none;">
-          <h3 style="border-left: 5px solid #2196F3; padding: 20px 0 20px 10px; color: #333;">Affiliations / 所属・関連機関</h3>
-          <ul id="links-affiliations-list" class="link" style="line-height: 1.6;"></ul>
-        </div>
-      </div>
-    </div>
+     <div id="links" class="detail" style="display:none;">
+       <div class="subhead"><p><span><b>Links</b></span></p></div>
+       <div class="texts">
+         <div id="links-tools-container" style="display:none; margin-bottom: 30px;">
+           <h3 style="border-left: 5px solid #4CAF50; padding: 10px 0 10px 10px; color: #333;">Web Tools & Databases / データベース・ツール</h3>
+           <ul id="links-tools-list" class="link" style="line-height: 1.6;"></ul>
+         </div>
+         <div id="links-affiliations-container" style="display:none;">
+           <h3 style="border-left: 5px solid #2196F3; padding: 10px 0 10px 10px; color: #333;">Affiliations / 所属・関連機関</h3>
+           <ul id="links-affiliations-list" class="link" style="line-height: 1.6;"></ul>
+         </div>
+       </div>
+     </div>
 
   </div>
 
@@ -291,29 +284,14 @@
     let globalPapersData = [];
     let currentChart = null;
     let currentNetwork = null;
-
-    // 🌍 国際共著者の定義オブジェクト（名前の表記揺れに対応できるようにすべて小文字で定義）
-    // 共著者名: 適用開始年（この年以降の論文であれば国際共著と判定）
-    const internationalCollaborators = {
-      "john smith": 2020,
-      "li wei": 2021,
-      "anna dupont": 2018,
-      "tetsuo takano": 2000 // 必要に応じて実際の海外共同研究者の名前に書き換えてください
-    };
-
-    // グローバルデータ保持用
-    let globalPapersData = [];
-    let currentChart = null;
-    let currentNetwork = null;
     let isPapersDashboardRendered = false; // 重複描画と初期読み込み遅延のためのフラグ
 
-    // 🌍 国際共著者の定義オブジェクト（名前の表記揺れに対応できるようにすべて小文字で定義）
-    // 共著者名: 適用開始年（この年以降の論文であれば国際共著と判定）
+    // 🌍 国際共著者の定義オブジェクト
     const internationalCollaborators = {
       "john smith": 2020,
       "li wei": 2021,
       "anna dupont": 2018,
-      "tetsuo takano": 2000 // 必要に応じて実際の海外共同研究者の名前に書き換えてください
+      "tetsuo takano": 2000
     };
 
     function switchPage(pageId) {
@@ -329,7 +307,7 @@
       const activeLink = document.querySelector(`.menu a[href="#${pageId}"]`);
       if (activeLink) activeLink.classList.add('current');
 
-      // ✨ 【爆速化の核心】Papersタブが初めてクリックされた時に初めてダッシュボードを描画する
+      // ✨ Papersタブが初めてクリックされた時に初めてダッシュボードを描画（ロード高速化）
       if (pageId === 'papers') {
         if (!isPapersDashboardRendered && globalPapersData.length > 0) {
           renderPapersDashboard(globalPapersData);
@@ -376,98 +354,102 @@
         const colListDiv = document.getElementById('collaborators-list');
         const almListDiv = document.getElementById('alumni-list');
     
-        currentDiv.innerHTML = '';
-        colListDiv.innerHTML = '';
-        almListDiv.innerHTML = '';
+        if (currentDiv) currentDiv.innerHTML = '';
+        if (colListDiv) colListDiv.innerHTML = '';
+        if (almListDiv) almListDiv.innerHTML = '';
     
         let hasCol = false;
         let hasAlm = false;
 
-        currentDiv.className = "member-container";
-        colListDiv.className = "sub-member-grid";
-        almListDiv.className = "sub-member-grid";
+        if (currentDiv) currentDiv.className = "member-container";
+        if (colListDiv) colListDiv.className = "sub-member-grid";
+        if (almListDiv) almListDiv.className = "sub-member-grid";
     
-        data.members.forEach(m => {
-          if (m.lab !== 'LGPR') return;
-          const isAlumni = m.grade && m.grade.match(/Alumni/i);
-          const isCollaborator = m.grade && m.grade.match(/Collaborator/i);
-    
-          let introListHtml = '';
-          if (m.intro1) {
-            const lines = m.intro1.split('\n').filter(l => l.trim() !== '');
-            introListHtml = `<div class="member-intro-list">` + lines.map(line => `<p class="member-intro-item">${line}</p>`).join('') + `</div>`;
-          }
+        if (data.members) {
+          data.members.forEach(m => {
+            if (m.lab !== 'LGPR') return;
+            const isAlumni = m.grade && m.grade.match(/Alumni/i);
+            const isCollaborator = m.grade && m.grade.match(/Collaborator/i);
+      
+            let introListHtml = '';
+            if (m.intro1) {
+              const lines = m.intro1.split('\n').filter(l => l.trim() !== '');
+              introListHtml = `<div class="member-intro-list">` + lines.map(line => `<p class="member-intro-item">${line}</p>`).join('') + `</div>`;
+            }
 
-          let timelineHtml = '';
-          if (m.intro2 && m.intro2.trim() !== '') {
-            const rows = m.intro2.split('\n').filter(l => l.includes('--'));
-            if (rows.length > 0) {
-              timelineHtml = `<div class="timeline">` + rows.map(row => {
-                const [year, desc] = row.split('--');
-                return `<div class="timeline-row"><div class="timeline-year">${year.trim()}</div><div class="timeline-desc">${desc.trim()}</div></div>`;
-              }).join('') + `</div>`;
-            }
-          }
-    
-          let mediaHtml = '<div class="member-media">';
-          if (!isAlumni) {
-            if (m.pic2) {
-              mediaHtml += `<div class="portrait-container">`;
-              if (m.pic3 && m.pic3.trim() !== '' && m.pic3.match(/\w/)) {
-                mediaHtml += `<img src="${m.pic3}" alt="${m.name_en}" class="hover-pic">`;
+            let timelineHtml = '';
+            if (m.intro2 && m.intro2.trim() !== '') {
+              const rows = m.intro2.split('\n').filter(l => l.includes('--'));
+              if (rows.length > 0) {
+                timelineHtml = `<div class="timeline">` + rows.map(row => {
+                  const [year, desc] = row.split('--');
+                  return `<div class="timeline-row"><div class="timeline-year">${year.trim()}</div><div class="timeline-desc">${desc.trim()}</div></div>`;
+                }).join('') + `</div>`;
               }
-              mediaHtml += `<img src="${m.pic2}" alt="${m.name_en}" class="main-pic">`;
-              mediaHtml += `</div>`;
             }
-          }
-          if (m.pic1) mediaHtml += `<img src="${m.pic1}" class="nationalflag" alt="flag">`;
-          mediaHtml += '</div>';
-    
-          if (!isAlumni && !isCollaborator) {
-            currentDiv.innerHTML += `
-              <div class="member-card">
-                ${mediaHtml}
-                <div class="member-info">
-                  <div class="member-header">
-                    <span class="member-name-en">${m.name_en}</span>
-                    <span class="member-title-en">${m.title_en || ''}</span>
-                    <br>
-                    <span class="member-name-ja">${m.name_ja || ''}</span>
-                    <span class="member-title-ja">${m.title_ja || ''}</span>
+      
+            let mediaHtml = '<div class="member-media">';
+            if (!isAlumni) {
+              if (m.pic2) {
+                mediaHtml += `<div class="portrait-container">`;
+                if (m.pic3 && m.pic3.trim() !== '' && m.pic3.match(/\w/)) {
+                  mediaHtml += `<img src="${m.pic3}" alt="${m.name_en}" class="hover-pic">`;
+                }
+                mediaHtml += `<img src="${m.pic2}" alt="${m.name_en}" class="main-pic">`;
+                mediaHtml += `</div>`;
+              }
+            }
+            if (m.pic1) mediaHtml += `<img src="${m.pic1}" class="nationalflag" alt="flag">`;
+            mediaHtml += '</div>';
+      
+            if (!isAlumni && !isCollaborator && currentDiv) {
+              currentDiv.innerHTML += `
+                <div class="member-card">
+                  ${mediaHtml}
+                  <div class="member-info">
+                    <div class="member-header">
+                      <span class="member-name-en">${m.name_en}</span>
+                      <span class="member-title-en">${m.title_en || ''}</span>
+                      <br>
+                      <span class="member-name-ja">${m.name_ja || ''}</span>
+                      <span class="member-title-ja">${m.title_ja || ''}</span>
+                    </div>
+                    ${introListHtml}
+                    ${timelineHtml}
                   </div>
-                  ${introListHtml}
-                  ${timelineHtml}
                 </div>
-              </div>
-            `;
-          } else if (m.name_en !== 'Daisuke Tsugama' && isCollaborator) {
-            hasCol = true;
-            colListDiv.innerHTML += `<div class="sub-member-card">${mediaHtml}<div><div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div><div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div><div style="font-size:0.85rem; color:#444; line-height:1.4;">${m.title_en || ''}<br>${m.title_ja || ''}</div></div></div>`;
-          } else if (isAlumni) {
-            hasAlm = true;
-            almListDiv.innerHTML += `<div class="sub-member-card">${mediaHtml}<div><div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div><div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div><div style="font-size:0.85rem; color:#444; line-height:1.4;">${m.title_en || ''}<br>${m.title_ja || ''}</div></div></div>`;
-          }
-        });
+              `;
+            } else if (m.name_en !== 'Daisuke Tsugama' && isCollaborator && colListDiv) {
+              hasCol = true;
+              colListDiv.innerHTML += `<div class="sub-member-card">${mediaHtml}<div><div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div><div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div><div style="font-size:0.85rem; color:#444; line-height:1.4;">${m.title_en || ''}<br>${m.title_ja || ''}</div></div></div>`;
+            } else if (isAlumni && almListDiv) {
+              hasAlm = true;
+              almListDiv.innerHTML += `<div class="sub-member-card">${mediaHtml}<div><div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div><div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div><div style="font-size:0.85rem; color:#444; line-height:1.4;">${m.title_en || ''}<br>${m.title_ja || ''}</div></div></div>`;
+            }
+          });
+        }
         
         if (hasCol && document.getElementById('collaborators-container')) document.getElementById('collaborators-container').style.display = 'block';
         if (hasAlm && document.getElementById('alumni-container')) document.getElementById('alumni-container').style.display = 'block';
 
-        // --- 📄 ④ Papers データのメモリ保持（ここではまだ重い計算・描画はしない） ---
+        // --- 📄 ④ Papers データのメモリ保持 ---
         if (data.papers && data.papers.length > 0) {
           globalPapersData = data.papers;
           
-          // 検索の入力イベントだけ先に仕込んでおく
-          document.getElementById('paper-search').addEventListener('input', function(e) {
-            const query = e.target.value.toLowerCase();
-            const filtered = globalPapersData.filter(p => {
-              const titleEn = (p["paper_title.en"] || "").toLowerCase();
-              const titleJa = (p["paper_title.ja"] || "").toLowerCase();
-              const descEn = (p["description.en"] || "").toLowerCase();
-              const authors = parseNames(p["authors.en"] || p["authors.ja"]).toLowerCase();
-              return titleEn.includes(query) || titleJa.includes(query) || descEn.includes(query) || authors.includes(query);
+          const searchInput = document.getElementById('paper-search');
+          if (searchInput) {
+            searchInput.addEventListener('input', function(e) {
+              const query = e.target.value.toLowerCase();
+              const filtered = globalPapersData.filter(p => {
+                const titleEn = (p["paper_title.en"] || "").toLowerCase();
+                const titleJa = (p["paper_title.ja"] || "").toLowerCase();
+                const descEn = (p["description.en"] || "").toLowerCase();
+                const authors = parseNames(p["authors.en"] || p["authors.ja"]).toLowerCase();
+                return titleEn.includes(query) || titleJa.includes(query) || descEn.includes(query) || authors.includes(query);
+              });
+              renderPapersListOnly(filtered);
             });
-            renderPapersListOnly(filtered);
-          });
+          }
         }
 
         // --- 🏆 ⑤ Honors の描画処理 ---
@@ -514,18 +496,18 @@
         // --- 🔗 ⑥ リンクデータの描画処理 ---
         const toolsListDiv = document.getElementById('links-tools-list');
         const affListDiv = document.getElementById('links-affiliations-list');
-        toolsListDiv.innerHTML = '';
-        affListDiv.innerHTML = '';
+        if (toolsListDiv) toolsListDiv.innerHTML = '';
+        if (affListDiv) affListDiv.innerHTML = '';
         let hasTools = false;
         let hasAffiliations = false;
         
         if (data.links && data.links.length > 0) {
           data.links.forEach(l => {
             const linkHtml = `<li style="margin-bottom: 12px;"><a href="${l.link}" target="_blank" rel="noopener" style="font-weight: bold; font-size: 1.05rem;">${l.item}</a><br><span style="font-size: 0.9rem; color: #555; margin-left: 5px;">${l.description || ''}</span></li>`;
-            if (l.category === "Web Tools & Databases") {
+            if (l.category === "Web Tools & Databases" && toolsListDiv) {
               hasTools = true;
               toolsListDiv.innerHTML += linkHtml;
-            } else if (l.category === "Affiliations") {
+            } else if (l.category === "Affiliations" && affListDiv) {
               hasAffiliations = true;
               affListDiv.innerHTML += linkHtml;
             }
@@ -584,8 +566,10 @@
       const intRatio = total > 0 ? Math.round((internationalCount / total) * 100) : 0;
       const hIndex = 25; 
 
-      document.getElementById('summary-bar').innerHTML = 
-        `Summary: Total Papers: <strong>${total}</strong> / h-index: <strong>${hIndex}</strong> / International: <strong>${intRatio}%</strong>`;
+      const summaryBar = document.getElementById('summary-bar');
+      if (summaryBar) {
+        summaryBar.innerHTML = `Summary: Total Papers: <strong>${total}</strong> / h-index: <strong>${hIndex}</strong> / International: <strong>${intRatio}%</strong>`;
+      }
     }
 
     function renderYearsChart(papers) {
@@ -601,7 +585,9 @@
       const sortedYears = Object.keys(countsByYear).sort();
       const chartData = sortedYears.map(y => countsByYear[y]);
 
-      const ctx = document.getElementById('yearsChart').getContext('2d');
+      const chartCanvas = document.getElementById('yearsChart');
+      if (!chartCanvas) return;
+      const ctx = chartCanvas.getContext('2d');
       if (currentChart) currentChart.destroy();
 
       currentChart = new Chart(ctx, {
@@ -656,14 +642,13 @@
       });
 
       const container = document.getElementById('network-container');
+      if (!container) return;
       const networkData = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
       
       const options = {
         nodes: { font: { size: 11 } },
         edges: { color: { inherit: 'from' }, smooth: { type: 'continuous' } },
-        physics: {
-          enabled: false // 初期フリーズ防止のため物理演算エンジンをカット
-        }
+        physics: { enabled: false }
       };
 
       if(currentNetwork) currentNetwork.destroy();
@@ -704,7 +689,7 @@
     function filterByTopic(topic) {
       const btns = document.querySelectorAll('.filter-tags .tag-btn');
       btns.forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
+      if (event && event.target) event.target.classList.add('active');
 
       let filtered = globalPapersData;
 
