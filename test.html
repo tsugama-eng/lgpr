@@ -294,6 +294,7 @@
       "tetsuo takano": 2000
     };
 
+    // ページ（タブ）切り替え関数
     function switchPage(pageId) {
       const pages = document.querySelectorAll('.detail');
       pages.forEach(page => page.style.display = 'none');
@@ -341,6 +342,7 @@
     }
 
     async function loadLabData() {
+
       try {
         const response = await fetch("data/content.json");
         const data = await response.json();
