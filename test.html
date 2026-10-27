@@ -542,25 +542,41 @@
           }
         }
 
-        // --- 🏆 ⑤ Honors の描画処理 ---
+        // --- 🏆 ⑤ Honors の描画処理（日英併記対応版） ---
         const grantsListDiv = document.getElementById('honors-grants-list');
         const awardsListDiv = document.getElementById('honors-awards-list');
         
         if (grantsListDiv && data.honors && data.honors.grants && data.honors.grants.length > 0) {
           grantsListDiv.innerHTML = '';
           data.honors.grants.forEach(g => {
-            const title = g["research_project_title.ja"] || g["research_project_title.en"] || "";
-            const system = g["system_name.ja"] || g["system_name.en"] || "";
-            const category = g["category.ja"] || g["category.en"] || "";
+            // 制度名・種目
+            const systemJa = g["system_name.ja"] || "";
+            const systemEn = g["system_name.en"] || "";
+            const system = systemJa && systemEn && systemJa !== systemEn ? `${systemJa} (${systemEn})` : (systemJa || systemEn);
+            
+            const catJa = g["category.ja"] || "";
+            const catEn = g["category.en"] || "";
+            const category = catJa && catEn && catJa !== catEn ? `${catJa} (${catEn})` : (catJa || catEn);
+
+            // 研究課題名
+            const titleJa = g["research_project_title.ja"] || "";
+            const titleEn = g["research_project_title.en"] || "";
+            const title = titleJa && titleEn && titleJa !== titleEn ? `${titleJa} / ${titleEn}` : (titleJa || titleEn);
+
+            // 期間・組織
             const fromYear = g["from_date"] ? g["from_date"].substring(0, 4) : "";
             const toYear = g["to_date"] ? g["to_date"].substring(0, 4) : "";
             const period = fromYear && toYear ? `${fromYear}-${toYear}` : fromYear;
-            const pi = parseNames(g["investigators.ja"] || g["investigators.en"]);
+            
+            const piJa = parseNames(g["investigators.ja"]);
+            const piEn = parseNames(g["investigators.en"] || g["investigators.ja"]); 
+            const pi = piJa && piEn && piJa !== piEn ? `${piJa} (${piEn})` : (piJa || piEn);
 
             grantsListDiv.innerHTML += `
-              <li style="margin-bottom: 12px; font-size: 1.05rem;">
-                <strong>${system} ${category}</strong> : 「${title}」 <span style="color: #666;">(${period})</span><br>
-                <span style="font-size: 0.9rem; color: #555; margin-left: 5px;">研究組織: ${pi}</span>
+              <li style="margin-bottom: 15px; font-size: 1.05rem; line-height: 1.5;">
+                <strong>${system} ${category}</strong><br>
+                <span style="color: #111;">「${title}」</span> <span style="color: #666; font-size: 0.95rem;">(${period})</span><br>
+                <span style="font-size: 0.9rem; color: #555; margin-left: 5px;">研究組織 (Taxonomy / Investigators): ${pi}</span>
               </li>
             `;
           });
@@ -569,15 +585,27 @@
         if (awardsListDiv && data.honors && data.honors.awards && data.honors.awards.length > 0) {
           awardsListDiv.innerHTML = '';
           data.honors.awards.forEach(a => {
-            const awardName = a["award_name.ja"] || a["award_name.en"] || "";
-            const awardTitle = a["award_title.ja"] || a["award_title.en"] || "";
-            const association = a["association.ja"] || a["association.en"] || "";
+            // 賞の名称
+            const nameJa = a["award_name.ja"] || "";
+            const nameEn = a["award_name.en"] || "";
+            const awardName = nameJa && nameEn && nameJa !== nameEn ? `${nameJa} (${nameEn})` : (nameJa || nameEn);
+
+            // 授与団体
+            const assJa = a["association.ja"] || "";
+            const assEn = a["association.en"] || "";
+            const association = assJa && assEn && assJa !== assEn ? `${assJa} (${assEn})` : (assJa || assEn);
+
+            // 対象業績
+            const titleJa = a["award_title.ja"] || "";
+            const titleEn = a["award_title.en"] || "";
+            const awardTitle = titleJa && titleEn && titleJa !== titleEn ? `${titleJa} / ${titleEn}` : (titleJa || titleEn);
+            
             const date = a["award_date"] || "";
 
             awardsListDiv.innerHTML += `
-              <li style="margin-bottom: 12px; font-size: 1.05rem;">
-                <strong>${awardName}</strong> - ${association} <span style="color: #666;">(${date})</span><br>
-                <span style="font-size: 0.95rem; color: #444; margin-left: 5px; display: inline-block; margin-top: 2px;">対象業績: 「${awardTitle}」</span>
+              <li style="margin-bottom: 15px; font-size: 1.05rem; line-height: 1.5;">
+                <strong>${awardName}</strong> - ${association} <span style="color: #666; font-size: 0.95rem;">(${date})</span><br>
+                <span style="font-size: 0.95rem; color: #444; margin-left: 5px; display: inline-block; margin-top: 2px;">対象業績 (Theme): 「${awardTitle}」</span>
               </li>
             `;
           });
