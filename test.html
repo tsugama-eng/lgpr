@@ -621,12 +621,12 @@
 
     function renderPapersDashboard(papers) {
       renderSummaryBar(papers);
-      renderPureYearsChart(papers); // 自前グラフに切り替え
-      renderPureCollaborationList(papers); // 自前コラボリストに切り替え
+      renderPureYearsChart(papers); // 自前グラフ
+      // ※ 旧 renderPureCollaborationList は削除（HTML側の div も不要であれば消して大丈夫です）
       renderPapersListOnly(papers);
     }
 
-    // 📊 完全自前の軽量棒グラフ描画ロジック
+    // 📊 はみ出し・見切れ対策を強化した自前グラフ
     function renderPureYearsChart(papers) {
       const container = document.getElementById('pure-chart-container');
       if (!container) return;
@@ -648,8 +648,8 @@
 
       sortedYears.forEach(year => {
         const count = countsByYear[year];
-        // 最大値を100%としたとき、この年の論文数が何%の高さになるか計算
-        const barHeightPercent = maxCount > 0 ? (count / maxCount) * 140 : 0; // 最大140px
+        // グラフエリア（最大140px）に綺麗に収まるよう係数を調整
+        const barHeightPercent = maxCount > 0 ? (count / maxCount) * 130 : 0;
 
         const wrapper = document.createElement('div');
         wrapper.className = 'pure-chart-bar-wrapper';
@@ -663,30 +663,42 @@
       });
     }
 
+    // 🏷️ ご提案に基づき刷新したトピック絞り込み関数
     function filterByTopic(topic) {
       const btns = document.querySelectorAll('.filter-tags .tag-btn');
       btns.forEach(btn => btn.classList.remove('active'));
       if (event && event.target) event.target.classList.add('active');
 
-      let filtered = globalPapersData;
+      let filtered = globalData ? (globalData.papers || []) : [];
 
-      if (topic === 'machine-learning') {
-        filtered = globalPapersData.filter(p => {
+      if (topic === 'international') {
+        filtered = filtered.filter(p => checkIsInternational(p));
+      } else if (topic === 'tools') {
+        // ツール・システム開発の判定
+        filtered = filtered.filter(p => {
           const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
-          return text.includes('machine learning') || text.includes('llm') || text.includes('機械学習') || text.includes('deep learning');
+          return text.includes('tool') || text.includes('database') || text.includes('server') || 
+                 text.includes('software') || text.includes('owl') || text.includes('machine learning') || 
+                 text.includes('llm') || text.includes('system');
         });
-      } else if (topic === 'genomics') {
-        filtered = globalPapersData.filter(p => {
+      } else if (topic === 'stress') {
+        // 環境・機械的ストレスの判定
+        filtered = filtered.filter(p => {
           const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
-          return text.includes('genome') || text.includes('genomics') || text.includes('ゲノム') || text.includes('sequencing');
+          return text.includes('stress') || text.includes('mechanical') || text.includes('gravity') || 
+                 text.includes('touch') || text.includes('salt') || text.includes('drought') || text.includes('tolerance');
         });
-      } else if (topic === 'international') {
-        filtered = globalPapersData.filter(p => checkIsInternational(p));
+      } else if (topic === 'materials') {
+        // 主要材料（雑穀/ナズナ/作物）の判定
+        filtered = filtered.filter(p => {
+          const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
+          return text.includes('millet') || text.includes('arabidopsis') || text.includes('thaliana') || 
+                 text.includes('brassica') || text.includes('rapa') || text.includes('asparagus') || text.includes('buckwheat');
+        });
       }
 
       renderPapersListOnly(filtered);
     }
-
     
     function renderPapersListOnly(papers) {
       const papersListDiv = document.getElementById('papers-list');
