@@ -365,7 +365,10 @@
             const journal = p["publication_name.en"] || p["publication_name.ja"] || "";
             const volume = p["volume"] ? ` Vol. ${p["volume"]}` : "";
             const pages = p["starting_page"] ? `, pp. ${p["starting_page"]}-${p["ending_page"] || p["starting_page"]}` : "";
-            const date = p["publication_date"] ? ` (${p["publication_date"]})` : "";
+            let dateStr = p["publication_date"] || "";
+            let yearOnly = dateStr.match(/^\d{4}/) ? dateStr.substring(0, 4) : dateStr;
+            const date = yearOnly ? ` (${yearOnly})` : "";
+
             const doiHtml = formatDoi(p["identifiers.doi"]);
 
             papersListDiv.innerHTML += `
