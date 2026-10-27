@@ -250,21 +250,20 @@
      </div>
 
      <div id="papers" class="detail" style="display:none;">
-       <div class="subhead"><p><span><b>Papers & Research Output</b></span></p></div>
+       <div class="subhead"><p><span><b>Papers</b></span></p></div>
        <p><span id="last-update">Last update: 書込中...</span></p>
        
        <div class="texts">
-         <h3 style="margin-bottom:10px;">▼ Research Dashboard (Quick Overview)</h3>
          
-         <!-- 📊 グラフを横長に1枚ドカンと配置 -->
+         <!-- 📊 グラフを配置 -->
          <div class="dashboard-card" style="margin-bottom: 20px;">
-            <h3>[ 年次論文数グラフ ]</h3>
+            <h3>Publications per Year</h3>
             <div id="pure-chart-container" class="pure-chart-container"></div>
          </div>
 
-         <!-- 📈 総数・h-index・国際共著比率のサマリーバー -->
+         <!-- 📈 総数・国際共著比率のサマリーバー -->
          <div id="summary-bar" class="summary-bar">
-           Summary: Total Papers: -- / h-index: 25 / International: --%
+           Summary: Total Papers: -- / International: --
          </div>
 
          <!-- 🔍 フリーワード検索窓 -->
@@ -610,7 +609,7 @@
 
       const summaryBar = document.getElementById('summary-bar');
       if (summaryBar) {
-        summaryBar.innerHTML = `Summary: Total Papers: <strong>${total}</strong> / International: <strong>${intRatio}%</strong>`;
+        summaryBar.innerHTML = `Summary: Total Papers: <strong>${total}</strong> / International: <strong>${internationalCount} (${intRatio}%)</strong>`;
       }
     }
 
@@ -664,7 +663,7 @@
       btns.forEach(btn => btn.classList.remove('active'));
       if (event && event.target) event.target.classList.add('active');
 
-      let filtered = globalPaperData ? (globalData.papers || []) : [];
+      let filtered = globalPapersData ? (globalData.papers || []) : [];
 
       if (topic === 'international') {
         filtered = filtered.filter(p => checkIsInternational(p));
