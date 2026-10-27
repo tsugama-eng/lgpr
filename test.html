@@ -76,24 +76,26 @@
     .menu a { cursor: pointer; text-decoration: none; }
     .menu a.current li { font-weight: bold; background-color: #eef7ee; }
     /* 自前グラフ・コラボリスト用の軽量スタイル */
+    /* 横長グラフ用のスタイル微調整 */
     .pure-chart-container {
       display: flex;
       align-items: flex-end;
-      justify-content: space-between;
+      justify-content: flex-start; /* 左詰めに変更して、年数が少ない場合もデザインを維持 */
       height: 180px;
       padding-top: 20px;
-      padding-bottom: 5px; /* ラベルの見切れ防止 */
+      padding-bottom: 5px;
       border-bottom: 2px solid #ccc;
       border-left: 2px solid #ccc;
-      overflow-x: auto; /* 万が一横幅が狭まってもスクロールで対応可能に */
+      overflow-x: auto;
     }
-
     .pure-chart-bar-wrapper {
       display: flex;
       flex-direction: column;
       align-items: center;
       flex: 1;
-      margin: 0 4px;
+      min-width: 45px;  /* 画面が狭くなっても文字や棒が潰れない最低幅 */
+      max-width: 70px;  /* 横長に広がったときに棒が太くなりすぎない最高幅 */
+      margin: 0 6px;    /* 棒同士の程よい間隔 */
     }
     .pure-chart-bar {
       width: 100%;
@@ -112,16 +114,6 @@
       margin-top: 4px;
       color: #555;
       white-space: nowrap;
-    }
-    .pure-collab-list {
-      max-height: 200px;
-      overflow-y: auto;
-      padding-left: 15px;
-      margin: 0;
-      font-size: 0.9rem;
-    }
-    .pure-collab-item {
-      margin-bottom: 5px;
     }
 
   </style>
@@ -265,34 +257,32 @@
        <div class="texts">
          <h3 style="margin-bottom:10px;">▼ Research Dashboard (Quick Overview)</h3>
          
-         <div class="dashboard-container">
-           <div class="dashboard-card">
-              <h3>[ 共同研究ネットワーク ]</h3>
-              <p style="font-size:0.85rem; color:#666; margin-bottom:5px;">主な共著者と共著回数トップ5</p>
-              <ul id="pure-collab-container" class="pure-collab-list"></ul>
-           </div>
-           <div class="dashboard-card">
-              <h3>[ 年次論文数グラフ ]</h3>
-              <div id="pure-chart-container" class="pure-chart-container"></div>
-           </div>
+         <!-- 📊 グラフを横長に1枚ドカンと配置 -->
+         <div class="dashboard-card" style="margin-bottom: 20px;">
+            <h3>[ 年次論文数グラフ ]</h3>
+            <div id="pure-chart-container" class="pure-chart-container"></div>
          </div>
 
+         <!-- 📈 総数・h-index・国際共著比率のサマリーバー -->
          <div id="summary-bar" class="summary-bar">
            Summary: Total Papers: -- / h-index: 25 / International: --%
          </div>
 
-         <!-- フリーワード検索窓の追加 -->
+         <!-- 🔍 フリーワード検索窓 -->
          <div style="margin-bottom: 15px;">
            <strong>Search Papers:</strong>
            <input type="text" id="paper-search" class="search-box" style="margin-top: 5px;" placeholder="キーワードを入力して論文を検索（タイトル・著者・要旨対象）...">
          </div>
 
+         <!-- 🏷️ 刷新したハッシュタグ（トピック絞り込み） -->
          <div class="filter-tags">
            <strong>Filter by Topic:</strong>
-           <button class="tag-btn active" onclick="filterByTopic('all')">#全て</button>
-           <button class="tag-btn" onclick="filterByTopic('machine-learning')">#機械学習 / LLM</button>
-           <button class="tag-btn" onclick="filterByTopic('genomics')">#ゲノミクス</button>
-           <button class="tag-btn" onclick="filterByTopic('international')">#国際共同研究</button>
+           <button class="tag-btn active" onclick="filterByTopic('all')">#All</button>
+           <button class="tag-btn" onclick="filterByTopic('international')">#International Collaboration</button>
+           <button class="tag-btn" onclick="filterByTopic('tools')">#Tool & System Development</button>
+           <button class="tag-btn" onclick="filterByTopic('stress')">#Abiotic and Mechanical Stress</button>
+           <button class="tag-btn" onclick="filterByTopic('materials')">#Arabidopsis</button>
+           <button class="tag-btn" onclick="filterByTopic('materials')">#Crop</button>
          </div>
 
          <h3>▼ Full Publication List (Latest First)</h3>
