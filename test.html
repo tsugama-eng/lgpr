@@ -622,7 +622,19 @@
       }
     }
 
-    function renderYearsChart(papers) {
+    function renderPapersDashboard(papers) {
+      renderSummaryBar(papers);
+      renderPureYearsChart(papers); // 自前グラフに切り替え
+      renderPureCollaborationList(papers); // 自前コラボリストに切り替え
+      renderPapersListOnly(papers);
+    }
+
+    // 📊 完全自前の軽量棒グラフ描画ロジック
+    function renderPureYearsChart(papers) {
+      const container = document.getElementById('pure-chart-container');
+      if (!container) return;
+      container.innerHTML = '';
+
       const countsByYear = {};
       papers.forEach(p => {
         let dateStr = p["publication_date"] || "";
@@ -633,36 +645,34 @@
       });
 
       const sortedYears = Object.keys(countsByYear).sort();
-      const chartData = sortedYears.map(y => countsByYear[y]);
+      if (sortedYears.length === 0) return;
 
-      const chartCanvas = document.getElementById('yearsChart');
-      if (!chartCanvas) return;
-      const ctx = chartCanvas.getContext('2d');
-      if (currentChart) currentChart.destroy();
+      const maxCount = Math.max(...Object.values(countsByYear));
 
-      currentChart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: sortedYears,
-          datasets: [{
-            label: '論文数',
-            data: chartData,
-            backgroundColor: 'rgba(76, 175, 80, 0.6)',
-            borderColor: 'rgba(76, 175, 80, 1)',
-            borderWidth: 1
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          scales: { y: { beginAtZero: true, ticks: { stepSize: 1 } } }
-        }
+      sortedYears.forEach(year => {
+        const count = countsByYear[year];
+        // 最大値を100%としたとき、この年の論文数が何%の高さになるか計算
+        const barHeightPercent = maxCount > 0 ? (count / maxCount) * 140 : 0; // 最大140px
+
+        const wrapper = document.createElement('div');
+        wrapper.className = 'pure-chart-bar-wrapper';
+
+        wrapper.innerHTML = `
+          <div class="pure-chart-value">${count}</div>
+          <div class="pure-chart-bar" style="height: ${barHeightPercent}px;" title="年: ${year}, 論文数: ${count}"></div>
+          <div class="pure-chart-label">${year}</div>
+        `;
+        container.appendChild(wrapper);
       });
     }
 
-    function renderCollaborationNetwork(papers) {
-      const authorConnections = {};
-      const authorMap = new Set();
+    // 👥 完全自前の共著者ランキングロジック（重いVis.jsネットワークの代替）
+    function renderPureCollaborationList(papers) {
+      const container = document.getElementById('pure-collab-container');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const authorCounts = {};
       const ignoreAuthors = ["daisuke tsugama", "tsugama d", "津釜 大侑", "津釜大侑"];
 
       papers.forEach(p => {
@@ -674,35 +684,29 @@
           rawAuthors = (p["authors.en"] || p["authors.ja"] || "").split(',').map(n => n.trim());
         }
 
-        const filteredAuthors = rawAuthors.filter(name => name && !ignoreAuthors.includes(name.toLowerCase()));
-
-        for (let i = 0; i < filteredAuthors.length; i++) {
-          authorMap.add(filteredAuthors[i]);
-          for (let j = i + 1; j < filteredAuthors.length; j++) {
-            const key = [filteredAuthors[i], filteredAuthors[j]].sort().join('||');
-            authorConnections[key] = (authorConnections[key] || 0) + 1;
+        rawAuthors.forEach(name => {
+          if (name && !ignoreAuthors.includes(name.toLowerCase())) {
+            authorCounts[name] = (authorCounts[name] || 0) + 1;
           }
-        }
+        });
       });
 
-      const nodes = Array.from(authorMap).map(name => ({ id: name, label: name, shape: 'dot', size: 10 }));
-      const edges = Object.keys(authorConnections).map(key => {
-        const [from, to] = key.split('||');
-        return { from: from, to: to, value: authorConnections[key], title: `共著回数: ${authorConnections[key]}` };
+      // 共著回数が多い順にソートして上位5名を取得
+      const topCollaborators = Object.entries(authorCounts)
+        .sort((a, b) => b[1] - a[1])
+        .slice(0, 5);
+
+      if (topCollaborators.length === 0) {
+        container.innerHTML = '<li style="color:#999;list-style:none;">共著者データがありません。</li>';
+        return;
+      }
+
+      topCollaborators.forEach(([name, count]) => {
+        const li = document.createElement('li');
+        li.className = 'pure-collab-item';
+        li.innerHTML = `<strong>${name}</strong> : 共著 <strong>${count}</strong> 回`;
+        container.appendChild(li);
       });
-
-      const container = document.getElementById('network-container');
-      if (!container) return;
-      const networkData = { nodes: new vis.DataSet(nodes), edges: new vis.DataSet(edges) };
-      
-      const options = {
-        nodes: { font: { size: 11 } },
-        edges: { color: { inherit: 'from' }, smooth: { type: 'continuous' } },
-        physics: { enabled: false }
-      };
-
-      if(currentNetwork) currentNetwork.destroy();
-      currentNetwork = new vis.Network(container, networkData, options);
     }
 
     function renderPapersListOnly(papers) {
