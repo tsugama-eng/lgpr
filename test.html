@@ -283,7 +283,7 @@
            <button class="tag-btn" onclick="filterByTopic('crops')">#Crop</button>
          </div>
 
-         <h3>▼ Full Publication List (Latest First)</h3>
+         <h3>▼ Publication List (Latest First)</h3>
          <ol id="papers-list"></ol>
        </div>
      </div>
@@ -663,7 +663,7 @@
       btns.forEach(btn => btn.classList.remove('active'));
       if (event && event.target) event.target.classList.add('active');
 
-      let filtered = globalPapersData ? (globalData.papers || []) : [];
+      let filtered = globalPapersData ? (globalPapersData.papers || []) : [];
 
       if (topic === 'international') {
         filtered = filtered.filter(p => checkIsInternational(p));
