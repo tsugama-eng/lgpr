@@ -708,9 +708,9 @@
 
         // テキスト表示を「Total数 : Owned数(F/C)」にして意味を明確化
         wrapper.innerHTML = `
-          <div class="pure-chart-value" style="font-size: 0.65rem; color: #444; white-space: nowrap; text-align: center; line-height: 1.1;">
+          <div class="pure-chart-value" style="font-size: 0.95rem; color: #444; white-space: nowrap; text-align: center; line-height: 1.1;">
             ${item.total} : <span style="color: #FF9800; font-weight: bold;">${item.owned}</span><br>
-            <span style="color: #888; font-size: 0.55rem;">(${item.first}/${item.corresponding})</span>
+            <span style="color: #888; font-size: 0.88rem;">(${item.first}/${item.corresponding})</span>
           </div>
           <div class="pure-chart-bars-container">
             <div class="pure-chart-bar bar-total" style="height: ${totalHeight}px;" title="Total: ${item.total}"></div>
@@ -722,8 +722,7 @@
       });
     }
 
-    // 🏷️ ご提案に基づき刷新したトピック絞り込み関数
-    // 🏷️ トピック絞り込み関数の修正
+    // 🏷️ トピック絞り込み関数
     function filterByTopic(topic) {
       const btns = document.querySelectorAll('.filter-tags .tag-btn');
       btns.forEach(btn => btn.classList.remove('active'));
