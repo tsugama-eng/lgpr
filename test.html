@@ -899,8 +899,127 @@
         `;
       });
     }
+
+    // 案B: 生物種の変遷（インラインSVGによる100%積み上げ面グラフ風の簡易実装）
+    function renderSpeciesAreaChart(trendData) {
+      const container = document.getElementById('species-chart-container');
+      if (!container || !trendData || trendData.length === 0) return;
+
+      const width = 400;
+      const height = 160;
+      const paddingLeft = 30;
+      const paddingRight = 10;
+      const paddingTop = 10;
+      const paddingBottom = 20;
+
+      const chartWidth = width - paddingLeft - paddingRight;
+      const chartHeight = height - paddingTop - paddingBottom;
+
+      const speciesList = ["Arabidopsis", "Asparagus", "Buckwheat", "Millet", "Rice"];
+      // プラントイメージに合わせたカラーパレット
+      const colors = {
+        "Arabidopsis": "#4CAF50", // 緑
+        "Asparagus": "#8BC34A",   // 薄緑
+        "Buckwheat": "#9C27B0",   // ソバの花の紫イメージ
+        "Millet": "#FFC107",      // 粟・キビの黄金色
+        "Rice": "#03A9F4"         // イネ・水の青
+      };
+
+      // 各ポイントにおける各生物種の「積み上げ上限Y座標」を計算
+      const numPoints = trendData.length;
+      let svgPaths = {};
+      speciesList.forEach(sp => { svgPaths[sp] = []; });
+
+      trendData.forEach((d, idx) => {
+        const x = paddingLeft + (idx / (numPoints - 1)) * chartWidth;
+        let currentTotal = d.total || 1;
         
+        let accumulatedPercent = 0;
+        speciesList.forEach(sp => {
+          // 該当年のその生物種の論文割合（無ければ0）
+          const count = d[sp] || 0;
+          const pct = count / currentTotal;
+          accumulatedPercent += pct;
+          
+          // SVGは左上が(0,0)なので、下から積み上げる計算
+          const y = paddingTop + chartHeight - (accumulatedPercent * chartHeight);
+          svgPaths[sp].push({x: x, y: y});
+        });
+      });
+
+      // SVG文字列の組み立て
+      let svgHtml = `<svg viewBox="0 0 ${width} ${height}" style="width:100%; height:100%;">`;
+      
+      // 背景グリッドと年号ラベル
+      trendData.forEach((d, idx) => {
+        const x = paddingLeft + (idx / (numPoints - 1)) * chartWidth;
+        if (idx === 0 || idx === numPoints - 1 || d.year % 5 === 0) {
+          svgHtml += `<line x1="${x}" y1="${paddingTop}" x2="${x}" y2="${paddingTop+chartHeight}" stroke="#eee" stroke-width="1"/>`;
+          svgHtml += `<text x="${x}" y="${height-4}" font-size="9" text-anchor="middle" fill="#777">${d.year}</text>`;
+        }
+      });
+
+      // 積み上げ面（Polygon）を後ろから順に描画
+      // 100%積み上げなので、リストの逆順にポリゴンを閉じて描画すると綺麗に重なります
+      for (let i = speciesList.length - 1; i >= 0; i--) {
+        const sp = speciesList[i];
+        const points = svgPaths[sp];
+        if(!points) continue;
+
+        let pointsStr = points.map(p => `${p.x},${p.y}`).join(" ");
+        // ポリゴンを閉じる（右下から左下へ戻るパス）
+        pointsStr += ` ${points[points.length-1].x},${paddingTop+chartHeight} ${points[0].x},${paddingTop+chartHeight}`;
+
+        svgHtml += `<polygon points="${pointsStr}" fill="${colors[sp]}" opacity="0.85" title="${sp}"/>`;
+      }
+
+      // 簡易凡例（右上に配置）
+      let legendX = paddingLeft + 10;
+      speciesList.forEach((sp, i) => {
+        svgHtml += `<rect x="${legendX}" y="${paddingTop + i*11}" width="8" height="8" fill="${colors[sp]}" opacity="0.9"/>`;
+        svgHtml += `<text x="${legendX + 12}" y="${paddingTop + i*11 + 7}" font-size="8" fill="#333">${sp}</text>`;
+        if((i+1) % 3 === 0) { legendX += 70; } // 横並び調整
+      });
+
+      svgHtml += `</svg>`;
+      container.innerHTML = svgHtml;
+    }
+
+    // 案C: 時代別ワードクラウド（ピュアHTML/CSS Flexboxによる超軽量アプローチ）
+    function switchCloudEra(eraName, btnElement) {
+      // ボタンのActiveクラス切り替え
+      const btns = btnElement.parentNode.querySelectorAll('.tag-btn');
+      btns.forEach(b => b.classList.remove('active'));
+      btnElement.classList.add('active');
+
+      const container = document.getElementById('top-wordcloud-container');
+      if (!container || !window.globalTopCharts) return;
+
+      const eraData = window.globalTopCharts.wordCloud.find(e => e.period === eraName);
+      if (!eraData || eraData.keywords.length === 0) {
+        container.innerHTML = '<span style="color:#999; font-size:0.9rem;">No data for this period</span>';
+        return;
+      }
+
+      // 件数に応じたフォントサイズ調整（最小11px 〜 最大28px）
+      const counts = eraData.keywords.map(k => k.count);
+      const maxCount = Math.max(...counts) || 1;
+      const minCount = Math.min(...counts) || 0;
+
+      // ランダムに並び替えてクラウド感を出す（毎回同じにならないようにシャッフル）
+      const shuffledKeywords = [...eraData.keywords].sort(() => Math.random() - 0.5);
+
+      container.innerHTML = shuffledKeywords.map(kw => {
+        // 重み付け計算
+        const size = maxCount === minCount ? 18 : 12 + ((kw.count - minCount) / (maxCount - minCount)) * 16;
+        // エンジニアライクなカラー（青〜緑系のランダムグラデーション）
+        const randomHue = 100 + Math.floor(Math.random() * 120); // 100(緑)〜220(青)
+        return `<span style="font-size: ${size}px; color: hsl(${randomHue}, 60%, 40%); font-weight: bold; padding: 2px 4px; transition: all 0.4s ease; cursor: default;" title="出現数: ${kw.count}回">${kw.text}</span>`;
+      }).join('');
+    }
+    
     window.onload = loadLabData;
+    
   </script>
 </body>
 </html>
