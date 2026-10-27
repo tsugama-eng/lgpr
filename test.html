@@ -394,7 +394,7 @@
 
       // ② 責任著者（2016年以降、かつ最後の著者）が tsugama か
       const isLast = rawAuthors[rawAuthors.length - 1].includes("tsugama");
-      status.isCorresponding = (pubYear >= 2016 && isLast);
+      status.isCorresponding = (pubYear >= 2016 && (isLast || isFirst));
 
       // ③ 筆頭または責任のいずれか（棒グラフ用フラグ）
       status.isOwned = (status.isFirst || status.isCorresponding);
