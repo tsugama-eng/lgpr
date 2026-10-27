@@ -301,6 +301,21 @@
       "tetsuo takano": 2000 // 必要に応じて実際の海外共同研究者の名前に書き換えてください
     };
 
+    // グローバルデータ保持用
+    let globalPapersData = [];
+    let currentChart = null;
+    let currentNetwork = null;
+    let isPapersDashboardRendered = false; // 重複描画と初期読み込み遅延のためのフラグ
+
+    // 🌍 国際共著者の定義オブジェクト（名前の表記揺れに対応できるようにすべて小文字で定義）
+    // 共著者名: 適用開始年（この年以降の論文であれば国際共著と判定）
+    const internationalCollaborators = {
+      "john smith": 2020,
+      "li wei": 2021,
+      "anna dupont": 2018,
+      "tetsuo takano": 2000 // 必要に応じて実際の海外共同研究者の名前に書き換えてください
+    };
+
     function switchPage(pageId) {
       const pages = document.querySelectorAll('.detail');
       pages.forEach(page => page.style.display = 'none');
@@ -314,21 +329,17 @@
       const activeLink = document.querySelector(`.menu a[href="#${pageId}"]`);
       if (activeLink) activeLink.classList.add('current');
 
+      // ✨ 【爆速化の核心】Papersタブが初めてクリックされた時に初めてダッシュボードを描画する
       if (pageId === 'papers') {
+        if (!isPapersDashboardRendered && globalPapersData.length > 0) {
+          renderPapersDashboard(globalPapersData);
+          isPapersDashboardRendered = true;
+        }
         setTimeout(() => {
           if(currentNetwork) currentNetwork.fit();
         }, 200);
       }
     }
-
-    // 🌍 国際共著者の定義オブジェクト（名前の表記揺れに対応できるようにすべて小文字で定義）
-    // 共著者名: 適用開始年（この年以降の論文であれば国際共著と判定）
-    const internationalCollaborators = {
-      "john smith": 2020,
-      "li wei": 2021,
-      "anna dupont": 2018,
-      "tetsuo takano": 2000 // 必要に応じて実際の海外共同研究者の名前に書き換えてください
-    };
 
     // 🛠️ 論文が国際共著かどうかを判定する関数
     function checkIsInternational(paper) {
@@ -343,7 +354,6 @@
       let dateStr = paper["publication_date"] || "";
       let pubYear = dateStr.match(/^\d{4}/) ? parseInt(dateStr.substring(0, 4), 10) : 0;
 
-      // 定義したリストに名前が存在し、かつ論文発行年が適用年以降かチェック
       return rawAuthors.some(author => {
         if (internationalCollaborators.hasOwnProperty(author)) {
           return pubYear >= internationalCollaborators[author];
@@ -442,11 +452,11 @@
         if (hasCol && document.getElementById('collaborators-container')) document.getElementById('collaborators-container').style.display = 'block';
         if (hasAlm && document.getElementById('alumni-container')) document.getElementById('alumni-container').style.display = 'block';
 
-        // --- 📄 ④ Papers データの保持とダッシュボード描画 ---
+        // --- 📄 ④ Papers データのメモリ保持（ここではまだ重い計算・描画はしない） ---
         if (data.papers && data.papers.length > 0) {
           globalPapersData = data.papers;
-          renderPapersDashboard(globalPapersData);
           
+          // 検索の入力イベントだけ先に仕込んでおく
           document.getElementById('paper-search').addEventListener('input', function(e) {
             const query = e.target.value.toLowerCase();
             const filtered = globalPapersData.filter(p => {
@@ -652,17 +662,12 @@
         nodes: { font: { size: 11 } },
         edges: { color: { inherit: 'from' }, smooth: { type: 'continuous' } },
         physics: {
-          enabled: true,
-          stabilization: { iterations: 100 }
+          enabled: false // 初期フリーズ防止のため物理演算エンジンをカット
         }
       };
 
       if(currentNetwork) currentNetwork.destroy();
       currentNetwork = new vis.Network(container, networkData, options);
-
-      currentNetwork.once("stabilizationIterationsDone", function() {
-        currentNetwork.setOptions({ physics: { enabled: false } });
-      });
     }
 
     function renderPapersListOnly(papers) {
