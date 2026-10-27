@@ -92,17 +92,29 @@
       flex-direction: column;
       align-items: center;
       flex: 1;
-      min-width: 45px;  /* 画面が狭くなっても文字や棒が潰れない最低幅 */
-      max-width: 70px;  /* 横長に広がったときに棒が太くなりすぎない最高幅 */
-      margin: 0 6px;    /* 棒同士の程よい間隔 */
+      min-width: 40px;  /* 棒がスリムになった分、最小幅を狭く調整 */
+      max-width: 65px;
+      margin: 0 4px;
+    }
+    /* 2本の棒を横並びにするコンテナ */
+    .pure-chart-bars-container {
+      display: flex;
+      align-items: flex-end;
+      width: 100%;
+      height: 140px;
+      gap: 3px;         /* 棒同士の隙間 */
     }
     .pure-chart-bar {
-      width: 100%;
-      background-color: rgba(76, 175, 80, 0.75);
-      border-radius: 4px 4px 0 0;
+      flex: 1;
+      border-radius: 2px 2px 0 0;
       transition: height 0.3s ease;
       min-height: 2px;
     }
+    /* 全論文数：色覚多様性に配慮したロイヤルブルー */
+    .bar-total { background-color: rgba(65, 105, 225, 0.85); }
+    /* 筆頭・責任論文数：はっきり識別できるアクセントオレンジ */
+    .bar-owned { background-color: rgba(255, 152, 0, 0.85); }
+
     .pure-chart-value {
       font-size: 0.75rem;
       margin-bottom: 2px;
@@ -361,8 +373,8 @@
       }
     }
 
-    // tsugamaが筆頭（最初）または責任（2016年以降かつ最後）かを判定する関数
-    function checkIsFirstOrCorresponding(paper) {
+    // 1. 各論文の著者立ち位置を判定する関数（オブジェクトを返すように拡張）
+    function checkAuthorStatus(paper) {
       let rawAuthors = [];
       try {
         const parsed = JSON.parse(paper["authors.en"] || paper["authors.ja"] || "[]");
@@ -370,19 +382,24 @@
       } catch(e) {
         rawAuthors = (paper["authors.en"] || paper["authors.ja"] || "").split(',').map(n => n.trim().toLowerCase());
       }
-      if (rawAuthors.length === 0) return false;
+      
+      const status = { isFirst: false, isCorresponding: false, isOwned: false };
+      if (rawAuthors.length === 0) return status;
 
       let dateStr = paper["publication_date"] || "";
       let pubYear = dateStr.match(/^\d{4}/) ? parseInt(dateStr.substring(0, 4), 10) : 0;
 
-      // 1. 筆頭著者（最初の著者）が tsugama か
-      const isFirst = rawAuthors[0].includes("tsugama");
+      // ① 筆頭著者（最初の著者）が tsugama か
+      status.isFirst = rawAuthors[0].includes("tsugama");
 
-      // 2. 責任著者（2016年以降、かつ最後の著者）が tsugama か
+      // ② 責任著者（2016年以降、かつ最後の著者）が tsugama か
       const isLast = rawAuthors[rawAuthors.length - 1].includes("tsugama");
-      const isCorresponding = (pubYear >= 2016 && isLast);
+      status.isCorresponding = (pubYear >= 2016 && isLast);
 
-      return (isFirst || isCorresponding);
+      // ③ 筆頭または責任のいずれか（棒グラフ用フラグ）
+      status.isOwned = (status.isFirst || status.isCorresponding);
+
+      return status;
     }
     
     // 🛠️ 論文が国際共著かどうかを判定する関数
@@ -527,8 +544,7 @@
 
         // --- 🏆 ⑤ Honors の描画処理 ---
         const grantsListDiv = document.getElementById('honors-grants-list');
-        const awardsListDiv = document.getElementById('honors-awards-list');
-
+ 
         if (grantsListDiv && data.honors && data.honors.grants && data.honors.grants.length > 0) {
           grantsListDiv.innerHTML = '';
           data.honors.grants.forEach(g => {
@@ -622,18 +638,24 @@
     function renderSummaryBar(papers) {
       const total = papers.length;
       let internationalCount = 0;
+      let totalFirst = 0;
+      let totalCorresponding = 0;
+      let totalOwned = 0;
       
       papers.forEach(p => {
-        if (checkIsInternational(p)) {
-          internationalCount++;
-        }
+        if (checkIsInternational(p)) internationalCount++;
+        
+        const status = checkAuthorStatus(p);
+        if (status.isFirst) totalFirst++;
+        if (status.isCorresponding) totalCorresponding++;
+        if (status.isOwned) totalOwned++;
       });
       
       const intRatio = total > 0 ? Math.round((internationalCount / total) * 100) : 0;
 
       const summaryBar = document.getElementById('summary-bar');
       if (summaryBar) {
-        summaryBar.innerHTML = `Summary: Total Papers: <strong>${total}</strong>, International: <strong>${internationalCount} (${intRatio}%)</strong>`;
+        summaryBar.innerHTML = `Summary: Total Papers: <strong>${total}</strong> (First: <strong>${totalFirst}</strong> / Corresponding: <strong>${totalCorresponding}</strong> / Total Owned: <strong>${totalOwned}</strong>) / International: <strong>${internationalCount} (${intRatio}%)</strong>`;
       }
     }
 
@@ -644,7 +666,7 @@
       renderPapersListOnly(papers);
     }
 
-    // 📊 はみ出し・見切れ対策を強化した自前グラフ
+    // 2. 📊 Y軸に沿って「全論文」と「ダブりのないOwned論文数」を並べるグラフ
     function renderPureYearsChart(papers) {
       const container = document.getElementById('pure-chart-container');
       if (!container) return;
@@ -655,26 +677,44 @@
         let dateStr = p["publication_date"] || "";
         let year = dateStr.match(/^\d{4}/) ? dateStr.substring(0, 4) : "Unknown";
         if(year !== "Unknown") {
-          countsByYear[year] = (countsByYear[year] || 0) + 1;
+          if (!countsByYear[year]) {
+            countsByYear[year] = { total: 0, first: 0, corresponding: 0, owned: 0 };
+          }
+          
+          countsByYear[year].total += 1;
+          
+          const status = checkAuthorStatus(p);
+          if (status.isFirst) countsByYear[year].first += 1;
+          if (status.isCorresponding) countsByYear[year].corresponding += 1;
+          if (status.isOwned) countsByYear[year].owned += 1; // これがダブりのない純粋なOwned数
         }
       });
 
       const sortedYears = Object.keys(countsByYear).sort();
       if (sortedYears.length === 0) return;
 
-      const maxCount = Math.max(...Object.values(countsByYear));
+      const maxCount = Math.max(...Object.values(countsByYear).map(v => v.total));
 
       sortedYears.forEach(year => {
-        const count = countsByYear[year];
-        // グラフエリア（最大140px）に綺麗に収まるよう係数を調整
-        const barHeightPercent = maxCount > 0 ? (count / maxCount) * 130 : 0;
+        const item = countsByYear[year];
+        
+        // 棒の高さの計算（オレンジ色のバーは、純粋なOwned数に基づいています）
+        const totalHeight = maxCount > 0 ? (item.total / maxCount) * 130 : 0;
+        const ownedHeight = maxCount > 0 ? (item.owned / maxCount) * 130 : 0;
 
         const wrapper = document.createElement('div');
         wrapper.className = 'pure-chart-bar-wrapper';
 
+        // テキスト表示を「Total数 : Owned数(F/C)」にして意味を明確化
         wrapper.innerHTML = `
-          <div class="pure-chart-value">${count}</div>
-          <div class="pure-chart-bar" style="height: ${barHeightPercent}px;" title="年: ${year}, 論文数: ${count}"></div>
+          <div class="pure-chart-value" style="font-size: 0.65rem; color: #444; white-space: nowrap; text-align: center; line-height: 1.1;">
+            ${item.total} : <span style="color: #FF9800; font-weight: bold;">${item.owned}</span><br>
+            <span style="color: #888; font-size: 0.55rem;">(${item.first}/${item.corresponding})</span>
+          </div>
+          <div class="pure-chart-bars-container">
+            <div class="pure-chart-bar bar-total" style="height: ${totalHeight}px;" title="Total: ${item.total}"></div>
+            <div class="pure-chart-bar bar-owned" style="height: ${ownedHeight}px;" title="Owned (First or Corresponding): ${item.owned}"></div>
+          </div>
           <div class="pure-chart-label">${year}</div>
         `;
         container.appendChild(wrapper);
