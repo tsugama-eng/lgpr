@@ -542,14 +542,13 @@
           }
         }
 
-        // --- 🏆 ⑤ Honors の描画処理（日英併記対応版） ---
+        // --- 🏆 ⑤ Honors の描画処理（科研費リンク＆課題番号対応版） ---
         const grantsListDiv = document.getElementById('honors-grants-list');
         const awardsListDiv = document.getElementById('honors-awards-list');
         
         if (grantsListDiv && data.honors && data.honors.grants && data.honors.grants.length > 0) {
           grantsListDiv.innerHTML = '';
           data.honors.grants.forEach(g => {
-            // 制度名・種目
             const systemJa = g["system_name.ja"] || "";
             const systemEn = g["system_name.en"] || "";
             const system = systemJa && systemEn && systemJa !== systemEn ? `${systemJa} (${systemEn})` : (systemJa || systemEn);
@@ -558,25 +557,45 @@
             const catEn = g["category.en"] || "";
             const category = catJa && catEn && catJa !== catEn ? `${catJa} (${catEn})` : (catJa || catEn);
 
-            // 研究課題名
             const titleJa = g["research_project_title.ja"] || "";
             const titleEn = g["research_project_title.en"] || "";
             const title = titleJa && titleEn && titleJa !== titleEn ? `${titleJa} / ${titleEn}` : (titleJa || titleEn);
 
-            // 期間・組織
             const fromYear = g["from_date"] ? g["from_date"].substring(0, 4) : "";
             const toYear = g["to_date"] ? g["to_date"].substring(0, 4) : "";
             const period = fromYear && toYear ? `${fromYear}-${toYear}` : fromYear;
             
             const piJa = parseNames(g["investigators.ja"]);
-            const piEn = parseNames(g["investigators.en"] || g["investigators.ja"]); 
+            const piEn = parseNames(g["investigators.en"] || g["investigators.ja"]);
             const pi = piJa && piEn && piJa !== piEn ? `${piJa} (${piEn})` : (piJa || piEn);
+
+            // 🔍 科研費（KAKEN）限定の追加情報判定
+            let kakenAddonHtml = "";
+            const grantNumber = g["identifiers.grant_number"] || "";
+            const seeAlsoUrl = g["see_also"] || "";
+            
+            // 制度名、種目名、またはURLのどこかに "kaken"（大文字小文字問わず）が含まれているかチェック
+            const isKaken = (systemJa + systemEn + catJa + catEn + seeAlsoUrl).toLowerCase().includes("kaken");
+            
+            if (isKaken) {
+              let addonParts = [];
+              if (grantNumber) {
+                addonParts.push(`Grant Number: <strong>${grantNumber}</strong>`);
+              }
+              if (seeAlsoUrl) {
+                addonParts.push(`<a href="${seeAlsoUrl}" target="_blank" rel="noopener" style="color: #4CAF50; text-decoration: underline; font-weight: bold;">[KAKEN Project Page]</a>`);
+              }
+              if (addonParts.length > 0) {
+                kakenAddonHtml = `<br><span style="font-size: 0.9rem; color: #444; margin-left: 5px;">${addonParts.join(" / ")}</span>`;
+              }
+            }
 
             grantsListDiv.innerHTML += `
               <li style="margin-bottom: 15px; font-size: 1.05rem; line-height: 1.5;">
                 <strong>${system} ${category}</strong><br>
                 <span style="color: #111;">「${title}」</span> <span style="color: #666; font-size: 0.95rem;">(${period})</span><br>
-                <span style="font-size: 0.9rem; color: #555; margin-left: 5px;">研究組織 (Taxonomy / Investigators): ${pi}</span>
+                <span style="font-size: 0.9rem; color: #555; margin-left: 5px;">研究組織 (Investigators): ${pi}</span>
+                ${kakenAddonHtml}
               </li>
             `;
           });
