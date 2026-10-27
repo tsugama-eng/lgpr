@@ -243,7 +243,6 @@
 
     async function loadLabData() {
       try {
-        // const response = await fetch(GAS_WEBAPP_URL);
         const response = await fetch("data/content.json");
         const data = await response.json();
     
@@ -251,11 +250,11 @@
           document.getElementById('last-update').innerText = "Last update: " + data.lastUpdate;
         }
     
+        // --- メンバー情報の描画 ---
         const currentDiv = document.getElementById('current-members');
         const colListDiv = document.getElementById('collaborators-list');
         const almListDiv = document.getElementById('alumni-list');
     
-        // 初期化
         currentDiv.innerHTML = '';
         colListDiv.innerHTML = '';
         almListDiv.innerHTML = '';
@@ -263,74 +262,47 @@
         let hasCol = false;
         let hasAlm = false;
 
-        // --- リンク用の出力先とフラグの初期化 ---
-        const toolsListDiv = document.getElementById('links-tools-list');
-        const affListDiv = document.getElementById('links-affiliations-list');
-        
-        toolsListDiv.innerHTML = '';
-        affListDiv.innerHTML = '';
-        
-        let hasTools = false;
-        let hasAffiliations = false;
-        
-        // 親要素に共通のコンテナクラスを付与
         currentDiv.className = "member-container";
         colListDiv.className = "sub-member-grid";
         almListDiv.className = "sub-member-grid";
     
         data.members.forEach(m => {
           if (m.lab !== 'LGPR') return;
-    
           const isAlumni = m.grade && m.grade.match(/Alumni/i);
           const isCollaborator = m.grade && m.grade.match(/Collaborator/i);
     
-          // --- ① 自己紹介テキストのパース処理 ---
           let introListHtml = '';
           if (m.intro1) {
             const lines = m.intro1.split('\n').filter(l => l.trim() !== '');
-            introListHtml = `<div class="member-intro-list">` + 
-              lines.map(line => `<p class="member-intro-item">${line}</p>`).join('') + 
-              `</div>`;
+            introListHtml = `<div class="member-intro-list">` + lines.map(line => `<p class="member-intro-item">${line}</p>`).join('') + `</div>`;
           }
 
-          // --- ② 経歴（タイムライン）のパース処理 ---
           let timelineHtml = '';
           if (m.intro2 && m.intro2.trim() !== '') {
             const rows = m.intro2.split('\n').filter(l => l.includes('--'));
             if (rows.length > 0) {
-              timelineHtml = `<div class="timeline">` + 
-                rows.map(row => {
-                  const [year, desc] = row.split('--');
-                  return `<div class="timeline-row"><div class="timeline-year">${year.trim()}</div><div class="timeline-desc">${desc.trim()}</div></div>`;
-                }).join('') + 
-                `</div>`;
+              timelineHtml = `<div class="timeline">` + rows.map(row => {
+                const [year, desc] = row.split('--');
+                return `<div class="timeline-row"><div class="timeline-year">${year.trim()}</div><div class="timeline-desc">${desc.trim()}</div></div>`;
+              }).join('') + `</div>`;
             }
           }
     
-          // --- ③ 画像エリアのHTML生成（CSSフェード対応版） ---
           let mediaHtml = '<div class="member-media">';
           if (!isAlumni) {
             if (m.pic2) {
               mediaHtml += `<div class="portrait-container">`;
               if (m.pic3 && m.pic3.trim() !== '' && m.pic3.match(/\w/)) {
-                // pic3があれば、背面に配置
                 mediaHtml += `<img src="${m.pic3}" alt="${m.name_en}" class="hover-pic">`;
               }
-              // pic2を前面に配置（ホバーでこれが透明になる）
               mediaHtml += `<img src="${m.pic2}" alt="${m.name_en}" class="main-pic">`;
               mediaHtml += `</div>`;
             }
           }
-          if (m.pic1) {
-            mediaHtml += `<img src="${m.pic1}" class="nationalflag" alt="flag">`;
-          }
-     
+          if (m.pic1) mediaHtml += `<img src="${m.pic1}" class="nationalflag" alt="flag">`;
           mediaHtml += '</div>';
     
-    
-          // --- ④ レンダリング分岐 ---
           if (!isAlumni && !isCollaborator) {
-            // 【現役メンバー】カード型レイアウト
             currentDiv.innerHTML += `
               <div class="member-card">
                 ${mediaHtml}
@@ -348,51 +320,117 @@
               </div>
             `;
           } else if (m.name_en !== 'Daisuke Tsugama' && isCollaborator) {
-            // 【共同研究者】コンパクトなグリッドカード
             hasCol = true;
-            colListDiv.innerHTML += `
-              <div class="sub-member-card">
-                ${mediaHtml}
-                <div>
-                  <div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div>
-                  <div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div>
-                  <div style="font-size:0.85rem; color:#444; line-height:1.4;">
-                    ${m.title_en || ''}<br>${m.title_ja || ''}
-                  </div>
-                </div>
-              </div>
-            `;
+            colListDiv.innerHTML += `<div class="sub-member-card">${mediaHtml}<div><div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div><div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div><div style="font-size:0.85rem; color:#444; line-height:1.4;">${m.title_en || ''}<br>${m.title_ja || ''}</div></div></div>`;
           } else if (isAlumni) {
-            // 【元メンバー】コンパクトなグリッドカード
             hasAlm = true;
-            almListDiv.innerHTML += `
-              <div class="sub-member-card">
-                ${mediaHtml}
-                <div>
-                  <div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div>
-                  <div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div>
-                  <div style="font-size:0.85rem; color:#444; line-height:1.4;">
-                    ${m.title_en || ''}<br>${m.title_ja || ''}
-                  </div>
-                </div>
-              </div>
-            `;
+            almListDiv.innerHTML += `<div class="sub-member-card">${mediaHtml}<div><div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div><div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div><div style="font-size:0.85rem; color:#444; line-height:1.4;">${m.title_en || ''}<br>${m.title_ja || ''}</div></div></div>`;
           }
         });
+        
+        if (hasCol && document.getElementById('collaborators-container')) document.getElementById('collaborators-container').style.display = 'block';
+        if (hasAlm && document.getElementById('alumni-container')) document.getElementById('alumni-container').style.display = 'block';
 
-        // --- リンクデータのパースとレンダリング処理 ---
-        if (data.links && data.links.length > 0) {
-          data.links.forEach(l => {
-            // HTML組み立て（別タブで安全に開く target="_blank" と rel="noopener" を付与）
-            const linkHtml = `
-              <li style="margin-bottom: 12px;">
-                <a href="${l.link}" target="_blank" rel="noopener" style="font-weight: bold; font-size: 1.05rem;">${l.item}</a>
-                <br>
-                <span style="font-size: 0.9rem; color: #555; margin-left: 5px;">${l.description || ''}</span>
+        // --- ⚙️ ヘルパー関数: JSON文字列化した著者・研究者配列のパース ---
+        function parseNames(jsonStr) {
+          if (!jsonStr) return "";
+          try {
+            const arr = JSON.parse(jsonStr);
+            return arr.map(obj => obj.name).join(", ");
+          } catch(e) {
+            return jsonStr; // パース失敗時はそのまま返す
+          }
+        }
+
+        // --- ⚙️ ヘルパー関数: DOI配列のパースとリンク生成 ---
+        function formatDoi(doiJsonStr) {
+          if (!doiJsonStr) return "";
+          try {
+            const arr = JSON.parse(doiJsonStr);
+            if (arr && arr.length > 0) {
+              return ` DOI: <a href="https://doi.org{arr[0]}" target="_blank" rel="noopener">${arr[0]}</a>`;
+            }
+          } catch(e) {}
+          return "";
+        }
+
+        // --- 📄 ③ Papers (論文業績) の描画処理 ---
+        const papersListDiv = document.getElementById('papers-list');
+        if (papersListDiv && data.papers && data.papers.length > 0) {
+          papersListDiv.innerHTML = '';
+          data.papers.forEach(p => {
+            const title = p["paper_title.en"] || p["paper_title.ja"] || "";
+            const authors = parseNames(p["authors.en"] || p["authors.ja"]);
+            const journal = p["publication_name.en"] || p["publication_name.ja"] || "";
+            const volume = p["volume"] ? ` Vol. ${p["volume"]}` : "";
+            const pages = p["starting_page"] ? `, pp. ${p["starting_page"]}-${p["ending_page"] || p["starting_page"]}` : "";
+            const date = p["publication_date"] ? ` (${p["publication_date"]})` : "";
+            const doiHtml = formatDoi(p["identifiers.doi"]);
+
+            papersListDiv.innerHTML += `
+              <li style="margin-bottom: 12px; font-size: 1.05rem;">
+                <strong>${title}</strong><br>
+                <span style="color: #444;">${authors}</span><br>
+                <span style="color: #666; font-style: italic;">${journal}</span>${volume}${pages}${date}.${doiHtml}
               </li>
             `;
+          });
+        }
 
-            // カテゴリに応じて振り分け
+        // --- 🏆 ⑤ Honors (受賞・グラント) の描画処理 ---
+        const grantsListDiv = document.getElementById('honors-grants-list');
+        const awardsListDiv = document.getElementById('honors-awards-list');
+
+        // ① Grants (外部資金) のパース
+        if (grantsListDiv && data.honors && data.honors.grants && data.honors.grants.length > 0) {
+          grantsListDiv.innerHTML = '';
+          data.honors.grants.forEach(g => {
+            const title = g["research_project_title.ja"] || g["research_project_title.en"] || "";
+            const system = g["system_name.ja"] || g["system_name.en"] || "";
+            const category = g["category.ja"] || g["category.en"] || "";
+            const fromYear = g["from_date"] ? g["from_date"].substring(0, 4) : "";
+            const toYear = g["to_date"] ? g["to_date"].substring(0, 4) : "";
+            const period = fromYear && toYear ? `${fromYear}-${toYear}` : fromYear;
+            const pi = parseNames(g["investigators.ja"] || g["investigators.en"]);
+
+            grantsListDiv.innerHTML += `
+              <li style="margin-bottom: 12px; font-size: 1.05rem;">
+                <strong>${system} ${category}</strong> : 「${title}」 <span style="color: #666;">(${period})</span><br>
+                <span style="font-size: 0.9rem; color: #555; margin-left: 5px;">研究組織: ${pi}</span>
+              </li>
+            `;
+          });
+        }
+
+        // ② Awards (受賞歴) のパース
+        if (awardsListDiv && data.honors && data.honors.awards && data.honors.awards.length > 0) {
+          awardsListDiv.innerHTML = '';
+          data.honors.awards.forEach(a => {
+            const awardName = a["award_name.ja"] || a["award_name.en"] || "";
+            const awardTitle = a["award_title.ja"] || a["award_title.en"] || "";
+            const association = a["association.ja"] || a["association.en"] || "";
+            const date = a["award_date"] || "";
+
+            awardsListDiv.innerHTML += `
+              <li style="margin-bottom: 12px; font-size: 1.05rem;">
+                <strong>${awardName}</strong> - ${association} <span style="color: #666;">(${date})</span><br>
+                <span style="font-size: 0.95rem; color: #444; margin-left: 5px; display: inline-block; margin-top: 2px;">対象業績: 「${awardTitle}」</span>
+              </li>
+            `;
+          });
+        }
+
+        // --- 🔗 リンクデータの描画処理 ---
+        const toolsListDiv = document.getElementById('links-tools-list');
+        const affListDiv = document.getElementById('links-affiliations-list');
+        toolsListDiv.innerHTML = '';
+        affListDiv.innerHTML = '';
+        let hasTools = false;
+        let hasAffiliations = false;
+        
+        if (data.links && data.links.length > 0) {
+          data.links.forEach(l => {
+            const linkHtml = `<li style="margin-bottom: 12px;"><a href="${l.link}" target="_blank" rel="noopener" style="font-weight: bold; font-size: 1.05rem;">${l.item}</a><br><span style="font-size: 0.9rem; color: #555; margin-left: 5px;">${l.description || ''}</span></li>`;
             if (l.category === "Web Tools & Databases") {
               hasTools = true;
               toolsListDiv.innerHTML += linkHtml;
@@ -403,21 +441,8 @@
           });
         }
         
-        if (hasCol && document.getElementById('collaborators-container')) {
-          document.getElementById('collaborators-container').style.display = 'block';
-        }
-        if (hasAlm && document.getElementById('alumni-container')) {
-          document.getElementById('alumni-container').style.display = 'block';
-        }
-
-        // --- リンクコンテナの表示・非表示制御 ---
-        if (hasTools && document.getElementById('links-tools-container')) {
-          document.getElementById('links-tools-container').style.display = 'block';
-        }
-        if (hasAffiliations && document.getElementById('links-affiliations-container')) {
-          document.getElementById('links-affiliations-container').style.display = 'block';
-        }
-
+        if (hasTools && document.getElementById('links-tools-container')) document.getElementById('links-tools-container').style.display = 'block';
+        if (hasAffiliations && document.getElementById('links-affiliations-container')) document.getElementById('links-affiliations-container').style.display = 'block';
     
       } catch (error) {
         console.error("データの読み込みに失敗しました:", error);
@@ -426,7 +451,7 @@
         }
       }
     }
-    
+        
     window.onload = loadLabData;
 
 
