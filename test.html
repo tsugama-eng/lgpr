@@ -375,9 +375,15 @@
       let dateStr = paper["publication_date"] || "";
       let pubYear = dateStr.match(/^\d{4}/) ? parseInt(dateStr.substring(0, 4), 10) : 0;
 
-      return rawAuthors.some(author => {
-        if (internationalCollaborators.hasOwnProperty(author)) {
-          return pubYear >= internationalCollaborators[author];
+      // 各著者（フルネームテキスト）の中に、登録した苗字が含まれているかを検証
+      return rawAuthors.some(authorFullName => {
+        for (const lastName in internationalCollaborators) {
+          if (internationalCollaborators.hasOwnProperty(lastName)) {
+            // 例: "john smith" や "smith j" の中に "smith" が含まれるかチェック
+            if (authorFullName.includes(lastName)) {
+              return pubYear >= internationalCollaborators[lastName];
+            }
+          }
         }
         return false;
       });
