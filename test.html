@@ -569,13 +569,42 @@
             const piEn = parseNames(g["investigators.en"] || g["investigators.ja"]);
             const pi = piJa && piEn && piJa !== piEn ? `${piJa} (${piEn})` : (piJa || piEn);
 
-            // 🔍 科研費（KAKEN）限定の追加情報判定
+            // 🔍 科研費（KAKEN）限定の追加情報判定（JSON配列データのクリーンアップ対応版）
             let kakenAddonHtml = "";
-            const grantNumber = g["identifiers.grant_number"] || "";
-            const seeAlsoUrl = g["see_also"] || "";
+            let grantNumber = g["identifiers.grant_number"] || "";
+            let seeAlsoUrl = "";
             
-            // 制度名、種目名、またはURLのどこかに "kaken"（大文字小文字問わず）が含まれているかチェック
-            const isKaken = (systemJa + systemEn + catJa + catEn + seeAlsoUrl).toLowerCase().includes("kaken");
+            // ① grant_number のクリーンアップ (例: '["23K26941"]' -> '23K26941')
+            if (grantNumber && typeof grantNumber === "string") {
+              try {
+                const parsedNum = JSON.parse(grantNumber);
+                if (Array.isArray(parsedNum) && parsedNum.length > 0) {
+                  grantNumber = parsedNum[0];
+                }
+              } catch(e) {
+                grantNumber = grantNumber.replace(/[\[\]"']/g, "").trim();
+              }
+            }
+
+            // ② see_also のパースとURL抽出 (例: '[{"label":"kaken","@id":"https://..."}]' -> 'https://...')
+            const seeAlsoRaw = g["see_also"] || "";
+            if (seeAlsoRaw && typeof seeAlsoRaw === "string") {
+              try {
+                const parsedSeeAlso = JSON.parse(seeAlsoRaw);
+                if (Array.isArray(parsedSeeAlso) && parsedSeeAlso.length > 0) {
+                  seeAlsoUrl = parsedSeeAlso[0]["@id"] || "";
+                } else if (parsedSeeAlso && parsedSeeAlso["@id"]) {
+                  seeAlsoUrl = parsedSeeAlso["@id"];
+                }
+              } catch(e) {
+                if (seeAlsoRaw.trim().startsWith("http")) {
+                  seeAlsoUrl = seeAlsoRaw.trim();
+                }
+              }
+            }
+            
+            // 制度名、種目名、または生データURLの中に "kaken" が含まれているかチェック
+            const isKaken = (systemJa + systemEn + catJa + catEn + seeAlsoRaw + seeAlsoUrl).toLowerCase().includes("kaken");
             
             if (isKaken) {
               let addonParts = [];
