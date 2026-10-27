@@ -277,11 +277,11 @@
          <div class="filter-tags">
            <strong>Filter by Topic:</strong>
            <button class="tag-btn active" onclick="filterByTopic('all')">#All</button>
-           <button class="tag-btn" onclick="filterByTopic('international')">#International Collaboration</button>
-           <button class="tag-btn" onclick="filterByTopic('tools')">#Tool & System Development</button>
-           <button class="tag-btn" onclick="filterByTopic('stress')">#Abiotic and Mechanical Stress</button>
-           <button class="tag-btn" onclick="filterByTopic('materials')">#Arabidopsis</button>
-           <button class="tag-btn" onclick="filterByTopic('materials')">#Crop</button>
+           <button class="tag-btn" onclick="filterByTopic('international')">#International</button>
+           <button class="tag-btn" onclick="filterByTopic('tools')">#Tools & Systems</button>
+           <button class="tag-btn" onclick="filterByTopic('stress')">#Abiotic Stress</button>
+           <button class="tag-btn" onclick="filterByTopic('arabidopsis')">#Arabidopsis</button>
+           <button class="tag-btn" onclick="filterByTopic('crops')">#Crop</button>
          </div>
 
          <h3>▼ Full Publication List (Latest First)</h3>
@@ -683,14 +683,20 @@
           return text.includes('stress') || text.includes('mechanical') || text.includes('gravity') || 
                  text.includes('touch') || text.includes('salt') || text.includes('drought') || text.includes('tolerance');
         });
-      } else if (topic === 'materials') {
-        // 主要材料（雑穀/ナズナ/作物）の判定
+      } else if (topic === 'arabidopsis') {
+        // ナズナの判定
         filtered = filtered.filter(p => {
           const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
-          return text.includes('millet') || text.includes('arabidopsis') || text.includes('thaliana') || 
-                 text.includes('brassica') || text.includes('rapa') || text.includes('asparagus') || text.includes('buckwheat');
+          return text.includes('arabidopsis') || text.includes('thaliana');
+        });
+      } else if (topic === 'crops') {
+        // 作物の判定
+        filtered = filtered.filter(p => {
+          const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
+          return text.includes('millet') || text.includes('brassica') || text.includes('rapa') || text.includes('asparagus') || text.includes('buckwheat');
         });
       }
+
 
       renderPapersListOnly(filtered);
     }
