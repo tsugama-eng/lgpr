@@ -544,7 +544,8 @@
 
         // --- 🏆 ⑤ Honors の描画処理 ---
         const grantsListDiv = document.getElementById('honors-grants-list');
- 
+        const awardsListDiv = document.getElementById('honors-awards-list');
+        
         if (grantsListDiv && data.honors && data.honors.grants && data.honors.grants.length > 0) {
           grantsListDiv.innerHTML = '';
           data.honors.grants.forEach(g => {
