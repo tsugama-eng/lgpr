@@ -268,9 +268,10 @@
 
          <!-- 🔍 フリーワード検索窓 -->
          <div style="margin-bottom: 15px;">
-           <strong>Search Papers:</strong>
-           <input type="text" id="paper-search" class="search-box" style="margin-top: 5px;" placeholder="キーワードを入力して論文を検索（タイトル・著者・要旨対象）...">
+           <label for="paper-search" style="font-weight: bold; display: block; margin-bottom: 5px;">Search Papers:</label>
+           <input type="text" id="paper-search" class="search-box" placeholder="キーワードを入力して論文を検索（タイトル・著者・要旨対象）...">
          </div>
+
 
          <!-- 🏷️ 刷新したハッシュタグ（トピック絞り込み） -->
          <div class="filter-tags">
@@ -589,7 +590,7 @@
       try {
         let cleanDoi = doiField.replace(/[\[\]"']/g, "").trim();
         if (cleanDoi !== "") {
-          return ` DOI: <a href="https://doi.org/{cleanDoi}" target="_blank" rel="noopener">${cleanDoi}</a>`;
+          return ` DOI: <a href="https://doi.org/${cleanDoi}" target="_blank" rel="noopener">${cleanDoi}</a>`;
         }
       } catch(e) {}
       return "";
@@ -658,12 +659,20 @@
     }
 
     // 🏷️ ご提案に基づき刷新したトピック絞り込み関数
+    // 🏷️ トピック絞り込み関数の修正
     function filterByTopic(topic) {
       const btns = document.querySelectorAll('.filter-tags .tag-btn');
       btns.forEach(btn => btn.classList.remove('active'));
       if (event && event.target) event.target.classList.add('active');
 
-      let filtered = globalPapersData ? (globalPapersData.papers || []) : [];
+      // 【修正】 globalPapersData 自体が配列なので、直接代入する
+      let filtered = globalPapersData || [];
+
+      // 【追加】 #All がクリックされた場合は、全件描画して早期リターン
+      if (topic === 'all') {
+        renderPapersListOnly(filtered);
+        return;
+      }
 
       if (topic === 'international') {
         filtered = filtered.filter(p => checkIsInternational(p));
