@@ -328,12 +328,12 @@
 
     // 🌍 国際共著者の定義オブジェクト
     const internationalCollaborators = {
-      "Gupta": 2000,
-      "Ardie": 2000,
-      "Liu": 2000,
-      "Chen": 2000,
-      "Gelvin": 2000,
-      "Yoon": 2022,
+      "gupta": 2000,
+      "ardie": 2000,
+      "liu": 2000,
+      "chen": 2000,
+      "gelvin": 2000,
+      "yoon": 2022,
     };
 
     // ページ（タブ）切り替え関数
@@ -664,7 +664,7 @@
       btns.forEach(btn => btn.classList.remove('active'));
       if (event && event.target) event.target.classList.add('active');
 
-      let filtered = globalData ? (globalData.papers || []) : [];
+      let filtered = globalPaperData ? (globalData.papers || []) : [];
 
       if (topic === 'international') {
         filtered = filtered.filter(p => checkIsInternational(p));
