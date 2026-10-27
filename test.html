@@ -75,6 +75,52 @@
     /* メニュー切替用のスタイル調整 */
     .menu a { cursor: pointer; text-decoration: none; }
     .menu a.current li { font-weight: bold; background-color: #eef7ee; }
+        /* 自前グラフ・コラボリスト用の軽量スタイル */
+    .pure-chart-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      height: 180px;
+      padding-top: 20px;
+      border-bottom: 2px solid #ccc;
+      border-left: 2px solid #ccc;
+    }
+    .pure-chart-bar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      margin: 0 4px;
+    }
+    .pure-chart-bar {
+      width: 100%;
+      background-color: rgba(76, 175, 80, 0.75);
+      border-radius: 4px 4px 0 0;
+      transition: height 0.3s ease;
+      min-height: 2px;
+    }
+    .pure-chart-value {
+      font-size: 0.75rem;
+      margin-bottom: 2px;
+      font-weight: bold;
+    }
+    .pure-chart-label {
+      font-size: 0.75rem;
+      margin-top: 4px;
+      color: #555;
+      white-space: nowrap;
+    }
+    .pure-collab-list {
+      max-height: 200px;
+      overflow-y: auto;
+      padding-left: 15px;
+      margin: 0;
+      font-size: 0.9rem;
+    }
+    .pure-collab-item {
+      margin-bottom: 5px;
+    }
+
   </style>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
