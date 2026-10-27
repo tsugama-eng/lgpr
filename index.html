@@ -138,18 +138,7 @@
       </div>
     </div>
 
-    <!-- ③ Papers セクション（researchmap等からの出力を想定） -->
-    <div id="papers" class="detail" style="display:none;">
-      <div class="subhead"><p><span><b>Selected Papers</b> / <b>論文業績</b></span></p></div>
-      <p><span id="last-update">Last update: 加込中...</span></p>
-      <div class="texts">
-        <ol id="papers-list">
-          <!-- 業績JSでここに<li>を自動追加 -->
-        </ol>
-      </div>
-    </div>
-
-    <!-- ④ People セクション（GSSから動的生成） -->
+    <!-- 3. People セクション（GSSから動的生成） -->
     <div id="people" class="detail" style="display:none;">
       <div class="subhead"><p><span><b>Members</b></span></p></div>
       
@@ -169,7 +158,40 @@
       </div>
     </div>
 
-    <!-- ⑤ Links セクション -->
+    <!-- 4. Papers セクション（researchmap等からの出力を想定） -->
+    <div id="papers" class="detail" style="display:none;">
+      <div class="subhead"><p><span><b>Selected Papers</b> / <b>論文業績</b></span></p></div>
+      <p><span id="last-update">Last update: 加込中...</span></p>
+      <div class="texts">
+        <ol id="papers-list">
+          <!-- 業績JSでここに<li>を自動追加 -->
+        </ol>
+      </div>
+    </div>
+
+
+    
+    <!-- 5. Honors セクション（新規追加） -->
+    <div id="honors" class="detail" style="display:none;">
+      <div class="subhead"><p><span><b>Honors & Achievements</b> / <b>受賞・外部資金</b></span></p></div>
+      <div class="texts">
+        
+        <!-- Grants / 外部資金の出力先 -->
+        <div id="honors-grants-container" style="margin-bottom: 30px;">
+          <h3 style="border-left: 5px solid #4CAF50; padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Grants & Funding / 外部資金・助成金</h3>
+          <ul id="honors-grants-list" style="line-height: 1.6; padding-left: 20px; margin-left: 10px;"></ul>
+        </div>
+
+        <!-- Awards / 受賞歴の出力先 -->
+        <div id="honors-awards-container">
+          <h3 style="border-left: 5px solid #2196F3; padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Awards & Recognition / 受賞歴</h3>
+          <ul id="honors-awards-list" style="line-height: 1.6; padding-left: 20px; margin-left: 10px;"></ul>
+        </div>
+
+      </div>
+    </div>
+    
+    <!-- 6. Links セクション -->
     <div id="links" class="detail" style="display:none;">
       <div class="subhead"><p><span><b>Links</b></span></p></div>
       <div class="texts">
