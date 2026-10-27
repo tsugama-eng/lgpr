@@ -361,6 +361,30 @@
       }
     }
 
+    // tsugamaが筆頭（最初）または責任（2016年以降かつ最後）かを判定する関数
+    function checkIsFirstOrCorresponding(paper) {
+      let rawAuthors = [];
+      try {
+        const parsed = JSON.parse(paper["authors.en"] || paper["authors.ja"] || "[]");
+        rawAuthors = parsed.map(o => o.name.trim().toLowerCase());
+      } catch(e) {
+        rawAuthors = (paper["authors.en"] || paper["authors.ja"] || "").split(',').map(n => n.trim().toLowerCase());
+      }
+      if (rawAuthors.length === 0) return false;
+
+      let dateStr = paper["publication_date"] || "";
+      let pubYear = dateStr.match(/^\d{4}/) ? parseInt(dateStr.substring(0, 4), 10) : 0;
+
+      // 1. 筆頭著者（最初の著者）が tsugama か
+      const isFirst = rawAuthors[0].includes("tsugama");
+
+      // 2. 責任著者（2016年以降、かつ最後の著者）が tsugama か
+      const isLast = rawAuthors[rawAuthors.length - 1].includes("tsugama");
+      const isCorresponding = (pubYear >= 2016 && isLast);
+
+      return (isFirst || isCorresponding);
+    }
+    
     // 🛠️ 論文が国際共著かどうかを判定する関数
     function checkIsInternational(paper) {
       let rawAuthors = [];
