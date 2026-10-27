@@ -234,14 +234,6 @@ div.detail p span.language:hover
 { cursor:pointer;
 }
 
-#papers p
-{ margin: 15px 0 0 0;
-}
-
-#papers p span
-{ font-size: 120%;
-}
-
 
 div.detail ol
 { margin: 15px 0 0 45px;
@@ -636,10 +628,6 @@ div.detail p span.language
 
 div.detail p span.language:hover
 { cursor:pointer;
-}
-
-#papers p span
-{ font-size: 95%;
 }
 
 div.detail ol
