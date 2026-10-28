@@ -964,3 +964,27 @@ img.brapa_exp
 	83.33%  {left: -125%}
 	100%    {left: -750%}
 }
+
+@media screen and (max-width: 750px) {
+  /* 1. 横並びから縦並びに変更し、隙間を調整 */
+  div#intro_en > div,
+  div#intro_ja > div {
+    flex-direction: column !important;
+    gap: 15px !important;
+  }
+
+  /* 2. 画像を囲むボックスの固定幅(350px)を解除し、中央寄せに */
+  div#intro_en > div > div:nth-child(2),
+  div#intro_ja > div > div:nth-child(2) {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* 3. 画像自体が画面からはみ出さないように最大幅を100%に制限 */
+  div#intro_en > div > div:nth-child(2) img,
+  div#intro_ja > div > div:nth-child(2) img {
+    width: 100% !important;
+    max-width: 350px; /* PC版のサイズを上限とする */
+    height: auto !important;
+  }
+}
