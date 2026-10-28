@@ -899,89 +899,118 @@
       });
     }
 
-    // 案B: 生物種の変遷（インラインSVGによる100%積み上げ面グラフ風の簡易実装）
+    // 案B: 生物種の変遷（見切れ・凡例の重なりを解消した100%積み上げ面グラフ）
     function renderSpeciesAreaChart(trendData) {
       const container = document.getElementById('species-chart-container');
       if (!container || !trendData || trendData.length === 0) return;
 
-      const width = 400;
-      const height = 160;
-      const paddingLeft = 30;
-      const paddingRight = 10;
-      const paddingTop = 10;
-      const paddingBottom = 20;
+      // グラフ描画領域のサイズ設定
+      const width = 450;
+      const height = 180;
+      const paddingLeft = 35;
+      const paddingRight = 15;
+      const paddingTop = 15;
+      const paddingBottom = 25; // X軸ラベル領域
 
       const chartWidth = width - paddingLeft - paddingRight;
       const chartHeight = height - paddingTop - paddingBottom;
 
       const speciesList = ["Arabidopsis", "Asparagus", "Buckwheat", "Millet", "Rice"];
-      // プラントイメージに合わせたカラーパレット
       const colors = {
-        "Arabidopsis": "#4CAF50", // 緑
-        "Asparagus": "#8BC34A",   // 薄緑
-        "Buckwheat": "#9C27B0",   // ソバの花の紫イメージ
-        "Millet": "#FFC107",      // 粟・キビの黄金色
-        "Rice": "#03A9F4"         // イネ・水の青
+        "Arabidopsis": "#4CAF50",
+        "Asparagus": "#8BC34A",
+        "Buckwheat": "#9C27B0",
+        "Millet": "#FFC107",
+        "Rice": "#03A9F4"
       };
 
-      // 各ポイントにおける各生物種の「積み上げ上限Y座標」を計算
       const numPoints = trendData.length;
-      let svgPaths = {};
-      speciesList.forEach(sp => { svgPaths[sp] = []; });
+      
+      // 各植物種のベースラインと積み上げラインを計算
+      let speciesLayers = {};
+      speciesList.forEach(sp => { speciesLayers[sp] = []; });
 
       trendData.forEach((d, idx) => {
         const x = paddingLeft + (idx / (numPoints - 1)) * chartWidth;
-        let currentTotal = d.total || 1;
         
-        let accumulatedPercent = 0;
+        // その年の「いずれかの植物キーワードにヒットした数」の合計
+        let yearHitsTotal = 0;
+        speciesList.forEach(sp => { yearHitsTotal += (d[sp] || 0); });
+        if (yearHitsTotal === 0) yearHitsTotal = 1; // ゼロ除算防止
+
+        let currentYOffset = 0;
         speciesList.forEach(sp => {
-          // 該当年のその生物種の論文割合（無ければ0）
           const count = d[sp] || 0;
-          const pct = count / currentTotal;
-          accumulatedPercent += pct;
+          const ratio = count / yearHitsTotal; // 100%に対する比率
           
-          // SVGは左上が(0,0)なので、下から積み上げる計算
-          const y = paddingTop + chartHeight - (accumulatedPercent * chartHeight);
-          svgPaths[sp].push({x: x, y: y});
+          currentYOffset += ratio;
+          // SVGのY座標（上から下に向かってプラスなので、高さから引く）
+          const y = paddingTop + chartHeight - (currentYOffset * chartHeight);
+          speciesLayers[sp].push({x: x, y: y});
         });
       });
 
-      // SVG文字列の組み立て
-      let svgHtml = `<svg viewBox="0 0 ${width} ${height}" style="width:100%; height:100%;">`;
+      // SVG全体のHTML構築（グラフ本体）
+      let svgHtml = `<svg viewBox="0 0 ${width} ${height}" style="width:100%; height:auto; overflow:visible;">`;
       
-      // 背景グリッドと年号ラベル
+      // 背景縦グリッド＆年号ラベル
       trendData.forEach((d, idx) => {
         const x = paddingLeft + (idx / (numPoints - 1)) * chartWidth;
         if (idx === 0 || idx === numPoints - 1 || d.year % 5 === 0) {
-          svgHtml += `<line x1="${x}" y1="${paddingTop}" x2="${x}" y2="${paddingTop+chartHeight}" stroke="#eee" stroke-width="1"/>`;
-          svgHtml += `<text x="${x}" y="${height-4}" font-size="9" text-anchor="middle" fill="#777">${d.year}</text>`;
+          svgHtml += `<line x1="${x}" y1="${paddingTop}" x2="${x}" y2="${paddingTop+chartHeight}" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="2,2"/>`;
+          svgHtml += `<text x="${x}" y="${height - 8}" font-size="10" text-anchor="middle" fill="#666" font-family="sans-serif">${d.year}</text>`;
         }
       });
 
-      // 積み上げ面（Polygon）を後ろから順に描画
-      // 100%積み上げなので、リストの逆順にポリゴンを閉じて描画すると綺麗に重なります
-      for (let i = speciesList.length - 1; i >= 0; i--) {
-        const sp = speciesList[i];
-        const points = svgPaths[sp];
-        if(!points) continue;
-
-        let pointsStr = points.map(p => `${p.x},${p.y}`).join(" ");
-        // ポリゴンを閉じる（右下から左下へ戻るパス）
-        pointsStr += ` ${points[points.length-1].x},${paddingTop+chartHeight} ${points[0].x},${paddingTop+chartHeight}`;
-
-        svgHtml += `<polygon points="${pointsStr}" fill="${colors[sp]}" opacity="0.85" title="${sp}"/>`;
-      }
-
-      // 簡易凡例（右上に配置）
-      let legendX = paddingLeft + 10;
-      speciesList.forEach((sp, i) => {
-        svgHtml += `<rect x="${legendX}" y="${paddingTop + i*11}" width="8" height="8" fill="${colors[sp]}" opacity="0.9"/>`;
-        svgHtml += `<text x="${legendX + 12}" y="${paddingTop + i*11 + 7}" font-size="8" fill="#333">${sp}</text>`;
-        if((i+1) % 3 === 0) { legendX += 70; } // 横並び調整
+      // Y軸グリッド（0%, 50%, 100%）
+      [0, 0.5, 1].forEach(pct => {
+        const y = paddingTop + chartHeight - (pct * chartHeight);
+        svgHtml += `<line x1="${paddingLeft}" y1="${y}" x2="${width-paddingRight}" y2="${y}" stroke="#e5e5e5" stroke-width="1"/>`;
+        svgHtml += `<text x="${paddingLeft - 6}" y="${y + 4}" font-size="9" text-anchor="end" fill="#777">${pct * 100}%</text>`;
       });
 
+      // 100%積み上げポリゴンを背面の生物種から順に生成
+      for (let i = speciesList.length - 1; i >= 0; i--) {
+        const sp = speciesList[i];
+        const currentPoints = speciesLayers[sp];
+        
+        let polygonPoints = [];
+        // 上のライン（左から右へ）
+        currentPoints.forEach(p => { polygonPoints.push(`${p.x},${p.y}`); });
+        
+        // 下のライン（右から左へ戻る）
+        if (i === 0) {
+          // 一番下の層（Arabidopsis）の床は常にグラフの底辺
+          for (let j = currentPoints.length - 1; j >= 0; j--) {
+            polygonPoints.push(`${currentPoints[j].x},${paddingTop + chartHeight}`);
+          }
+        } else {
+          // 2層目以降の床は、1つ下の層の天井ライン
+          const prevPoints = speciesLayers[speciesList[i - 1]];
+          for (let j = prevPoints.length - 1; j >= 0; j--) {
+            polygonPoints.push(`${prevPoints[j].x},${prevPoints[j].y}`);
+          }
+        }
+
+        svgHtml += `<polygon points="${polygonPoints.join(" ")}" fill="${colors[sp]}" opacity="0.88">
+                      <title>${sp}</title>
+                    </polygon>`;
+      }
       svgHtml += `</svg>`;
-      container.innerHTML = svgHtml;
+
+      // 🛠️ 【新設計】凡例（レジェンド）をプロットの外（コンテナ内）へ大きく綺麗に並べる
+      let legendHtml = `<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-top:12px; padding:8px 0; border-top:1px solid #eee;">`;
+      speciesList.forEach(sp => {
+        legendHtml += `
+          <div style="display:flex; align-items:center; gap:6px;">
+            <div style="width:14px; height:14px; background-color:${colors[sp]}; border-radius:3px;"></div>
+            <span style="font-size:0.95rem; font-weight:bold; color:#333; font-family:sans-serif;">${sp}</span>
+          </div>`;
+      });
+      legendHtml += `</div>`;
+
+      // コンテナへの流し込み（グラフSVG + 独立した凡例HTML）
+      container.innerHTML = svgHtml + legendHtml;
     }
 
     // 案C: 時代別ワードクラウド（ピュアHTML/CSS Flexboxによる超軽量アプローチ）
