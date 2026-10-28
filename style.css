@@ -663,11 +663,6 @@ div.subhead p span#vip1_subtitle
 { font-size: 88%;
 }
 
-
-#intro_en, #mm_en, #contact_en, #intro_ja, #mm_ja, #contact_ja, #pm_en, #aspara_en, #vip1_en, #others_en, #pm_ja, #aspara_ja, #vip1_ja, #others_ja
-{ display: none;
-}
-
 div.texts p
 { text-align: justify;
   line-height: 165%;
