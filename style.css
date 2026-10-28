@@ -336,11 +336,6 @@ p.pagetop a
 { font-size: 120%;
 }
 
-p.showhide
-{ display: none;
-}
-
-
 .gmap
 { margin: 0 0 0 20px;
   width: 600px;
@@ -713,24 +708,6 @@ div.lgpr_pc
 
 p.pagetop
 { display: none;
-}
-
-p.showhide
-{ clear: left;
-  margin: 5px 0 15px 5px;
-}
-
-p.showhide span
-{ clear: left;
-  margin: 0 15px 0 0;
-  font-size: 105%;
-  text-decoration: underline;
-  color: #225588;
-}
-
-p.showhide span:hover
-{ cursor: pointer;
-  color: #882255;
 }
 
 #intro_hide, #mm_hide, #contact_hide, #pm_hide, #aspara_hide, #vip1_hide, #others_hide
