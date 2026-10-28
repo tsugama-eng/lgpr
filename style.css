@@ -278,12 +278,12 @@ div.subhead p span#vip1_subtitle
 
 div.texts p
 { text-align: justify;
-  line-height: 200%;
+  line-height: 180%;
   margin: 5px 0 10px 15px;
 }
 
 div.texts p span
-{ font-size: 115%;
+{ font-size: 105%;
 }
 
 div.texts2
