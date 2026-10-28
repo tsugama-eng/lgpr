@@ -1010,7 +1010,7 @@
       legendHtml += `</div>`;
 
       // コンテナへの流し込み（グラフSVG + 独立した凡例HTML）
-      container.innerHTML = svgHtml + legendHtml;
+      container.innerHTML =  legendHtml + svgHtml;
     }
 
     // 案C: 時代別ワードクラウド（ピュアHTML/CSS Flexboxによる超軽量アプローチ）
