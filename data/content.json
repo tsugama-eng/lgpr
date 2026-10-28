@@ -5095,19 +5095,19 @@
     ],
     "wordCloud": [
       {
-        "period": "2009-2015",
+        "period": "2009-2018",
         "keywords": [
           {
+            "text": "Interact",
+            "count": 7
+          },
+          {
             "text": "VIP1",
-            "count": 4
+            "count": 6
           },
           {
             "text": "AGB1",
             "count": 4
-          },
-          {
-            "text": "Interact",
-            "count": 6
           },
           {
             "text": "Drought",
@@ -5116,19 +5116,6 @@
           {
             "text": "Signal",
             "count": 1
-          }
-        ]
-      },
-      {
-        "period": "2015-2018",
-        "keywords": [
-          {
-            "text": "Interact",
-            "count": 1
-          },
-          {
-            "text": "VIP1",
-            "count": 2
           }
         ]
       },
