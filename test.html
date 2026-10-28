@@ -1034,7 +1034,7 @@
         const size = maxCount === minCount ? 18 : 12 + ((kw.count - minCount) / (maxCount - minCount)) * 16;
         // エンジニアライクなカラー（青〜緑系のランダムグラデーション）
         const randomHue = 100 + Math.floor(Math.random() * 120); // 100(緑)〜220(青)
-        return `<span style="font-size: ${size}px; color: hsl(${randomHue}, 60%, 40%); font-weight: bold; padding: 2px 4px; transition: all 0.4s ease; cursor: default;" title="出現数: ${kw.count}回">${kw.text}</span>`;
+        return `<span style="font-size: ${size}px; color: hsl(${randomHue}, 60%, 40%); font-weight: bold; padding: 2px 4px; transition: all 0.4s ease; cursor: default;" title="Count: ${kw.count}">${kw.text}</span>`;
       }).join('');
     }
     
