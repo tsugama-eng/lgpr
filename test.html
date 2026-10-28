@@ -216,11 +216,14 @@
             <!-- 右側：時代別ワードクラウド（案C） -->
             <div class="dashboard-card" style="flex: 0.8; min-width: 280px;">
               <h3>Keywords Word Cloud (技術・ターゲットの変遷)</h3>
+            <!-- 右側：時代別ワードクラウド（案C） -->
+            <div class="dashboard-card" style="flex: 0.8; min-width: 280px;">
+              <h3>Keywords Word Cloud (技術・ターゲットの変遷)</h3>
               <div class="filter-tags" style="margin-bottom: 10px; text-align: center;">
-                <!-- <button class="tag-btn active" onclick="switchCloudEra('2009-2015', this)">09-15</button> -->
                 <button class="tag-btn" onclick="switchCloudEra('2009-2018', this)">09-18</button>
                 <button class="tag-btn" onclick="switchCloudEra('2018-2024', this)">18-24</button>
-                <button class="tag-btn" onclick="switchCloudEra('2024-', this)">24-26</button>
+                <!-- ★ 2024以降を初期アクティブにするための id と active クラスを追加 -->
+                <button id="default-cloud-btn" class="tag-btn active" onclick="switchCloudEra('2024-', this)">24-26</button>
               </div>
               <div id="top-wordcloud-container" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; min-height: 120px; background:#fff; border-radius:4px; padding:10px;"></div>
             </div>
@@ -538,10 +541,12 @@
           if (data.topCharts) {
             window.globalTopCharts = data.topCharts; // グローバル保持
             renderSpeciesAreaChart(data.topCharts.speciesTrend);
-            // 初期値として最新の時代を表示
+            // ★ 初期表示として「24-26（2024以降）」のワードクラウドを自動クリックで開く
             setTimeout(() => {
-              const initialBtn = document.querySelector(".filter-tags .tag-btn");
-              if(initialBtn) initialBtn.click();
+              const defaultBtn = document.getElementById("default-cloud-btn");
+              if (defaultBtn) {
+                defaultBtn.click();
+              }
             }, 100);
           }
 
@@ -904,13 +909,13 @@
       const container = document.getElementById('species-chart-container');
       if (!container || !trendData || trendData.length === 0) return;
 
-      // グラフ描画領域のサイズ設定
+      // グラフ描画領域のサイズ設定（★高さを200に拡張して見切れを完全に防ぐ）
       const width = 450;
-      const height = 180;
-      const paddingLeft = 35;
+      const height = 200;
+      const paddingLeft = 38;
       const paddingRight = 15;
       const paddingTop = 15;
-      const paddingBottom = 25; // X軸ラベル領域
+      const paddingBottom = 35; // ★下部の年号テキスト用の余白を十分に確保
 
       const chartWidth = width - paddingLeft - paddingRight;
       const chartHeight = height - paddingTop - paddingBottom;
@@ -926,39 +931,37 @@
 
       const numPoints = trendData.length;
       
-      // 各植物種のベースラインと積み上げラインを計算
       let speciesLayers = {};
       speciesList.forEach(sp => { speciesLayers[sp] = []; });
 
       trendData.forEach((d, idx) => {
         const x = paddingLeft + (idx / (numPoints - 1)) * chartWidth;
         
-        // その年の「いずれかの植物キーワードにヒットした数」の合計
         let yearHitsTotal = 0;
         speciesList.forEach(sp => { yearHitsTotal += (d[sp] || 0); });
-        if (yearHitsTotal === 0) yearHitsTotal = 1; // ゼロ除算防止
+        if (yearHitsTotal === 0) yearHitsTotal = 1;
 
         let currentYOffset = 0;
         speciesList.forEach(sp => {
           const count = d[sp] || 0;
-          const ratio = count / yearHitsTotal; // 100%に対する比率
+          const ratio = count / yearHitsTotal;
           
           currentYOffset += ratio;
-          // SVGのY座標（上から下に向かってプラスなので、高さから引く）
           const y = paddingTop + chartHeight - (currentYOffset * chartHeight);
           speciesLayers[sp].push({x: x, y: y});
         });
       });
 
-      // SVG全体のHTML構築（グラフ本体）
-      let svgHtml = `<svg viewBox="0 0 ${width} ${height}" style="width:100%; height:auto; overflow:visible;">`;
+      // ★ overflow:visible を除去し、ボックスモデルを安定させます
+      let svgHtml = `<svg viewBox="0 0 ${width} ${height}" style="width:100%; height:auto; display:block;">`;
       
       // 背景縦グリッド＆年号ラベル
       trendData.forEach((d, idx) => {
         const x = paddingLeft + (idx / (numPoints - 1)) * chartWidth;
         if (idx === 0 || idx === numPoints - 1 || d.year % 5 === 0) {
           svgHtml += `<line x1="${x}" y1="${paddingTop}" x2="${x}" y2="${paddingTop+chartHeight}" stroke="#e0e0e0" stroke-width="1" stroke-dasharray="2,2"/>`;
-          svgHtml += `<text x="${x}" y="${height - 8}" font-size="10" text-anchor="middle" fill="#666" font-family="sans-serif">${d.year}</text>`;
+          // ★ Y軸座標の位置を調整して確実に描画枠内に収めます
+          svgHtml += `<text x="${x}" y="${paddingTop + chartHeight + 16}" font-size="10" text-anchor="middle" fill="#666" font-family="sans-serif">${d.year}</text>`;
         }
       });
 
@@ -969,23 +972,18 @@
         svgHtml += `<text x="${paddingLeft - 6}" y="${y + 4}" font-size="9" text-anchor="end" fill="#777">${pct * 100}%</text>`;
       });
 
-      // 100%積み上げポリゴンを背面の生物種から順に生成
       for (let i = speciesList.length - 1; i >= 0; i--) {
         const sp = speciesList[i];
         const currentPoints = speciesLayers[sp];
         
         let polygonPoints = [];
-        // 上のライン（左から右へ）
         currentPoints.forEach(p => { polygonPoints.push(`${p.x},${p.y}`); });
         
-        // 下のライン（右から左へ戻る）
         if (i === 0) {
-          // 一番下の層（Arabidopsis）の床は常にグラフの底辺
           for (let j = currentPoints.length - 1; j >= 0; j--) {
             polygonPoints.push(`${currentPoints[j].x},${paddingTop + chartHeight}`);
           }
         } else {
-          // 2層目以降の床は、1つ下の層の天井ライン
           const prevPoints = speciesLayers[speciesList[i - 1]];
           for (let j = prevPoints.length - 1; j >= 0; j--) {
             polygonPoints.push(`${prevPoints[j].x},${prevPoints[j].y}`);
@@ -998,8 +996,7 @@
       }
       svgHtml += `</svg>`;
 
-      // 🛠️ 【新設計】凡例（レジェンド）をプロットの外（コンテナ内）へ大きく綺麗に並べる
-      let legendHtml = `<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-top:12px; padding:8px 0; border-top:1px solid #eee;">`;
+      let legendHtml = `<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-top:4px; padding:8px 0; border-top:1px solid #eee;">`;
       speciesList.forEach(sp => {
         legendHtml += `
           <div style="display:flex; align-items:center; gap:6px;">
@@ -1009,8 +1006,8 @@
       });
       legendHtml += `</div>`;
 
-      // コンテナへの流し込み（グラフSVG + 独立した凡例HTML）
-      container.innerHTML =  legendHtml + svgHtml;
+      // グラフの枠外に綺麗に出力
+      container.innerHTML = legendHtml + svgHtml;
     }
 
     // 案C: 時代別ワードクラウド（ピュアHTML/CSS Flexboxによる超軽量アプローチ）
