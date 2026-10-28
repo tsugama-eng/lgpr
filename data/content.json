@@ -3728,7 +3728,7 @@
         "rm:modifier_type": "",
         "research_project_title.ja": "トウジンビエの「コンパクトな穂」の形成を制御する遺伝子の同定と機能解析 ",
         "research_project_title.en": "Identification and Functional Analysis of the Gene Controlling \"Compact Panicle\" Formation in Pearl Millet",
-        "investigators.ja": "[{\"name\":\"神原 昂太\"}",
+        "investigators.ja": "[{\"name\":\"神原 昂太\"}]",
         "offer_organization.ja": "日本学術振興会",
         "offer_organization.en": "Japan Society for the Promotion of Science",
         "system_name.ja": "科学研究費助成事業",
@@ -4188,7 +4188,7 @@
         "rm:modifier_type": "",
         "research_project_title.ja": "「麦踏み」応答を司る分子機構の解明",
         "research_project_title.en": "Elucidation of the Molecular Mechanisms Governing the Response to \"Mugifumi\" in Wheat",
-        "investigators.ja": "[{\"name\":\"神原 昂太\"}",
+        "investigators.ja": "[{\"name\":\"神原 昂太\"}]",
         "offer_organization.ja": "公益財団法人日本科学協会",
         "offer_organization.en": "Nippon Science Foundation",
         "system_name.ja": "笹川科学研究助成",
@@ -4945,5 +4945,339 @@
       "description": "Our University 私達の大学",
       "link": "https://www.u-tokyo.ac.jp/en/index.html"
     }
-  ]
+  ],
+  "topCharts": {
+    "speciesTrend": [
+      {
+        "year": 2009,
+        "Arabidopsis": 0,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 0,
+        "Rice": 1,
+        "total": 2
+      },
+      {
+        "year": 2011,
+        "Arabidopsis": 1,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 0,
+        "Rice": 0,
+        "total": 1
+      },
+      {
+        "year": 2012,
+        "Arabidopsis": 5,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 0,
+        "Rice": 0,
+        "total": 5
+      },
+      {
+        "year": 2013,
+        "Arabidopsis": 3,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 0,
+        "Rice": 0,
+        "total": 3
+      },
+      {
+        "year": 2014,
+        "Arabidopsis": 2,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 0,
+        "Rice": 0,
+        "total": 2
+      },
+      {
+        "year": 2016,
+        "Arabidopsis": 2,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 0,
+        "Rice": 0,
+        "total": 2
+      },
+      {
+        "year": 2017,
+        "Arabidopsis": 0,
+        "Asparagus": 1,
+        "Buckwheat": 0,
+        "Millet": 0,
+        "Rice": 0,
+        "total": 2
+      },
+      {
+        "year": 2018,
+        "Arabidopsis": 3,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 2,
+        "Rice": 0,
+        "total": 7
+      },
+      {
+        "year": 2019,
+        "Arabidopsis": 2,
+        "Asparagus": 1,
+        "Buckwheat": 0,
+        "Millet": 1,
+        "Rice": 0,
+        "total": 3
+      },
+      {
+        "year": 2020,
+        "Arabidopsis": 3,
+        "Asparagus": 1,
+        "Buckwheat": 1,
+        "Millet": 1,
+        "Rice": 1,
+        "total": 7
+      },
+      {
+        "year": 2021,
+        "Arabidopsis": 4,
+        "Asparagus": 1,
+        "Buckwheat": 1,
+        "Millet": 3,
+        "Rice": 1,
+        "total": 5
+      },
+      {
+        "year": 2022,
+        "Arabidopsis": 1,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 1,
+        "Rice": 1,
+        "total": 4
+      },
+      {
+        "year": 2023,
+        "Arabidopsis": 1,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 2,
+        "Rice": 1,
+        "total": 3
+      },
+      {
+        "year": 2024,
+        "Arabidopsis": 5,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 6,
+        "Rice": 0,
+        "total": 8
+      },
+      {
+        "year": 2025,
+        "Arabidopsis": 1,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 1,
+        "Rice": 0,
+        "total": 2
+      },
+      {
+        "year": 2026,
+        "Arabidopsis": 0,
+        "Asparagus": 0,
+        "Buckwheat": 0,
+        "Millet": 3,
+        "Rice": 1,
+        "total": 12
+      }
+    ],
+    "wordCloud": [
+      {
+        "period": "2009-2015",
+        "keywords": [
+          {
+            "text": "VIP1",
+            "count": 4
+          },
+          {
+            "text": "AGB1",
+            "count": 4
+          },
+          {
+            "text": "Interact",
+            "count": 6
+          },
+          {
+            "text": "Drought",
+            "count": 1
+          },
+          {
+            "text": "Signal",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "period": "2015-2018",
+        "keywords": [
+          {
+            "text": "Interact",
+            "count": 1
+          },
+          {
+            "text": "VIP1",
+            "count": 2
+          }
+        ]
+      },
+      {
+        "period": "2018-2024",
+        "keywords": [
+          {
+            "text": "Mechanical",
+            "count": 6
+          },
+          {
+            "text": "Transcription factor",
+            "count": 11
+          },
+          {
+            "text": "Drought",
+            "count": 3
+          },
+          {
+            "text": "GWAS",
+            "count": 1
+          },
+          {
+            "text": "Overexpress",
+            "count": 3
+          },
+          {
+            "text": "Mutant",
+            "count": 4
+          },
+          {
+            "text": "Interact",
+            "count": 6
+          },
+          {
+            "text": "Signal",
+            "count": 7
+          },
+          {
+            "text": "NGS",
+            "count": 2
+          },
+          {
+            "text": "Pollen",
+            "count": 4
+          },
+          {
+            "text": "VIP1",
+            "count": 7
+          },
+          {
+            "text": "System",
+            "count": 2
+          },
+          {
+            "text": "Database",
+            "count": 2
+          },
+          {
+            "text": "PCR",
+            "count": 2
+          },
+          {
+            "text": "Edit",
+            "count": 1
+          },
+          {
+            "text": "Tool",
+            "count": 1
+          }
+        ]
+      },
+      {
+        "period": "2024-",
+        "keywords": [
+          {
+            "text": "GWAS",
+            "count": 1
+          },
+          {
+            "text": "PCR",
+            "count": 3
+          },
+          {
+            "text": "NGS",
+            "count": 6
+          },
+          {
+            "text": "Transcription factor",
+            "count": 5
+          },
+          {
+            "text": "Interact",
+            "count": 3
+          },
+          {
+            "text": "RNA-Seq",
+            "count": 3
+          },
+          {
+            "text": "Browser",
+            "count": 1
+          },
+          {
+            "text": "Signal",
+            "count": 4
+          },
+          {
+            "text": "Edit",
+            "count": 1
+          },
+          {
+            "text": "CRISPR",
+            "count": 1
+          },
+          {
+            "text": "System",
+            "count": 3
+          },
+          {
+            "text": "Tool",
+            "count": 2
+          },
+          {
+            "text": "Drought",
+            "count": 5
+          },
+          {
+            "text": "VIP1",
+            "count": 3
+          },
+          {
+            "text": "Overexpress",
+            "count": 4
+          },
+          {
+            "text": "Mechanical",
+            "count": 3
+          },
+          {
+            "text": "Mutant",
+            "count": 3
+          },
+          {
+            "text": "Database",
+            "count": 2
+          }
+        ]
+      }
+    ]
+  }
 }
