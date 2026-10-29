@@ -234,8 +234,8 @@
         </div>
 
         <div style="display: flex; gap: 15px; justify-content: center; align-items: center; width: 100%; margin-top: 20px;">
-          <img src="https://lh3.googleusercontent.com/d/1BLqo2EOTRMtNcs4cEBiif5jH1Hb8AmhV" alt="ICRISAT_Field_Day_2026" style="width: 50%; height: 275px; object-fit: cover;" title="ICRISAT Pearl Millet Field Day 2026">
-          <img src="https://lh3.googleusercontent.com/d/1QZVoqggiSMuElEmZ6vKWhJ8PYHDdO2QO" alt="IPB_Students_Visit_2024" style="width: 50%; height: 275px; object-fit: cover;" title="Sakura Science Program 2024 with IPB University Students">
+          <img src="https://lh3.googleusercontent.com/d/1BLqo2EOTRMtNcs4cEBiif5jH1Hb8AmhV" alt="ICRISAT_Field_Day_2026" style="width: 50%; height: 275px; object-fit: cover;" title="ICRISAT Pearl Millet Field Day 2026" loading="lazy">
+          <img src="https://lh3.googleusercontent.com/d/1QZVoqggiSMuElEmZ6vKWhJ8PYHDdO2QO" alt="IPB_Students_Visit_2024" style="width: 50%; height: 275px; object-fit: cover;" title="Sakura Science Program 2024 with IPB University Students" loading="lazy">
         </div>
        
         <div class="subhead"><p><span><b>Contact Information</b></span></p></div>
@@ -499,13 +499,13 @@
               if (m.pic2) {
                 mediaHtml += `<div class="portrait-container">`;
                 if (m.pic3 && m.pic3.trim() !== '' && m.pic3.match(/\w/)) {
-                  mediaHtml += `<img src="${m.pic3}" alt="${m.name_en}" class="hover-pic">`;
+                  mediaHtml += `<img src="${m.pic3}" alt="${m.name_en}" class="hover-pic" loading="lazy">`;
                 }
-                mediaHtml += `<img src="${m.pic2}" alt="${m.name_en}" class="main-pic">`;
+                mediaHtml += `<img src="${m.pic2}" alt="${m.name_en}" class="main-pic" loading="lazy">`;
                 mediaHtml += `</div>`;
               }
             }
-            if (m.pic1) mediaHtml += `<img src="${m.pic1}" class="nationalflag" alt="flag">`;
+            if (m.pic1) mediaHtml += `<img src="${m.pic1}" class="nationalflag" alt="flag" loading="lazy">`;
             mediaHtml += '</div>';
       
             if (!isAlumni && !isCollaborator && currentDiv) {
