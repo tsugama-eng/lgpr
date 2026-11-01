@@ -236,10 +236,11 @@
 
      <ul class="menu">
        <a href="#top" onclick="switchPage('top')" class="current"><li>Our Lab</li></a>
-       <a href="#topics" onclick="switchPage('topics')"><li>Topics</li></a>
        <a href="#people" onclick="switchPage('people')"><li>People</li></a>
+       <a href="#topics" onclick="switchPage('topics')"><li>Topics</li></a>
        <a href="#papers" onclick="switchPage('papers')"><li>Papers</li></a>
        <a href="#honors" onclick="switchPage('honors')"><li>Honors</li></a>
+       <a href="#events" onclick="switchPage('events')"><li>Events</li></a> <!-- 💡ここを追記 -->
        <a href="#links" onclick="switchPage('links')"><li>Links</li></a>
      </ul>
 
@@ -351,7 +352,19 @@
          <span id="Japanese_topics" class="language" onclick="switchLangSections('ja', 'topics')">Japanese</span>
        </p>
        <div class="subhead"><p><span><b>Research Topics</b> / <b>研究テーマ</b></span></p></div>
-       <div id="topics-content" class="topics-grid">Loading Topics...</div>
+       <!-- 💡 カードグリッドスタイルを適用 -->
+       <div id="topics-content" class="project-grid">Loading Topics...</div>
+     </div>
+
+     <!-- 2.5 Events セクション -->
+     <div id="events" class="detail" style="display:none;">
+       <p class="language_sel">
+         <span id="English_events" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="switchLangSections('en', 'events')">English</span>
+         <span id="Japanese_events" class="language" onclick="switchLangSections('ja', 'events')">Japanese</span>
+       </p>
+       <div class="subhead"><p><span><b>Lab Events</b> / <b>研究室の活動履歴</b></span></p></div>
+       <!-- 💡 カードグリッドスタイルを適用 -->
+       <div id="events-content" class="project-grid">Loading Events...</div>
      </div>
 
      <div id="people" class="detail" style="display:none;">
