@@ -1,0 +1,509 @@
+/* ==========================================================================
+   1. GLOBAL STYLES & VARIABLES (テック×バイオの世界観)
+   ========================================================================== */
+:root {
+  --bg-main: #ffffff;
+  --bg-sub: #f8f9fa;
+  --text-main: #1a1a1a;
+  --text-sub: #666666;
+  --color-bio: #00b074;      /* 植物・生命力を表す鮮やかなグリーン */
+  --color-tech: #0070f3;     /* データ・計算（ドライ）を表すサイアンブルー */
+  --color-border: #eef2f5;
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "JetBrains Mono", "Fira Code", "Courier New", monospace; /* ドライ要素用 */
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-main);
+  color: var(--text-main);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   2. HEADER & NAVIGATION (研究室トップ)
+   ========================================================================== */
+#title {
+  padding: 30px 4%;
+  background: var(--bg-main);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+#title h1 {
+  font-size: 1.8rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+  line-height: 1.2;
+}
+
+#subtitle {
+  display: block;
+  font-size: 0.95rem;
+  color: var(--color-tech);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  margin-top: 5px;
+}
+
+#title img {
+  height: 80px;
+  width: auto;
+  border-radius: 50%; /* ロゴを丸型にして今風に */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+#titleborder {
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-bio), var(--color-tech)); /* 2つの融合を表現 */
+  width: 100%;
+}
+
+/* ナビゲーションメニュー (古いfloatを全廃し、Flexboxで一列/折り返しに) */
+ul.menu {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 15px 4%;
+  list-style: none;
+  background: var(--bg-sub);
+  border-bottom: 1px solid var(--color-border);
+}
+
+ul.menu a {
+  flex: 1;
+  min-width: 100px;
+  text-decoration: none;
+}
+
+ul.menu li {
+  padding: 10px 0;
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-sub);
+  background: var(--bg-main);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+ul.menu li:hover {
+  color: var(--color-bio);
+  border-color: var(--color-bio);
+  background: #f0fbf7;
+  cursor: pointer;
+}
+
+ul.menu a.current li {
+  color: #ffffff;
+  background: var(--color-bio);
+  border-color: var(--color-bio);
+}
+
+/* ==========================================================================
+   3. LAYOUT & CONTENT BLOCKS (メイン領域)
+   ========================================================================== */
+div.detail {
+  padding: 40px 4%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* セクションの見出し */
+div.subhead {
+  margin-bottom: 25px;
+  margin-top: 30px;
+}
+
+div.subhead p {
+  border-bottom: 2px solid var(--color-border);
+  padding-bottom: 8px;
+  display: flex;
+  align-items: center;
+}
+
+div.subhead p span {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-main);
+  position: relative;
+}
+
+div.subhead p span::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: var(--color-bio);
+}
+
+/* テキスト文章 */
+div.texts p {
+  font-size: 1.05rem;
+  color: #333333;
+  margin-bottom: 15px;
+  text-align: justify;
+}
+
+/* ==========================================================================
+   4. PEOPLE SECTION (メンバー紹介 - JS変更なしでGrid対応)
+   ========================================================================== */
+.member-container {
+  display: flex;
+  flex-direction: column;
+  gap: 35px;
+  margin-top: 25px;
+}
+
+/* 究極のデトックス: 旧絶対配置(absolute)を全廃、GridでPC/スマホ自動可変 */
+.member-card {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 30px;
+  background: var(--bg-sub);
+  padding: 25px;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  align-items: start;
+}
+
+@media (min-width: 769px) {
+  .member-card {
+    grid-template-columns: 200px 1fr; /* PCでは写真固定、右側可変 */
+  }
+}
+
+.portrait-container {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.portrait-container img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: opacity 0.3s ease;
+}
+
+.portrait-container img.main-pic { z-index: 2; }
+.portrait-container:hover img.main-pic { opacity: 0; }
+
+.member-header {
+  border-left: 4px solid var(--color-bio);
+  padding-left: 15px;
+  margin-bottom: 15px;
+}
+
+.member-name-en { font-size: 1.4rem; font-weight: 700; margin-right: 10px; color: var(--text-main); }
+.member-title-en { font-size: 0.9rem; color: var(--text-sub); font-family: var(--font-mono); }
+.member-name-ja { font-size: 1.1rem; color: #444; font-weight: 600; }
+.member-title-ja { font-size: 0.85rem; color: var(--text-sub); }
+
+.member-intro-list {
+  background: var(--bg-main);
+  border: 1px solid var(--color-border);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* サブメンバー（共同研究者・アルムニ）のカード */
+.sub-member-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+.sub-member-card {
+  background: var(--bg-main);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+  transition: transform 0.2s;
+}
+.sub-member-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--color-bio);
+}
+
+/* ==========================================================================
+   5. PAPERS & DASHBOARD (論文と可視化グラフ)
+   ========================================================================== */
+.dashboard-card {
+  background: var(--bg-main);
+  border: 1px solid var(--color-border);
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+  margin-bottom: 25px;
+}
+
+.dashboard-card h3 {
+  font-size: 1.15rem;
+  color: var(--text-main);
+  margin-bottom: 15px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dashboard-card h3::before {
+  content: '';
+  display: inline-block;
+  width: 4px;
+  height: 16px;
+  background: var(--color-tech);
+  border-radius: 2px;
+}
+
+.summary-bar {
+  background: #f0f7ff;
+  border-left: 5px solid var(--color-tech);
+  color: #1e40af;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+}
+
+/* 論文検索窓 */
+.search-box {
+  width: 100%;
+  padding: 12px 16px !important;
+  border: 1px solid var(--color-border);
+  background: var(--bg-sub);
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: all 0.2s;
+}
+.search-box:focus {
+  outline: none;
+  border-color: var(--color-tech);
+  background: var(--bg-main);
+  box-shadow: 0 0 0 3px rgba(0, 112, 243, 0.1);
+}
+
+/* ハッシュタグボタン */
+.filter-tags .tag-btn {
+  background: var(--bg-sub);
+  color: var(--text-sub);
+  border: 1px solid var(--color-border);
+  padding: 6px 14px;
+  margin: 0 6px 8px 0;
+  border-radius: 20px;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filter-tags .tag-btn:hover, .filter-tags .tag-btn.active {
+  background: var(--color-tech);
+  color: #ffffff;
+  border-color: var(--color-tech);
+  box-shadow: 0 4px 10px rgba(0, 112, 243, 0.2);
+}
+
+/* 論文リスト（美しくスリムな学術的リスト） */
+div.detail ol#papers-list {
+  margin-left: 20px;
+}
+
+div.detail ol#papers-list li {
+  font-size: 1rem;
+  margin-bottom: 18px;
+  padding-bottom: 14px;
+  border-bottom: 1px dashed var(--color-border);
+  color: #333;
+}
+
+div.detail ol#papers-list li strong {
+  color: var(--text-main);
+  display: block;
+  margin-bottom: 4px;
+  line-height: 1.4;
+}
+
+/* DOIリンクのバッジ化 */
+div.detail ol#papers-list a {
+  color: var(--color-tech);
+  text-decoration: none;
+  font-weight: 500;
+}
+div.detail ol#papers-list a:hover {
+  text-decoration: underline;
+}
+
+/* ==========================================================================
+   6. NEWS TIMELINE & TOPICS (お知らせ・研究テーマ)
+   ========================================================================== */
+.news-timeline-item {
+  border-bottom: 1px solid var(--color-border) !important;
+  padding: 16px 10px !important;
+  background: var(--bg-main);
+  border-radius: 8px;
+  transition: background 0.2s;
+}
+
+.news-timeline-item:hover {
+  background: var(--bg-sub);
+}
+
+.news-date {
+  font-family: var(--font-mono);
+  font-size: 0.85rem !important;
+}
+
+/* ニュースのカテゴリバッジを洗練 */
+.news-badge-papers { background: #e0f2fe; color: #0369a1; border-radius: 4px; font-weight: 600; }
+.news-badge-people { background: #f3e8ff; color: #6b21a8; border-radius: 4px; font-weight: 600; }
+.news-badge-events { background: #dcfce7; color: #166534; border-radius: 4px; font-weight: 600; }
+.news-badge-general { background: #f1f5f9; color: #475569; border-radius: 4px; font-weight: 600; }
+
+/* 研究テーマ・イベントのグリッドカード */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 25px;
+}
+
+.project-card {
+  border-radius: 12px !important;
+  border: 1px solid var(--color-border) !important;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.02) !important;
+  background: var(--bg-main);
+}
+
+.project-card.clickable:hover {
+  transform: translateY(-4px) !important;
+  box-shadow: 0 12px 24px rgba(0,0,0,0.08) !important;
+  border-color: var(--color-bio) !important;
+}
+
+/* Google Maps コンテナ */
+.gmap {
+  width: 100% !important;
+  height: 400px !important;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  margin-top: 20px;
+}
+
+/* ==========================================================================
+   7. MODAL POPUP (詳細表示モーダル)
+   ========================================================================== */
+.modal-window {
+  border-radius: 16px !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.3) !important;
+}
+
+.modal-title {
+  border-bottom: 2px solid var(--color-bio) !important;
+}
+
+.detail-page-back-btn {
+  background: var(--bg-sub) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 6px !important;
+  color: var(--text-main);
+  padding: 6px 14px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  display: inline-block;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.detail-page-back-btn:hover {
+  background: var(--text-main) !important;
+  color: #ffffff !important;
+  border-color: var(--text-main) !important;
+}
+
+/* モーダル内の言語トグルボタン */
+.modal-lang-toggle .language {
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* ==========================================================================
+   8. CLEANUP & UTILITIES (旧レスポンシブの互換性維持)
+   ========================================================================== */
+/* 不要になったfloat等の表示崩れ対策・不要な要素の非表示制御 */
+.extra {
+  display: inline;
+}
+
+.hidden {
+  display: none;
+}
+
+@media screen and (max-width: 768px) {
+  .extra {
+    display: none; /* スマホ・タブレット幅ではタイトルの余剰文字をスッキリ非表示に */
+  }
+}
+
+/* アニメーションキーフレーム (既存の構造を維持) */
+@keyframes imgPassToLeft {
+  0%     { left: 0%; opacity: 0; }
+  2%     { left: 0%; opacity: 1; }
+  14.66% { left: 0%; opacity: 1; }
+  16.65% { left: 0%; opacity: 0; }
+  16.66% { left: -100%; opacity: 0; }
+  18.66% { left: -100%; opacity: 1; } 
+  31.33% { left: -100%; opacity: 1; }
+  33.32% { left: -100%; opacity: 0; }
+  33.33% { left: -200%; opacity: 0; }
+  35.33% { left: -200%; opacity: 1; }
+  48%    { left: -200%; opacity: 1; }
+  49.99% { left: -200%; opacity: 0; }
+  50%    { left: -300%; opacity: 0; }
+  52%    { left: -300%; opacity: 1; }
+  64.66% { left: -300%; opacity: 1; } 
+  66.65% { left: -300%; opacity: 0; }
+  66.66% { left: -400%; opacity: 0; }
+  68.66% { left: -400%; opacity: 1; }
+  81.33% { left: -400%; opacity: 1; }
+  83.32% { left: -400%; opacity: 0; }
+  83.33% { left: -500%; opacity: 0; }
+  85.33% { left: -500%; opacity: 1; }
+  98%    { left: -500%; opacity: 1; }
+  99.99% { left: -500%; opacity: 0; }
+  100%   { left: 0%; opacity: 0; }
+}
+
+@keyframes transbullet {
+  0%     { left: -750%; }
+  16.66% { left: -625%; }
+  33.33% { left: -500%; }
+  50%    { left: -375%; }
+  66.66% { left: -250%; }
+  83.33% { left: -125%; }
+  100%   { left: -750%; }
+}
+
