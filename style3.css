@@ -213,11 +213,11 @@ ul.menu a {
 
     text-decoration:none;
 
-    color:#333333;
+    color:#333;
 
-    background:#f3f3f3;
+    background:#f5f5f5;
 
-    border:1px solid #d8d8d8;
+    border:1px solid #ddd;
 }
 
 ul.menu a:hover {
@@ -229,7 +229,7 @@ ul.menu a:hover {
 
 ul.menu a.current {
 
-    background:#222222;
+    background:#2e7d32;
 
     color:#ffffff;
 }
@@ -585,14 +585,6 @@ body {
 }
 
 ul.menu {
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  float:none;
-  height:auto;
-}
-
-ul.menu {
 
     display:flex;
 
@@ -630,11 +622,11 @@ ul.menu a {
 
     text-decoration:none;
 
-    color:#333333;
+    color:#333;
 
-    background:#f3f3f3;
+    background:#f5f5f5;
 
-    border:1px solid #d8d8d8;
+    border:1px solid #ddd;
 }
 
 ul.menu a:hover {
@@ -646,7 +638,7 @@ ul.menu a:hover {
 
 ul.menu a.current {
 
-    background:#222222;
+    background:#2e7d32;
 
     color:#ffffff;
 }
