@@ -326,12 +326,16 @@
       width: 100%;
       margin-bottom: 25px;
     }
+
+    /* 💡 トップのメイン画像用スタイル（画像を一切削らず全部表示する） */
     .detail-page-main-image-wrapper img {
       width: 100%;
-      max-height: 400px;
-      object-fit: cover;
+      height: auto;           /* max-height指定による縦の削れを防止 */
+      max-height: 500px;      /* 縦に長すぎる画像の場合のセーフティ */
+      object-fit: contain;    /* 💡 coverからcontainに変更してトリミングを完全に防止 */
       border-radius: 8px;
       border: 1px solid #ddd;
+      background: #fdfdfd;    /* 余白ができる場合の軽い背景色 */
     }
 
     /* 📸 本文の下に配置するサブ画像用横並びギャラリー（横に2枚並べる） */
@@ -772,13 +776,12 @@
       });
     }
 
-    // 💡 修正：Topics詳細画面（トップにメイン1枚、本文の後にサブ画像を横並びで配置）
+    // 💡 修正：Topics詳細（メイン画像全体表示＆サムネ使い回し排除版）
     window.showTopicDetailPage = function(idx) {
       const t = globalTopicsData[idx];
       const listView = document.getElementById('topics-list-view');
       const detailView = document.getElementById('topics-detail-page');
       
-      // ① トップに配置するメイン画像（pic_main）
       let mainImgHtml = '';
       if (t.pic_main && t.pic_main.match(/\w/)) {
         mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${t.pic_main}"><img src="${t.pic_main}" alt="Main Image"></a></div>`;
@@ -786,27 +789,19 @@
 
       const bodyText = (currentLang === 'ja') ? (t.body_ja || t.summary) : (t.body_en || t.summary);
 
-      // ② 本文の後に配置するサブ画像群（pic_sub や pic_thumb をコンマ区切りで分解して展開）
+      // 💡 変更点：純粋に pic_sub にデータがある場合のみ、本文の後に展開（使い回しを禁止）
       let subImgsHtml = '';
-      let subImagesArray = [];
-      
       if (t.pic_sub && t.pic_sub.trim() !== '') {
-        subImagesArray = t.pic_sub.split(',').map(url => url.trim()).filter(url => url !== '' && url !== t.pic_main);
-      }
-      // もし pic_thumb もあればサブ画像リストの末尾に結合
-      if (t.pic_thumb && t.pic_thumb.match(/\w/) && t.pic_thumb !== t.pic_main && !subImagesArray.includes(t.pic_thumb)) {
-        subImagesArray.push(t.pic_thumb);
-      }
-
-      if (subImagesArray.length > 0) {
-        subImgsHtml = '<div class="detail-sub-image-gallery">';
-        subImagesArray.forEach(url => {
-          subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img src="${url}" alt="Sub Image"></a>`;
-        });
-        subImgsHtml += '</div>';
+        const subImagesArray = t.pic_sub.split(',').map(url => url.trim()).filter(url => url !== '' && url !== t.pic_main);
+        if (subImagesArray.length > 0) {
+          subImgsHtml = '<div class="detail-sub-image-gallery">';
+          subImagesArray.forEach(url => {
+            subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img src="${url}" alt="Sub Image"></a>`;
+          });
+          subImgsHtml += '</div>';
+        }
       }
 
-      // 🔍 関連論文の自動マッチング
       let refPapersHtml = '';
       if (t.references && t.references.trim() !== '') {
         const keywords = t.references.split(',').map(k => k.trim().toLowerCase()).filter(k => k !== '');
@@ -855,7 +850,7 @@
       document.getElementById('topics-detail-page').style.display = 'none';
     };
 
-    // 💡 新設：Eventsの通常ページ風・詳細画面のレンダリング
+    // 💡 修正：Events詳細（メイン画像全体表示＆サムネ使い回し排除版）
     window.showEventDetailPage = function(idx) {
       const e = globalEventsData[idx];
       const listView = document.getElementById('events-list-view');
@@ -868,21 +863,17 @@
 
       const bodyText = (currentLang === 'ja') ? (e.body_ja || e.summary) : (e.body_en || e.summary);
 
+      // 💡 変更点：純粋に pic_sub にデータがある場合のみ、本文の後に展開（使い回しを禁止）
       let subImgsHtml = '';
-      let subImagesArray = [];
       if (e.pic_sub && e.pic_sub.trim() !== '') {
-        subImagesArray = e.pic_sub.split(',').map(url => url.trim()).filter(url => url !== '' && url !== e.pic_main);
-      }
-      if (e.pic_thumb && e.pic_thumb.match(/\w/) && e.pic_thumb !== e.pic_main && !subImagesArray.includes(e.pic_thumb)) {
-        subImagesArray.push(e.pic_thumb);
-      }
-
-      if (subImagesArray.length > 0) {
-        subImgsHtml = '<div class="detail-sub-image-gallery">';
-        subImagesArray.forEach(url => {
-          subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img src="${url}"></a>`;
-        });
-        subImgsHtml += '</div>';
+        const subImagesArray = e.pic_sub.split(',').map(url => url.trim()).filter(url => url !== '' && url !== e.pic_main);
+        if (subImagesArray.length > 0) {
+          subImgsHtml = '<div class="detail-sub-image-gallery">';
+          subImagesArray.forEach(url => {
+            subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img src="${url}"></a>`;
+          });
+          subImgsHtml += '</div>';
+        }
       }
 
       detailView.innerHTML = `
