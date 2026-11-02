@@ -391,6 +391,49 @@
     .news-badge-events { background: #4CAF50; color: white; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
     .news-badge-general { background: #777777; color: white; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
 
+    /* 新しいNewsの縦並びリストスタイル */
+    .news-list-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+    .news-timeline-item {
+      display: flex;
+      gap: 20px;
+      padding: 12px 15px;
+      border-bottom: 1px dashed #ddd;
+      transition: background-color 0.2s;
+    }
+    .news-timeline-item[style*="cursor: pointer"]:hover {
+      background-color: #f9fdf9; /* クリック可能なイベント等はホバーで薄く緑化 */
+    }
+    .news-meta-inline {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+      min-width: 100px;
+      flex-shrink: 0;
+    }
+    .news-date {
+      font-size: 0.9rem;
+      color: #666;
+      font-weight: bold;
+    }
+    .news-body-inline {
+      flex-grow: 1;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #333;
+    }
+    /* スマホ表示（幅狭画面）時は日付と本文を縦並びに */
+    @media (max-width: 768px) {
+      .news-timeline-item { flex-direction: column; gap: 8px; }
+      .news-meta-inline { flex-direction: row; align-items: center; gap: 10px; }
+    }
+    
   </style>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -533,7 +576,7 @@
            <span id="Japanese_news" class="language" onclick="switchLangSections('ja', 'news')">Japanese</span>
          </p>
          <div class="subhead"><p><span><b>News</b> / <b>お知らせ</b></span></p></div>
-         <div id="news-content" class="project-grid">Loading News...</div>
+         <div id="news-content" class="news-list-timeline">Loading News...</div>
        </div>
        <!-- 通常ページ風の詳細画面用コンテナ -->
        <div id="news-detail-page" style="display:none;"></div>
@@ -1167,23 +1210,20 @@
         return;
       }
 
-      newsList.forEach((n, idx) => {
+     newsList.forEach((n, idx) => {
         const title = n.title || "Notice";
         const cat = (n.category || "General").trim();
         const catLower = cat.toLowerCase();
         
-        // 💡 対策2: Papers と People は詳細リンクを持たせない（static）、それ以外は clickable
         const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
-        const cardClass = isClickable ? "project-card clickable" : "project-card static";
         const clickAttribute = isClickable ? `onclick="showNewsDetailPage(${idx})"` : "";
+        const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
 
-        // カテゴリ別にバッジの色情報を変動させる
         let badgeClass = "news-badge-general";
         if(catLower.includes("paper")) badgeClass = "news-badge-papers";
         if(catLower.includes("people")) badgeClass = "news-badge-people";
         if(catLower.includes("event")) badgeClass = "news-badge-events";
 
-        // 💡 対策1: JSONパース崩れの安全処理（[{"name":"..."}] 形式の文字列が迷い込んだ場合の救済）
         let summaryHtml = n.summary || "";
         if (summaryHtml.includes('[{"name":')) {
           try {
@@ -1212,16 +1252,14 @@
           }
         }
 
-        // 💡 対策3: `img` タグ（ロゴ）を完全に廃止し、すっきりとした縦並びテキストカードに
         container.innerHTML += `
-          <div class="${cardClass}" ${clickAttribute}>
-            <div class="card-content" style="padding: 20px;">
-              <div class="news-date-area">
-                <span class="${badgeClass}">${cat}</span>
-                <span>${n.date || ''}</span>
-              </div>
-              <h3 class="card-title" style="border-bottom:none; padding-bottom:0; font-size:1.15rem; margin-bottom:12px;">${title}</h3>
-              <div class="card-summary" style="margin-bottom:0; font-size:0.95rem; color:#444; line-height:1.6;">${summaryHtml}</div>
+          <div class="news-timeline-item" ${clickAttribute} style="${cursorStyle}">
+            <div class="news-meta-inline">
+              <span class="news-date">${n.date || ''}</span>
+              <span class="${badgeClass}">${cat}</span>
+            </div>
+            <div class="news-body-inline">
+              <div class="news-summary-text">${summaryHtml}</div>
             </div>
           </div>
         `;
