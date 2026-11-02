@@ -920,20 +920,29 @@
       if (type === 'event') showEventDetailPage(idx);
     };
 
-    // 全データの非同期読み込みメイン処理
+    // --- メインデータロード関数の拡張対応版 ---
     async function loadLabData() {
       try {
-        const response = await fetch("data/content.json");
-        const data = await response.json();
+        // 💡 【追記・変更】 Promise.all を使い、content.json と news.json を同時に並列読み込みする
+        const [contentRes, newsRes] = await Promise.all([
+          fetch("data/content.json"),
+          fetch("data/news.json")
+        ]);
+        
+        const data = await contentRes.json();
+        const newsData = await newsRes.json(); // 💡【追記】
     
         if (document.getElementById('last-update')) {
           document.getElementById('last-update').innerText = "Last update: " + data.lastUpdate;
         }
-    
-        // データのメモリ保持
+
+        // グローバルメモリへ格納
         globalPapersData = data.papers || [];
         globalTopicsData = data.topics || [];
         globalEventsData = data.events || [];
+        
+        // 💡 【追記】 分離されたNewsシート由来のデータをグローバル配列に保持
+        window.globalNewsData = newsData.news || [];
 
         // --- 👥 メンバー情報の描画 (完全維持) ---
         const currentDiv = document.getElementById('current-members');
