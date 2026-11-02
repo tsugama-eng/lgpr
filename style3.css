@@ -1,0 +1,321 @@
+/* =====================================================
+   LGPR Modern Theme Override v1
+   ===================================================== */
+
+:root{
+  --primary:#1f4e79;
+  --accent:#2a9d8f;
+
+  --bg:#f7f9fc;
+  --card:#ffffff;
+
+  --text:#22303c;
+  --text2:#667085;
+
+  --shadow:
+    0 2px 10px rgba(0,0,0,.05),
+    0 12px 30px rgba(0,0,0,.04);
+
+  --radius:14px;
+}
+
+
+/* =====================================================
+   body
+   ===================================================== */
+
+body{
+
+  background:var(--bg) !important;
+
+  color:var(--text);
+
+  font-family:
+    "Segoe UI",
+    "Helvetica Neue",
+    "Noto Sans JP",
+    sans-serif;
+}
+
+
+/* =====================================================
+   top title
+   ===================================================== */
+
+#title{
+
+  background:white !important;
+
+  border-left:none !important;
+
+  padding:24px 32px;
+}
+
+#title h1{
+
+  width:auto !important;
+
+  float:none !important;
+
+  font-size:2.3rem !important;
+
+  font-weight:700;
+
+  line-height:1.2;
+
+  color:var(--primary);
+}
+
+#subtitle{
+
+  color:var(--text2);
+}
+
+#titleborder{
+
+  width:100% !important;
+
+  height:4px !important;
+
+  background:
+
+  linear-gradient(
+       90deg,
+       var(--primary),
+       var(--accent)
+  ) !important;
+}
+
+
+/* =====================================================
+   menu
+   ===================================================== */
+
+ul.menu{
+
+  display:flex !important;
+
+  flex-wrap:wrap;
+
+  justify-content:center;
+
+  gap:10px;
+
+  height:auto !important;
+
+  float:none !important;
+
+  margin:20px auto 30px auto !important;
+}
+
+ul.menu li{
+
+  width:auto !important;
+
+  height:auto !important;
+
+  line-height:normal !important;
+
+  padding:10px 18px;
+
+  background:white !important;
+
+  border:none !important;
+
+  border-radius:999px;
+
+  box-shadow:var(--shadow);
+
+  transition:.2s;
+}
+
+ul.menu li:hover{
+
+  background:var(--primary) !important;
+
+  transform:translateY(-2px);
+}
+
+ul.menu li:hover{
+
+  color:white;
+}
+
+ul.menu a.current li{
+
+  background:var(--primary) !important;
+
+  color:white;
+}
+
+
+/* =====================================================
+   main
+   ===================================================== */
+
+div.detail{
+
+  width:auto !important;
+
+  max-width:1200px;
+
+  margin:auto !important;
+
+  padding-left:24px;
+
+  padding-right:24px;
+}
+
+
+/* =====================================================
+   section title
+   ===================================================== */
+
+div.subhead{
+
+  margin-top:40px;
+}
+
+div.subhead p{
+
+  border-bottom:none !important;
+
+  margin-bottom:15px;
+}
+
+div.subhead span{
+
+  font-size:1.6rem !important;
+
+  font-weight:700;
+
+  color:var(--primary);
+}
+
+
+/* =====================================================
+   cards
+   ===================================================== */
+
+.dashboard-card,
+.project-card,
+.member-card,
+.sub-member-card{
+
+  border:none !important;
+
+  border-radius:var(--radius);
+
+  box-shadow:var(--shadow);
+}
+
+
+/* =====================================================
+   topic/event
+   ===================================================== */
+
+.project-card{
+
+  transition:.25s;
+}
+
+.project-card:hover{
+
+  transform:translateY(-4px);
+
+  box-shadow:
+      0 12px 28px rgba(0,0,0,.10);
+}
+
+.card-title{
+
+  color:var(--primary) !important;
+
+  border-bottom:none !important;
+}
+
+
+/* =====================================================
+   member
+   ===================================================== */
+
+.member-card{
+
+  padding:24px !important;
+
+  background:white;
+}
+
+.member-header{
+
+  border-left:
+    5px solid var(--primary) !important;
+}
+
+.member-name-en{
+
+  color:var(--primary);
+}
+
+.member-intro-list{
+
+  background:#f8fafc !important;
+
+  border-left:
+    4px solid var(--accent);
+}
+
+
+/* =====================================================
+   news
+   ===================================================== */
+
+.news-timeline-item{
+
+  background:white;
+
+  border:none !important;
+
+  border-radius:12px;
+
+  box-shadow:var(--shadow);
+}
+
+
+/* =====================================================
+   summary
+   ===================================================== */
+
+.summary-bar{
+
+  background:white !important;
+
+  box-shadow:var(--shadow);
+
+  border-left:
+    5px solid var(--accent) !important;
+}
+
+
+/* =====================================================
+   mobile
+   ===================================================== */
+
+@media (max-width:768px){
+
+  #title h1{
+
+      font-size:1.55rem !important;
+  }
+
+  div.detail{
+
+      padding-left:10px;
+      padding-right:10px;
+  }
+
+  ul.menu{
+
+      justify-content:flex-start;
+  }
+}
