@@ -126,8 +126,8 @@
       color: #555;
       white-space: nowrap;
     }
+
     /* Topics & Events のグリッド・カードレイアウト */
-    /* 💡 最新のカードグリッドデザイン */
     .project-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -338,30 +338,32 @@
       background: #fdfdfd;    /* 余白ができる場合の軽い背景色 */
     }
 
-    /* 📸 本文の下に配置するサブ画像用横並びギャラリー（横に2枚並べる） */
+    /* 📸 修正：サブ画像も削らず全体表示（1枚なら100%、2枚なら横並び、高さはなりゆき） */
     .detail-sub-image-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* 自動で横並び、幅が狭い時は折り返し */
+      display: flex;
+      flex-wrap: wrap; /* 画面が狭いときは自動で縦並び */
       gap: 16px;
       margin-top: 25px;
       margin-bottom: 25px;
+      width: 100%;
     }
     .sub-gallery-img-link {
-      display: block;
-      width: 100%;
+      flex: 1;
+      min-width: 280px; /* 1枚のときの最小幅（これ以下になると縦並びになる） */
     }
     .sub-gallery-img-link img {
       width: 100%;
-      aspect-ratio: 16 / 9;
-      object-fit: cover;
+      height: auto;           /* 💡 縦を固定せず、比率を完全に維持 */
+      object-fit: contain;    /* 💡 画像を絶対に削らない */
       border-radius: 6px;
       border: 1px solid #eee;
+      background: #fdfdfd;
       transition: transform 0.2s;
     }
     .sub-gallery-img-link img:hover {
       transform: scale(1.02);
     }
-   
+    
     .detail-page-text {
       font-size: 1.05rem;
       line-height: 1.7;
