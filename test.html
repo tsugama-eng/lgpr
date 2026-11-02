@@ -370,6 +370,19 @@
       color: #333;
       margin-bottom: 25px;
     }
+    /* 💡 Newsカード用の固有スタイルバッジ */
+    .news-date-area {
+      font-size: 0.82rem;
+      color: #777;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .news-badge-papers { background: #2196F3; color: white; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
+    .news-badge-people { background: #9C27B0; color: white; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
+    .news-badge-events { background: #4CAF50; color: white; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
+    .news-badge-general { background: #777777; color: white; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
 
   </style>
 
@@ -399,7 +412,8 @@
        <a href="#topics" onclick="switchPage('topics')"><li>Topics</li></a>
        <a href="#papers" onclick="switchPage('papers')"><li>Papers</li></a>
        <a href="#honors" onclick="switchPage('honors')"><li>Honors</li></a>
-       <a href="#events" onclick="switchPage('events')"><li>Events</li></a> <!-- 💡ここを追記 -->
+       <a href="#events" onclick="switchPage('events')"><li>Events</li></a>
+       <a href="#news" onclick="switchPage('news')"><li>News</li></a>
        <a href="#links" onclick="switchPage('links')"><li>Links</li></a>
      </ul>
 
@@ -503,7 +517,21 @@
            <iframe class="gmap" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12954.835647249565!2d139.5316872!3d35.7333768!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ef4ef8ac7dbd%3A0x951b9a8a5816bcbc!2zMS1jaMWNbWUtMS0xIE1pZG9yaWNoxY0sIE5pc2hpdG9reW8sIFTFjWt5xY0tdG8gMTg4LTAwMDI!5e0!3m2!1sen!2sjp!4v1573127341862!5m2!1sen!2sjp" frameborder="0" style="border:0;" allowfullscreen=""></iframe>
         </div>
      </div>
-       
+
+     <!-- 💡 新設: 1.5 News セクション -->
+     <div id="news" class="detail" style="display:none;">
+       <div id="news-list-view">
+         <p class="language_sel">
+           <span id="English_news" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="switchLangSections('en', 'news')">English</span>
+           <span id="Japanese_news" class="language" onclick="switchLangSections('ja', 'news')">Japanese</span>
+         </p>
+         <div class="subhead"><p><span><b>News</b> / <b>お知らせ</b></span></p></div>
+         <div id="news-content" class="project-grid">Loading News...</div>
+       </div>
+       <!-- 通常ページ風の詳細画面用コンテナ -->
+       <div id="news-detail-page" style="display:none;"></div>
+     </div>
+    
      <!-- 2. Topics セクション -->
      <div id="topics" class="detail" style="display:none;">
        <div id="topics-list-view">
@@ -649,9 +677,10 @@
       // 対象セクションを再レンダリング
       if(section === 'topics') renderTopics(globalTopicsData, globalPapersData);
       if(section === 'events') renderEvents(globalEventsData);
+      if(section === 'news')   renderNews(window.globalNewsData); // 💡ここを追記
     }
 
-    // 💡 修正：メニュークリック時に、詳細画面を閉じて強制的に一覧（List View）に戻す
+    // 💡 修正：メニュークリック時に詳細画面をリセットして一覧（List View）に戻す
     function switchPage(pageId) {
       const pages = document.querySelectorAll('.detail');
       pages.forEach(page => page.style.display = 'none');
@@ -665,13 +694,10 @@
       const activeLink = document.querySelector(`.menu a[href="#${pageId}"]`);
       if (activeLink) activeLink.classList.add('current');
 
-      // 🔥 【追加ロジック】詳細画面を閉じて、一覧表示の状態に巻き戻す
-      if (pageId === 'topics') {
-        hideTopicDetailPage(); // トピックの詳細画面を隠してリストに戻す
-      }
-      if (pageId === 'events') {
-        hideEventDetailPage();  // イベントの詳細画面を隠してリストに戻す
-      }
+      // 詳細表示をリセット
+      if (pageId === 'topics') hideTopicDetailPage();
+      if (pageId === 'events') hideEventDetailPage();
+      if (pageId === 'news')   hideNewsDetailPage(); // 💡追記
 
       if (pageId === 'papers') {
         if (!isPapersDashboardRendered && globalPapersData.length > 0) {
@@ -1117,12 +1143,84 @@
         // --- 💡 新設コンポーネントの初期描画を実行 ---
         renderTopics(globalTopicsData, globalPapersData);
         renderEvents(globalEventsData);
-
+        renderNews(window.globalNewsData);
+        
       } catch (error) {
         console.error("データの読み込みに失敗しました:", error);
       }
     }
 
+    // 💡 新設：Newsデータを一覧カードグリッドに表示（サムネイル枠にはデフォルトでTurnipをハメる）
+    function renderNews(newsList) {
+      const container = document.getElementById('news-content');
+      if (!container) return;
+      container.innerHTML = '';
+      if(!newsList || newsList.length === 0) {
+        container.innerHTML = '<p style="color:#999; padding-left:20px;">No recent news found.</p>';
+        return;
+      }
+
+      newsList.forEach((n, idx) => {
+        const title = n.title || "Notice";
+        const summary = n.summary || "";
+        const cat = (n.category || "General").toLowerCase();
+        
+        // カテゴリ別にバッジの色情報を変動させる
+        let badgeClass = "news-badge-general";
+        if(cat.includes("paper")) badgeClass = "news-badge-papers";
+        if(cat.includes("people")) badgeClass = "news-badge-people";
+        if(cat.includes("event")) badgeClass = "news-badge-events";
+
+        container.innerHTML += `
+          <div class="project-card" onclick="showNewsDetailPage(${idx})">
+            <img src="Turnip.jpg" class="card-thumbnail" alt="News Thumbnail">
+            <div class="card-content">
+              <div class="news-date-area">
+                <span class="${badgeClass}">${n.category || 'General'}</span>
+                <span>${n.date || ''}</span>
+              </div>
+              <h3 class="card-title" style="border-bottom:none; padding-bottom:0; font-size:1.1rem;">${title}</h3>
+              <p class="card-summary" style="margin-bottom:0; font-size:0.9rem; color:#666;">${summary}</p>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // 💡 新設：Newsの通常ページ風・詳細画面の表示処理（HTMLタグパース・多言語対応）
+    window.showNewsDetailPage = function(idx) {
+      const n = window.globalNewsData[idx];
+      const listView = document.getElementById('news-list-view');
+      const detailView = document.getElementById('news-detail-page');
+
+      // 多言語による本文テキストの出し分け対応（改行とHTMLの混在を許可）
+      const bodyText = (currentLang === 'ja') ? (n.body_ja || n.summary) : (n.body_en || n.summary);
+
+      detailView.innerHTML = `
+        <div class="detail-page-view">
+          <button class="detail-page-back-btn" onclick="hideNewsDetailPage()">&larr; Back to List</button>
+          <div class="modal-lang-toggle" style="float: right; margin-top: 5px;">
+            <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('en', 'news', ${idx})">English</span>
+            <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('ja', 'news', ${idx})">Japanese</span>
+          </div>
+          <h2 style="margin-top:0; border-bottom:2px solid #4CAF50; padding-bottom:10px; margin-bottom:15px; font-size:1.5rem;">${n.title || ''}</h2>
+          <div class="card-meta" style="margin-bottom:20px;">
+            <span class="date-badge" style="background:#4169E1;">${n.date || ''}</span>
+            <span class="category-badge" style="color:#4169E1; border-color:#4169E1; background:#f4f7fc;">${n.category || 'General'}</span>
+          </div>
+          <div class="detail-page-text"><p>${bodyText}</p></div>
+        </div>
+      `;
+
+      listView.style.display = 'none';
+      detailView.style.display = 'block';
+    };
+
+    window.hideNewsDetailPage = function() {
+      document.getElementById('news-list-view').style.display = 'block';
+      document.getElementById('news-detail-page').style.display = 'none';
+    };
+    
     // 各種ヘルパー関数群
     function parseNames(jsonStr) {
       if (!jsonStr) return "";
