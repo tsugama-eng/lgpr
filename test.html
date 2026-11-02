@@ -300,6 +300,59 @@
     .project-card { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
     .project-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
 
+        /* 💡 詳細ページ（通常ページ風）のレイアウト */
+    .detail-page-view {
+      background: #ffffff;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      padding: 25px;
+      margin-top: 20px;
+    }
+    .detail-page-back-btn {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      padding: 6px 14px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 0.9rem;
+      margin-bottom: 20px;
+      display: inline-block;
+    }
+    .detail-page-back-btn:hover { background: #e0e0e0; }
+    
+    /* 📸 画像ギャラリー（メイン＋サブ画像を並べる） */
+    .detail-image-gallery {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+    .gallery-img-wrapper {
+      flex: 1;
+      min-width: 200px;
+      max-width: 100%;
+    }
+    .gallery-img-wrapper.primary {
+      flex: 2; /* メイン画像を少し大きめに */
+      min-width: 300px;
+    }
+    .gallery-img-wrapper img {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-radius: 6px;
+      border: 1px solid #ddd;
+    }
+    
+    .detail-page-text {
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: #333;
+      margin-bottom: 25px;
+    }
+
   </style>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
@@ -435,24 +488,30 @@
        
      <!-- 2. Topics セクション -->
      <div id="topics" class="detail" style="display:none;">
-       <p class="language_sel">
-         <span id="English_topics" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="switchLangSections('en', 'topics')">English</span>
-         <span id="Japanese_topics" class="language" onclick="switchLangSections('ja', 'topics')">Japanese</span>
-       </p>
-       <div class="subhead"><p><span><b>Research Topics</b> / <b>研究テーマ</b></span></p></div>
-       <!-- 💡 カードグリッドスタイルを適用 -->
-       <div id="topics-content" class="project-grid">Loading Topics...</div>
+       <div id="topics-list-view">
+         <p class="language_sel">
+           <span id="English_topics" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="switchLangSections('en', 'topics')">English</span>
+           <span id="Japanese_topics" class="language" onclick="switchLangSections('ja', 'topics')">Japanese</span>
+         </p>
+         <div class="subhead"><p><span><b>Research Topics</b> / <b>研究テーマ</b></span></p></div>
+         <div id="topics-content" class="project-grid">Loading Topics...</div>
+       </div>
+       <!-- 💡 通常ページ風の詳細画面用コンテナ -->
+       <div id="topics-detail-page" style="display:none;"></div>
      </div>
 
      <!-- 2.5 Events セクション -->
      <div id="events" class="detail" style="display:none;">
-       <p class="language_sel">
-         <span id="English_events" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="switchLangSections('en', 'events')">English</span>
-         <span id="Japanese_events" class="language" onclick="switchLangSections('ja', 'events')">Japanese</span>
-       </p>
-       <div class="subhead"><p><span><b>Lab Events</b> / <b>研究室の活動履歴</b></span></p></div>
-       <!-- 💡 カードグリッドスタイルを適用 -->
-       <div id="events-content" class="project-grid">Loading Events...</div>
+       <div id="events-list-view">
+         <p class="language_sel">
+           <span id="English_events" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="switchLangSections('en', 'events')">English</span>
+           <span id="Japanese_events" class="language" onclick="switchLangSections('ja', 'events')">Japanese</span>
+         </p>
+         <div class="subhead"><p><span><b>Lab Events</b> / <b>研究室の活動履歴</b></span></p></div>
+         <div id="events-content" class="project-grid">Loading Events...</div>
+       </div>
+       <!-- 💡 通常ページ風の詳細画面用コンテナ -->
+       <div id="events-detail-page" style="display:none;"></div>
      </div>
 
      <div id="people" class="detail" style="display:none;">
@@ -643,7 +702,7 @@
       });
     }
 
-    // 💡 修正：Topicsをコンパクトにカード化し、クリックでポップアップを開く
+    // 💡 修正：Topicsをコンパクトにカード化し、クリックで通常ページ風の詳細へ切り替える
     function renderTopics(topics, papers) {
       const container = document.getElementById('topics-content');
       if (!container) return;
@@ -655,12 +714,11 @@
 
       topics.forEach((t, idx) => {
         const title = t.title || "No Title";
-        // カードには最初の1〜2行（summary）だけを常に見せる
         const summary = t.summary || ""; 
-        const imgSrc = t.pic_thumb || t.pic_main || "Turnip.jpg";
+        const imgSrc = t.pic_thumb || t.pic_main || t.pic_sub || "Turnip.jpg";
 
         container.innerHTML += `
-          <div class="project-card" onclick="openTopicModal(${idx})">
+          <div class="project-card" onclick="showTopicDetailPage(${idx})">
             <img src="${imgSrc}" class="card-thumbnail" alt="Topic Thumbnail">
             <div class="card-content">
               <h3 class="card-title">${title}</h3>
@@ -671,7 +729,7 @@
       });
     }
 
-    // 💡 修正：Eventsをコンパクトにカード化し、クリックでポップアップを開く
+    // 💡 修正：Eventsをコンパクトにカード化し、クリックで通常ページ風の詳細へ切り替える
     function renderEvents(events) {
       const container = document.getElementById('events-content');
       if (!container) return;
@@ -684,10 +742,10 @@
       events.forEach((e, idx) => {
         const title = e.title || "No Title";
         const summary = e.summary || "";
-        const imgSrc = e.pic_thumb || e.pic_main || "Turnip.jpg";
+        const imgSrc = e.pic_thumb || e.pic_main || e.pic_sub || "Turnip.jpg";
 
         container.innerHTML += `
-          <div class="project-card" onclick="openEventModal(${idx})">
+          <div class="project-card" onclick="showEventDetailPage(${idx})">
             <img src="${imgSrc}" class="card-thumbnail" alt="Event Thumbnail">
             <div class="card-content">
               <h3 class="card-title">${title}</h3>
@@ -702,88 +760,129 @@
       });
     }
 
-    // 💡 新設：Topicsのポップアップを開く処理
-    window.openTopicModal = function(idx) {
+    // 💡 新設：Topicsの通常ページ風・詳細画面のレンダリング（論文検索バグ修正＆サブ画像活用版）
+    window.showTopicDetailPage = function(idx) {
       const t = globalTopicsData[idx];
-      const modal = document.getElementById('detail-modal');
+      const listView = document.getElementById('topics-list-view');
+      const detailView = document.getElementById('topics-detail-page');
       
-      // ポップアップ専用の日英切り替えスイッチを設置
-      let html = `
-        <div class="modal-window" onclick="event.stopPropagation()">
-          <button class="modal-close-btn" onclick="closeModal()">&times;</button>
-          <div class="modal-body">
-            <div class="modal-lang-toggle">
-              <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setModalLang('en', 'topic', ${idx})">English</span>
-              <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setModalLang('ja', 'topic', ${idx})">Japanese</span>
-            </div>
-            <h3 class="modal-title">${t.title || ''}</h3>
-            ${t.pic_main ? `<img src="${t.pic_main}" class="modal-main-img">` : ''}
-            <div class="modal-text">${currentLang === 'ja' ? (t.body_ja || t.summary) : (t.body_en || t.summary)}</div>
-            <div id="modal-refs-area"></div>
-          </div>
-        </div>
-      `;
-      modal.innerHTML = html;
-      modal.style.display = 'flex';
+      // サブ画像も含めて、存在する画像をギャラリーとして組み立て
+      let galleryHtml = '<div class="detail-image-gallery">';
+      let hasImage = false;
+      
+      if (t.pic_main && t.pic_main.match(/\w/)) {
+        galleryHtml += `<div class="gallery-img-wrapper primary"><a target="_blank" href="${t.pic_main}"><img src="${t.pic_main}" alt="Main Image"></a></div>`;
+        hasImage = true;
+      }
+      if (t.pic_thumb && t.pic_thumb.match(/\w/) && t.pic_thumb !== t.pic_main) {
+        galleryHtml += `<div class="gallery-img-wrapper"><a target="_blank" href="${t.pic_thumb}"><img src="${t.pic_thumb}" alt="Sub Image 1"></a></div>`;
+        hasImage = true;
+      }
+      if (t.pic_sub && t.pic_sub.match(/\w/) && t.pic_sub !== t.pic_main && t.pic_sub !== t.pic_thumb) {
+        galleryHtml += `<div class="gallery-img-wrapper"><a target="_blank" href="${t.pic_sub}"><img src="${t.pic_sub}" alt="Sub Image 2"></a></div>`;
+        hasImage = true;
+      }
+      galleryHtml += '</div>';
 
-      // 🔍 references列から論文リストをその場でマッチングして挿入
-      const refsContainer = document.getElementById('modal-refs-area');
-      if(t.references && t.references.trim() !== '' && refsContainer) {
+      const bodyText = (currentLang === 'ja') ? (t.body_ja || t.summary) : (t.body_en || t.summary);
+
+      // 🔍 論文自動マッチングロジックのバグ修正
+      let refPapersHtml = '';
+      if (t.references && t.references.trim() !== '') {
         const keywords = t.references.split(',').map(k => k.trim().toLowerCase()).filter(k => k !== '');
+        
         let matched = globalPapersData.filter(p => {
-          return keywords.some(kw => (p["paper_title.en"]||"").toLowerCase().includes(kw) || (p["paper_title.ja"]||"").toLowerCase().includes(kw));
-        }).sort((a,b) => (b["publication_date"]||"").localeCompare(a["publication_date"]||""));
+          // キー名（paper_title.en / ja）に完全にマッチさせる
+          const titleEn = (p["paper_title.en"] || "").toLowerCase();
+          const titleJa = (p["paper_title.ja"] || "").toLowerCase();
+          return keywords.some(kw => titleEn.includes(kw) || titleJa.includes(kw));
+        }).sort((a, b) => (b["publication_date"] || "").localeCompare(a["publication_date"] || ""));
 
-        if(matched.length > 0) {
-          let refHtml = `<div class="card-references"><h4>▼ Related Publications (Auto-Matched)</h4><ol>`;
+        if (matched.length > 0) {
+          refPapersHtml = `<div class="card-references" style="margin-top:30px; padding:20px; font-size:1rem;"><h4 style="font-size:1.1rem; margin-bottom:12px;">▼ Related Publications (Auto-Matched)</h4><ol style="padding-left:20px;">`;
           matched.forEach(p => {
             const pTitle = p["paper_title.en"] || p["paper_title.ja"] || "";
-            const year = (p["publication_date"] || "").substring(0, 4);
-            refHtml += `<li><strong>${pTitle}</strong>${year ? ` (${year})` : ''}</li>`;
+            const pAuthors = parseNames(p["authors.en"] || p["authors.ja"]);
+            const pJournal = p["publication_name.en"] || p["publication_name.ja"] || "";
+            const pVolume = p["volume"] ? ` Vol. ${p["volume"]}` : "";
+            const pPages = p["starting_page"] ? `, pp. ${p["starting_page"]}-${p["ending_page"] || p["starting_page"]}` : "";
+            let year = (p["publication_date"] || "").substring(0, 4);
+            
+            refPapersHtml += `<li style="margin-bottom:12px; line-height:1.5;"><strong>${pTitle}</strong><br><span style="color:#555; font-size:0.9rem;">${pAuthors}</span><br><span style="color:#777; font-style:italic; font-size:0.9rem;">${pJournal}</span>${pVolume}${pPages}${year ? ` (${year})` : ''}.${formatDoi(p["identifiers.doi"])}</li>`;
           });
-          refHtml += `</ol></div>`;
-          refsContainer.innerHTML = refHtml;
+          refPapersHtml += `</ol></div>`;
         }
       }
-    };
 
-    // 💡 新設：Eventsのポップアップを開く処理
-    window.openEventModal = function(idx) {
-      const e = globalEventsData[idx];
-      const modal = document.getElementById('detail-modal');
-      
-      let html = `
-        <div class="modal-window" onclick="event.stopPropagation()">
-          <button class="modal-close-btn" onclick="closeModal()">&times;</button>
-          <div class="modal-body">
-            <div class="modal-lang-toggle">
-              <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setModalLang('en', 'event', ${idx})">English</span>
-              <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setModalLang('ja', 'event', ${idx})">Japanese</span>
-            </div>
-            <h3 class="modal-title">${e.title || ''}</h3>
-            <div class="card-meta" style="margin-bottom:15px;">
-              <span class="date-badge">${e.date || ''}</span>
-              <span class="category-badge">${e.category || ''}</span>
-            </div>
-            ${e.pic_main ? `<img src="${e.pic_main}" class="modal-main-img">` : ''}
-            <div class="modal-text">${currentLang === 'ja' ? (e.body_ja || e.summary) : (e.body_en || e.summary)}</div>
+      detailView.innerHTML = `
+        <div class="detail-page-view">
+          <button class="detail-page-back-btn" onclick="hideTopicDetailPage()">&larr; Back to List</button>
+          <div class="modal-lang-toggle" style="float: right; margin-top: 5px;">
+            <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('en', 'topic', ${idx})">English</span>
+            <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('ja', 'topic', ${idx})">Japanese</span>
           </div>
+          <h2 style="margin-top:0; border-bottom:2px solid #4CAF50; padding-bottom:10px; margin-bottom:20px; font-size:1.5rem;">${t.title || ''}</h2>
+          ${hasImage ? galleryHtml : ''}
+          <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
+          ${refPapersHtml}
         </div>
       `;
-      modal.innerHTML = html;
-      modal.style.display = 'flex';
+
+      listView.style.display = 'none';
+      detailView.style.display = 'block';
     };
 
-    // 💡 新設：ポップアップ内での言語切り替え処理
-    window.setModalLang = function(lang, type, idx) {
+    window.hideTopicDetailPage = function() {
+      document.getElementById('topics-list-view').style.display = 'block';
+      document.getElementById('topics-detail-page').style.display = 'none';
+    };
+
+    // 💡 新設：Eventsの通常ページ風・詳細画面のレンダリング
+    window.showEventDetailPage = function(idx) {
+      const e = globalEventsData[idx];
+      const listView = document.getElementById('events-list-view');
+      const detailView = document.getElementById('events-detail-page');
+
+      let galleryHtml = '<div class="detail-image-gallery">';
+      let hasImage = false;
+      if (e.pic_main && e.pic_main.match(/\w/)) { galleryHtml += `<div class="gallery-img-wrapper primary"><a target="_blank" href="${e.pic_main}"><img src="${e.pic_main}"></a></div>`; hasImage = true; }
+      if (e.pic_thumb && e.pic_thumb.match(/\w/) && e.pic_thumb !== e.pic_main) { galleryHtml += `<div class="gallery-img-wrapper"><a target="_blank" href="${e.pic_thumb}"><img src="${e.pic_thumb}"></a></div>`; hasImage = true; }
+      if (e.pic_sub && e.pic_sub.match(/\w/) && e.pic_sub !== e.pic_main && e.pic_sub !== e.pic_thumb) { galleryHtml += `<div class="gallery-img-wrapper"><a target="_blank" href="${e.pic_sub}"><img src="${e.pic_sub}"></a></div>`; hasImage = true; }
+      galleryHtml += '</div>';
+
+      const bodyText = (currentLang === 'ja') ? (e.body_ja || e.summary) : (e.body_en || e.summary);
+
+      detailView.innerHTML = `
+        <div class="detail-page-view">
+          <button class="detail-page-back-btn" onclick="hideEventDetailPage()">&larr; Back to List</button>
+          <div class="modal-lang-toggle" style="float: right; margin-top: 5px;">
+            <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('en', 'event', ${idx})">English</span>
+            <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('ja', 'event', ${idx})">Japanese</span>
+          </div>
+          <h2 style="margin-top:0; border-bottom:2px solid #4CAF50; padding-bottom:10px; margin-bottom:10px; font-size:1.5rem;">${e.title || ''}</h2>
+          <div class="card-meta" style="margin-bottom:20px;">
+            <span class="date-badge">${e.date || ''}</span>
+            <span class="category-badge">${e.category || ''}</span>
+          </div>
+          ${hasImage ? galleryHtml : ''}
+          <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
+        </div>
+      `;
+
+      listView.style.display = 'none';
+      detailView.style.display = 'block';
+    };
+
+    window.hideEventDetailPage = function() {
+      document.getElementById('events-list-view').style.display = 'block';
+      document.getElementById('events-detail-page').style.display = 'none';
+    };
+
+    // 💡 詳細画面内での言語トグル関数
+    window.setInlinePageLang = function(lang, type, idx) {
       currentLang = lang;
-      if (type === 'topic') openTopicModal(idx);
-      if (type === 'event') openEventModal(idx);
-    };
-
-    // 💡 新設：ポップアップを閉じる処理
-    window.closeModal = function() {
-      document.getElementById('detail-modal').style.display = 'none';
+      if (type === 'topic') showTopicDetailPage(idx);
+      if (type === 'event') showEventDetailPage(idx);
     };
 
     // 全データの非同期読み込みメイン処理
