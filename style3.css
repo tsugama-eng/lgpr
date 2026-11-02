@@ -319,3 +319,53 @@ div.subhead span{
       justify-content:flex-start;
   }
 }
+
+/* People photo tuning */
+
+.portrait-container{
+
+    width:140px !important;
+
+    height:190px !important;
+
+    overflow:hidden;
+}
+
+.portrait-container img{
+
+    width:100% !important;
+
+    height:100% !important;
+
+    object-fit:cover;
+}
+
+/* restore portrait hover */
+
+.portrait-container{
+
+    position:relative !important;
+}
+
+.portrait-container img{
+
+    position:absolute !important;
+
+    top:0;
+    left:0;
+
+    transition:
+      opacity .3s ease !important;
+}
+
+.portrait-container img.main-pic{
+
+    z-index:2 !important;
+
+    opacity:1;
+}
+
+.portrait-container:hover img.main-pic{
+
+    opacity:0 !important;
+}
