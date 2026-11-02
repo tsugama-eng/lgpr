@@ -651,7 +651,7 @@
       if(section === 'events') renderEvents(globalEventsData);
     }
 
-    // ページ（タブ）切り替え関数
+    // 💡 修正：メニュークリック時に、詳細画面を閉じて強制的に一覧（List View）に戻す
     function switchPage(pageId) {
       const pages = document.querySelectorAll('.detail');
       pages.forEach(page => page.style.display = 'none');
@@ -664,6 +664,14 @@
 
       const activeLink = document.querySelector(`.menu a[href="#${pageId}"]`);
       if (activeLink) activeLink.classList.add('current');
+
+      // 🔥 【追加ロジック】詳細画面を閉じて、一覧表示の状態に巻き戻す
+      if (pageId === 'topics') {
+        hideTopicDetailPage(); // トピックの詳細画面を隠してリストに戻す
+      }
+      if (pageId === 'events') {
+        hideEventDetailPage();  // イベントの詳細画面を隠してリストに戻す
+      }
 
       if (pageId === 'papers') {
         if (!isPapersDashboardRendered && globalPapersData.length > 0) {
