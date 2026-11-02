@@ -296,9 +296,16 @@
       margin-bottom: 15px;
       text-align: right;
     }
-    /* カード自体のクリック感を出す */
-    .project-card { cursor: pointer; transition: transform 0.2s, box-shadow 0.2s; }
-    .project-card:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+
+    /* 💡 カードの基本形（ホバー時の挙動を調整） */
+    .project-card { transition: transform 0.2s, box-shadow 0.2s; }
+    
+    /* 💡 イベントなど、詳細ページがあるカードのみクリック感を出す */
+    .project-card.clickable { cursor: pointer; }
+    .project-card.clickable:hover { transform: translateY(-4px); box-shadow: 0 6px 16px rgba(0,0,0,0.1); }
+    
+    /* 💡 Papers / People など、詳細ページがないカードはホバーさせない */
+    .project-card.static { cursor: default; }
 
         /* 💡 詳細ページ（通常ページ風）のレイアウト */
     .detail-page-view {
@@ -1150,7 +1157,7 @@
       }
     }
 
-    // 💡 新設：Newsデータを一覧カードグリッドに表示（サムネイル枠にはデフォルトでTurnipをハメる）
+    // 💡 修正版：Newsデータを一覧カードグリッドに表示（ロゴ廃止・Papers/Peopleのリンク排除・パース補正版）
     function renderNews(newsList) {
       const container = document.getElementById('news-content');
       if (!container) return;
@@ -1162,38 +1169,71 @@
 
       newsList.forEach((n, idx) => {
         const title = n.title || "Notice";
-        const summary = n.summary || "";
-        const cat = (n.category || "General").toLowerCase();
+        const cat = (n.category || "General").trim();
+        const catLower = cat.toLowerCase();
         
+        // 💡 対策2: Papers と People は詳細リンクを持たせない（static）、それ以外は clickable
+        const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
+        const cardClass = isClickable ? "project-card clickable" : "project-card static";
+        const clickAttribute = isClickable ? `onclick="showNewsDetailPage(${idx})"` : "";
+
         // カテゴリ別にバッジの色情報を変動させる
         let badgeClass = "news-badge-general";
-        if(cat.includes("paper")) badgeClass = "news-badge-papers";
-        if(cat.includes("people")) badgeClass = "news-badge-people";
-        if(cat.includes("event")) badgeClass = "news-badge-events";
+        if(catLower.includes("paper")) badgeClass = "news-badge-papers";
+        if(catLower.includes("people")) badgeClass = "news-badge-people";
+        if(catLower.includes("event")) badgeClass = "news-badge-events";
 
+        // 💡 対策1: JSONパース崩れの安全処理（[{"name":"..."}] 形式の文字列が迷い込んだ場合の救済）
+        let summaryHtml = n.summary || "";
+        if (summaryHtml.includes('[{"name":')) {
+          try {
+            // もし生データに近い形になっていた場合、著者を綺麗に再パースしてHTML化
+            const parts = summaryHtml.split('\n');
+            const lead = parts[0] || "";
+            const mainTitle = parts[1] || "";
+            const jsonIdx = summaryHtml.indexOf('[');
+            const doiIdx = summaryHtml.indexOf('(2026)');
+            
+            let authorsStr = "";
+            if (jsonIdx !== -1) {
+              const endJsonIdx = summaryHtml.indexOf(']', jsonIdx);
+              const jsonStr = summaryHtml.substring(jsonIdx, endJsonIdx + 1);
+              const parsedAuthors = JSON.parse(jsonStr);
+              authorsStr = parsedAuthors.map(o => o.name).join(", ");
+            }
+            
+            summaryHtml = `<span>${lead}</span><br><strong>${mainTitle}</strong><br><span style="color:#555; font-size:0.88rem;">${authorsStr}</span>`;
+            if (doiIdx !== -1) {
+              summaryHtml += `<br><span style="color:#777; font-size:0.85rem;">(2026)</span>`;
+            }
+          } catch(e) {
+            // パース失敗時は、不自然なJSON文字列ブラケットを除去するだけの安全処理
+            summaryHtml = summaryHtml.replace(/[\[\]\{\}"']/g, "").replace(/name:/g, "");
+          }
+        }
+
+        // 💡 対策3: `img` タグ（ロゴ）を完全に廃止し、すっきりとした縦並びテキストカードに
         container.innerHTML += `
-          <div class="project-card" onclick="showNewsDetailPage(${idx})">
-            <img src="Turnip.jpg" class="card-thumbnail" alt="News Thumbnail">
-            <div class="card-content">
+          <div class="${cardClass}" ${clickAttribute}>
+            <div class="card-content" style="padding: 20px;">
               <div class="news-date-area">
-                <span class="${badgeClass}">${n.category || 'General'}</span>
+                <span class="${badgeClass}">${cat}</span>
                 <span>${n.date || ''}</span>
               </div>
-              <h3 class="card-title" style="border-bottom:none; padding-bottom:0; font-size:1.1rem;">${title}</h3>
-              <p class="card-summary" style="margin-bottom:0; font-size:0.9rem; color:#666;">${summary}</p>
+              <h3 class="card-title" style="border-bottom:none; padding-bottom:0; font-size:1.15rem; margin-bottom:12px;">${title}</h3>
+              <div class="card-summary" style="margin-bottom:0; font-size:0.95rem; color:#444; line-height:1.6;">${summaryHtml}</div>
             </div>
           </div>
         `;
       });
     }
 
-    // 💡 新設：Newsの通常ページ風・詳細画面の表示処理（HTMLタグパース・多言語対応）
+    // 💡 新設：Newsの通常ページ風・詳細画面の表示処理（Clickableなカテゴリのみ遷移）
     window.showNewsDetailPage = function(idx) {
       const n = window.globalNewsData[idx];
       const listView = document.getElementById('news-list-view');
       const detailView = document.getElementById('news-detail-page');
 
-      // 多言語による本文テキストの出し分け対応（改行とHTMLの混在を許可）
       const bodyText = (currentLang === 'ja') ? (n.body_ja || n.summary) : (n.body_en || n.summary);
 
       detailView.innerHTML = `
@@ -1214,6 +1254,11 @@
 
       listView.style.display = 'none';
       detailView.style.display = 'block';
+    };
+
+    window.hideNewsDetailPage = function() {
+      document.getElementById('news-list-view').style.display = 'block';
+      document.getElementById('news-detail-page').style.display = 'none';
     };
 
     window.hideNewsDetailPage = function() {
