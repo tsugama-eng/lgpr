@@ -735,7 +735,7 @@
       // 対象セクションを再レンダリング
       if(section === 'topics') renderTopics(globalTopicsData, globalPapersData);
       if(section === 'events') renderEvents(globalEventsData);
-      if(section === 'news')   renderNews(window.globalNewsData); // 💡ここを追記
+      if(section === 'news')   renderNews(window.globalNewsData);
     }
 
     // 💡 修正：メニュークリック時に詳細画面をリセットして一覧（List View）に戻す
@@ -1202,6 +1202,7 @@
         renderTopics(globalTopicsData, globalPapersData);
         renderEvents(globalEventsData);
         renderNews(window.globalNewsData);
+        renderTopRecentNews(window.globalNewsData); 
         
       } catch (error) {
         console.error("データの読み込みに失敗しました:", error);
@@ -1218,7 +1219,7 @@
         return;
       }
 
-     newsList.forEach((n, idx) => {
+      newsList.forEach((n, idx) => {
         const title = n.title || "Notice";
         const cat = (n.category || "General").trim();
         const catLower = cat.toLowerCase();
@@ -1306,6 +1307,58 @@
     window.hideNewsDetailPage = function() {
       document.getElementById('news-list-view').style.display = 'block';
       document.getElementById('news-detail-page').style.display = 'none';
+    };
+
+    // 🔥 Topページに最新5〜10件のお知らせをレンダリングする関数
+    function renderTopRecentNews(newsList) {
+      const container = document.getElementById('top-recent-news-list');
+      if (!container) return;
+      container.innerHTML = '';
+      if (!newsList || newsList.length === 0) {
+        container.innerHTML = '<p style="color:#999;">No recent updates.</p>';
+        return;
+      }
+
+      // 先頭7件（お好みに合わせて 5 や 10 に変更してください）をスライス
+      const recentItems = newsList.slice(0, 7);
+
+      recentItems.forEach((n, idx) => {
+        const title = n.title || "Notice";
+        const cat = (n.category || "General").trim();
+        const catLower = cat.toLowerCase();
+        
+        // Papers と People 以外は詳細画面へ飛べるように設定
+        const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
+        const clickAttribute = isClickable ? `onclick="navigateToNewsDetail(${idx})"` : "";
+        const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
+
+        let badgeClass = "news-badge-general";
+        if(catLower.includes("paper")) badgeClass = "news-badge-papers";
+        if(catLower.includes("people")) badgeClass = "news-badge-people";
+        if(catLower.includes("event")) badgeClass = "news-badge-events";
+
+        let summaryHtml = n.summary || "";
+
+        // 行間をさらに詰めてコンパクトにしたタイムライン形式
+        container.innerHTML += `
+          <div class="news-timeline-item" ${clickAttribute} style="${cursorStyle} padding: 8px 10px; border-bottom: 1px dotted #eee;">
+            <div class="news-meta-inline" style="min-width: 90px;">
+              <span class="news-date" style="font-size:0.85rem;">${n.date || ''}</span>
+              <span class="${badgeClass}" style="font-size:0.75rem; padding:1px 4px;">${cat}</span>
+            </div>
+            <div class="news-body-inline" style="font-size:0.9rem;">
+              <div class="news-summary-text">${summaryHtml}</div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // 🔥 Topページの簡易ニュースをクリックした時に、Newsタブの詳細画面へ直接ワープさせる関数
+    window.navigateToNewsDetail = function(idx) {
+      switchPage('news'); // Newsタブに切り替え
+      showNewsDetailPage(idx); // 詳細ビューを展開
+      document.getElementById('news').scrollIntoView({ behavior: 'smooth' }); // スムーズスクロール
     };
     
     // 各種ヘルパー関数群
