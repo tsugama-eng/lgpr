@@ -321,31 +321,43 @@
     }
     .detail-page-back-btn:hover { background: #e0e0e0; }
     
-    /* 📸 画像ギャラリー（メイン＋サブ画像を並べる） */
-    .detail-image-gallery {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 15px;
-      margin-bottom: 20px;
-    }
-    .gallery-img-wrapper {
-      flex: 1;
-      min-width: 200px;
-      max-width: 100%;
-    }
-    .gallery-img-wrapper.primary {
-      flex: 2; /* メイン画像を少し大きめに */
-      min-width: 300px;
-    }
-    .gallery-img-wrapper img {
+    /* 💡 トップのメイン画像用スタイル */
+    .detail-page-main-image-wrapper {
       width: 100%;
-      height: auto;
+      margin-bottom: 25px;
+    }
+    .detail-page-main-image-wrapper img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+
+    /* 📸 本文の下に配置するサブ画像用横並びギャラリー（横に2枚並べる） */
+    .detail-sub-image-gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); /* 自動で横並び、幅が狭い時は折り返し */
+      gap: 16px;
+      margin-top: 25px;
+      margin-bottom: 25px;
+    }
+    .sub-gallery-img-link {
+      display: block;
+      width: 100%;
+    }
+    .sub-gallery-img-link img {
+      width: 100%;
       aspect-ratio: 16 / 9;
       object-fit: cover;
       border-radius: 6px;
-      border: 1px solid #ddd;
+      border: 1px solid #eee;
+      transition: transform 0.2s;
     }
-    
+    .sub-gallery-img-link img:hover {
+      transform: scale(1.02);
+    }
+   
     .detail-page-text {
       font-size: 1.05rem;
       line-height: 1.7;
@@ -760,39 +772,45 @@
       });
     }
 
-    // 💡 新設：Topicsの通常ページ風・詳細画面のレンダリング（論文検索バグ修正＆サブ画像活用版）
+    // 💡 修正：Topics詳細画面（トップにメイン1枚、本文の後にサブ画像を横並びで配置）
     window.showTopicDetailPage = function(idx) {
       const t = globalTopicsData[idx];
       const listView = document.getElementById('topics-list-view');
       const detailView = document.getElementById('topics-detail-page');
       
-      // サブ画像も含めて、存在する画像をギャラリーとして組み立て
-      let galleryHtml = '<div class="detail-image-gallery">';
-      let hasImage = false;
-      
+      // ① トップに配置するメイン画像（pic_main）
+      let mainImgHtml = '';
       if (t.pic_main && t.pic_main.match(/\w/)) {
-        galleryHtml += `<div class="gallery-img-wrapper primary"><a target="_blank" href="${t.pic_main}"><img src="${t.pic_main}" alt="Main Image"></a></div>`;
-        hasImage = true;
+        mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${t.pic_main}"><img src="${t.pic_main}" alt="Main Image"></a></div>`;
       }
-      if (t.pic_thumb && t.pic_thumb.match(/\w/) && t.pic_thumb !== t.pic_main) {
-        galleryHtml += `<div class="gallery-img-wrapper"><a target="_blank" href="${t.pic_thumb}"><img src="${t.pic_thumb}" alt="Sub Image 1"></a></div>`;
-        hasImage = true;
-      }
-      if (t.pic_sub && t.pic_sub.match(/\w/) && t.pic_sub !== t.pic_main && t.pic_sub !== t.pic_thumb) {
-        galleryHtml += `<div class="gallery-img-wrapper"><a target="_blank" href="${t.pic_sub}"><img src="${t.pic_sub}" alt="Sub Image 2"></a></div>`;
-        hasImage = true;
-      }
-      galleryHtml += '</div>';
 
       const bodyText = (currentLang === 'ja') ? (t.body_ja || t.summary) : (t.body_en || t.summary);
 
-      // 🔍 論文自動マッチングロジックのバグ修正
+      // ② 本文の後に配置するサブ画像群（pic_sub や pic_thumb をコンマ区切りで分解して展開）
+      let subImgsHtml = '';
+      let subImagesArray = [];
+      
+      if (t.pic_sub && t.pic_sub.trim() !== '') {
+        subImagesArray = t.pic_sub.split(',').map(url => url.trim()).filter(url => url !== '' && url !== t.pic_main);
+      }
+      // もし pic_thumb もあればサブ画像リストの末尾に結合
+      if (t.pic_thumb && t.pic_thumb.match(/\w/) && t.pic_thumb !== t.pic_main && !subImagesArray.includes(t.pic_thumb)) {
+        subImagesArray.push(t.pic_thumb);
+      }
+
+      if (subImagesArray.length > 0) {
+        subImgsHtml = '<div class="detail-sub-image-gallery">';
+        subImagesArray.forEach(url => {
+          subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img src="${url}" alt="Sub Image"></a>`;
+        });
+        subImgsHtml += '</div>';
+      }
+
+      // 🔍 関連論文の自動マッチング
       let refPapersHtml = '';
       if (t.references && t.references.trim() !== '') {
         const keywords = t.references.split(',').map(k => k.trim().toLowerCase()).filter(k => k !== '');
-        
         let matched = globalPapersData.filter(p => {
-          // キー名（paper_title.en / ja）に完全にマッチさせる
           const titleEn = (p["paper_title.en"] || "").toLowerCase();
           const titleJa = (p["paper_title.ja"] || "").toLowerCase();
           return keywords.some(kw => titleEn.includes(kw) || titleJa.includes(kw));
@@ -807,7 +825,6 @@
             const pVolume = p["volume"] ? ` Vol. ${p["volume"]}` : "";
             const pPages = p["starting_page"] ? `, pp. ${p["starting_page"]}-${p["ending_page"] || p["starting_page"]}` : "";
             let year = (p["publication_date"] || "").substring(0, 4);
-            
             refPapersHtml += `<li style="margin-bottom:12px; line-height:1.5;"><strong>${pTitle}</strong><br><span style="color:#555; font-size:0.9rem;">${pAuthors}</span><br><span style="color:#777; font-style:italic; font-size:0.9rem;">${pJournal}</span>${pVolume}${pPages}${year ? ` (${year})` : ''}.${formatDoi(p["identifiers.doi"])}</li>`;
           });
           refPapersHtml += `</ol></div>`;
@@ -822,8 +839,9 @@
             <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('ja', 'topic', ${idx})">Japanese</span>
           </div>
           <h2 style="margin-top:0; border-bottom:2px solid #4CAF50; padding-bottom:10px; margin-bottom:20px; font-size:1.5rem;">${t.title || ''}</h2>
-          ${hasImage ? galleryHtml : ''}
+          ${mainImgHtml}
           <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
+          ${subImgsHtml}
           ${refPapersHtml}
         </div>
       `;
@@ -843,14 +861,29 @@
       const listView = document.getElementById('events-list-view');
       const detailView = document.getElementById('events-detail-page');
 
-      let galleryHtml = '<div class="detail-image-gallery">';
-      let hasImage = false;
-      if (e.pic_main && e.pic_main.match(/\w/)) { galleryHtml += `<div class="gallery-img-wrapper primary"><a target="_blank" href="${e.pic_main}"><img src="${e.pic_main}"></a></div>`; hasImage = true; }
-      if (e.pic_thumb && e.pic_thumb.match(/\w/) && e.pic_thumb !== e.pic_main) { galleryHtml += `<div class="gallery-img-wrapper"><a target="_blank" href="${e.pic_thumb}"><img src="${e.pic_thumb}"></a></div>`; hasImage = true; }
-      if (e.pic_sub && e.pic_sub.match(/\w/) && e.pic_sub !== e.pic_main && e.pic_sub !== e.pic_thumb) { galleryHtml += `<div class="gallery-img-wrapper"><a target="_blank" href="${e.pic_sub}"><img src="${e.pic_sub}"></a></div>`; hasImage = true; }
-      galleryHtml += '</div>';
+      let mainImgHtml = '';
+      if (e.pic_main && e.pic_main.match(/\w/)) {
+        mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${e.pic_main}"><img src="${e.pic_main}"></a></div>`;
+      }
 
       const bodyText = (currentLang === 'ja') ? (e.body_ja || e.summary) : (e.body_en || e.summary);
+
+      let subImgsHtml = '';
+      let subImagesArray = [];
+      if (e.pic_sub && e.pic_sub.trim() !== '') {
+        subImagesArray = e.pic_sub.split(',').map(url => url.trim()).filter(url => url !== '' && url !== e.pic_main);
+      }
+      if (e.pic_thumb && e.pic_thumb.match(/\w/) && e.pic_thumb !== e.pic_main && !subImagesArray.includes(e.pic_thumb)) {
+        subImagesArray.push(e.pic_thumb);
+      }
+
+      if (subImagesArray.length > 0) {
+        subImgsHtml = '<div class="detail-sub-image-gallery">';
+        subImagesArray.forEach(url => {
+          subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img src="${url}"></a>`;
+        });
+        subImgsHtml += '</div>';
+      }
 
       detailView.innerHTML = `
         <div class="detail-page-view">
@@ -864,15 +897,16 @@
             <span class="date-badge">${e.date || ''}</span>
             <span class="category-badge">${e.category || ''}</span>
           </div>
-          ${hasImage ? galleryHtml : ''}
+          ${mainImgHtml}
           <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
+          ${subImgsHtml}
         </div>
       `;
 
       listView.style.display = 'none';
       detailView.style.display = 'block';
     };
-
+    
     window.hideEventDetailPage = function() {
       document.getElementById('events-list-view').style.display = 'block';
       document.getElementById('events-detail-page').style.display = 'none';
