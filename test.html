@@ -777,7 +777,7 @@
         const imgSrc = t.pic_thumb || t.pic_main || t.pic_sub || "Turnip.jpg";
 
         container.innerHTML += `
-          <div class="project-card" onclick="showTopicDetailPage(${idx})">
+          <div class="project-card clickable" onclick="showTopicDetailPage(${idx})">
             <img src="${imgSrc}" class="card-thumbnail" alt="Topic Thumbnail">
             <div class="card-content">
               <h3 class="card-title">${title}</h3>
@@ -804,7 +804,7 @@
         const imgSrc = e.pic_thumb || e.pic_main || e.pic_sub || "Turnip.jpg";
 
         container.innerHTML += `
-          <div class="project-card" onclick="showEventDetailPage(${idx})">
+          <div class="project-card clickable" onclick="showEventDetailPage(${idx})">
             <img src="${imgSrc}" class="card-thumbnail" alt="Event Thumbnail">
             <div class="card-content">
               <h3 class="card-title">${title}</h3>
