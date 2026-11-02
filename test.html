@@ -127,89 +127,109 @@
       white-space: nowrap;
     }
     /* Topics & Events のグリッド・カードレイアウト */
-    .topics-grid, .news-list-container {
+    /* 💡 最新のカードグリッドデザイン */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+      margin-bottom: 30px;
+    }
+
+    .project-card {
       display: flex;
       flex-direction: column;
-      gap: 30px;
-      margin-top: 15px;
-    }
-    .topic-card, .event-detail-card {
-      border: 1px solid #eee;
-      border-radius: 8px;
-      padding: 20px;
+      height: 100%;
       background: #fff;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 1px solid #eee;
     }
-    .topic-card h3, .event-detail-card h3 {
+
+    .card-thumbnail {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-bottom: 1px solid #eee;
+      cursor: pointer;
+    }
+
+    .card-content {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .card-title {
       margin-top: 0;
+      margin-bottom: 10px;
+      font-size: 1.15rem;
       color: #333;
-      font-size: 1.3rem;
-      border-bottom: 1px dashed #4CAF50;
-      padding-bottom: 8px;
+      border-bottom: 2px solid #4CAF50;
+      padding-bottom: 6px;
     }
-    .topic-meta, .event-meta {
-      font-size: 0.9rem;
+
+    .card-meta {
+      font-size: 0.85rem;
       color: #666;
       margin-bottom: 10px;
-    }
-    .topic-content, .event-content {
       display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
+      gap: 8px;
     }
-    .topic-text, .event-text {
-      flex: 1;
-      min-width: 300px;
+
+    .card-summary {
+      font-size: 0.95rem;
       line-height: 1.6;
-      font-size: 1.05rem;
+      color: #444;
+      margin: 0 0 15px 0;
+      flex-grow: 1;
     }
-    .topic-images, .event-images {
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      width: 240px;
-      flex-shrink: 0;
-    }
-    .topic-images img, .event-images img {
-      width: 100%;
-      height: 150px;
-      object-fit: cover;
-      border-radius: 6px;
-      border: 1px solid #ddd;
-    }
-    .topic-references {
-      margin-top: 20px;
-      padding-top: 15px;
-      border-top: 1px solid #eee;
-      background: #fafafa;
-      padding: 15px;
-      border-radius: 6px;
-    }
-    .topic-references h4 {
-      margin-top: 0;
-      margin-bottom: 10px;
-      color: #4169E1;
-      font-size: 1rem;
-    }
-    .topic-references ol {
-      margin: 0;
-      padding-left: 20px;
-    }
-    /* 日付バッジ */
+
+    /* 日付・カテゴリバッジ */
     .date-badge {
       background: #4CAF50;
       color: white;
-      padding: 2px 8px;
+      padding: 2px 6px;
       border-radius: 4px;
       font-weight: bold;
-      margin-right: 8px;
     }
+
     .category-badge {
       background: #eef7ee;
       color: #4CAF50;
-      padding: 2px 8px;
+      padding: 2px 6px;
       border-radius: 4px;
       border: 1px solid #4CAF50;
+    }
+
+    /* 自動マッチング論文セクション */
+    .card-references {
+      margin-top: auto;
+      padding-top: 12px;
+      border-top: 1px dashed #ddd;
+      background: #fcfcfc;
+      padding: 10px;
+      border-radius: 4px;
+    }
+
+    .card-references h4 {
+      margin: 0 0 6px 0;
+      color: #4169E1;
+      font-size: 0.85rem;
+    }
+
+    .card-references ol {
+      margin: 0;
+      padding-left: 15px;
+      font-size: 0.8rem;
+      color: #555;
+      line-height: 1.4;
+    }
+    
+    .card-references li {
+      margin-bottom: 6px;
     }
 
   </style>
