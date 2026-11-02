@@ -1310,7 +1310,7 @@
       if (!doiField || doiField.trim() === "") return "";
       try {
         let cleanDoi = doiField.replace(/[\[\]"']/g, "").trim();
-        if (cleanDoi !== "") return ` DOI: <a href="https://doi.org{cleanDoi}" target="_blank" rel="noopener">${cleanDoi}</a>`;
+        if (cleanDoi !== "") return ` DOI: <a href="https://doi.org/${cleanDoi}" target="_blank" rel="noopener">${cleanDoi}</a>`;
       } catch(e) {}
       return "";
     }
