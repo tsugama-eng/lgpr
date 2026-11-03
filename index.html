@@ -741,7 +741,7 @@
       });
     }
 
-    // 💡 修正：Eventsをコンパクトにカード化し、クリックで通常ページ風の詳細へ切り替える
+    // 💡 Eventsをコンパクトにカード化し、クリックで通常ページ風の詳細へ切り替える
     function renderEvents(events) {
       const container = document.getElementById('events-content');
       if (!container) return;
@@ -783,7 +783,7 @@
         mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${t.pic_main}"><img src="${t.pic_main}" alt="Main Image"></a></div>`;
       }
 
-      const bodyText = (currentLang === 'ja') ? (t.body_ja || t.summary) : (t.body_en || t.summary);
+      const bodyText = (currentLang === 'ja') ? (t.body_ja || t.summary) : (`t.body_en<br><br>t.body_ja` || t.summary);
 
       // 💡 変更点：純粋に pic_sub にデータがある場合のみ、本文の後に展開（使い回しを禁止）
       let subImgsHtml = '';
