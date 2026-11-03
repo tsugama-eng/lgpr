@@ -154,7 +154,7 @@ body {
 
   /* 見出し・サブヘッド */
   div.subhead {
-    margin: 0px 0 0px 0;
+    margin: 0px 0 10px 0;
   }
 
   div.subhead p span {
