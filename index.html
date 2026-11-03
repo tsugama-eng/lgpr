@@ -19,8 +19,8 @@
   <style>
     /* 💡 HTML側のインラインスタイルを、等幅フォントをベースとしたダッシュボードUIへ刷新 */
     :root {
-      --font-tech: 'JetBrains Mono', monospace;
-      --font-base: 'IBM Plex Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-base: 'JetBrains Mono', monospace;
+      <!-- --font-base: 'IBM Plex Sans JP', -apple-system, BlinkMacSystemFont, sans-serif; -->
       --color-bg-dark: #0f141c;
       --color-border: #e2e8f0;
       --color-neon-green: #00cc66;
@@ -43,7 +43,7 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.02);
     }
     .dashboard-card h3 {
-      font-family: var(--font-tech);
+      font-family: var(--font-base);
       letter-spacing: 0.05em;
       margin-top: 0;
       border-bottom: 2px solid #111;
@@ -52,7 +52,7 @@
       color: #111;
     }
     .summary-bar {
-      font-family: var(--font-tech);
+      font-family: var(--font-base);
       background: #f8fafc;
       padding: 12px 20px;
       font-weight: bold;
@@ -67,12 +67,12 @@
       font-family: var(--font-base);
     }
     .filter-tags strong {
-      font-family: var(--font-tech);
+      font-family: var(--font-base);
       font-size: 0.9rem;
       margin-right: 10px;
     }
     .tag-btn {
-      font-family: var(--font-tech);
+      font-family: var(--font-base);
       background: #f1f5f9;
       border: 1px solid var(--color-border);
       padding: 5px 12px;
@@ -135,7 +135,7 @@
       min-width: 45px;
       max-width: 65px;
       margin: 0 6px;
-      font-family: var(--font-tech);
+      font-family: var(--font-base);
     }
     .pure-chart-bars-container {
       display: flex;
@@ -182,7 +182,7 @@
     }
     /* 計測機器っぽさを出す四隅の+マークを疑似要素で実装 */
     .project-card::before {
-      content: '+'; position: absolute; top: 2px; left: 6px; font-family: var(--font-tech); font-size: 10px; color: #94a3b8;
+      content: '+'; position: absolute; top: 2px; left: 6px; font-family: var(--font-base); font-size: 10px; color: #94a3b8;
     }
     .card-thumbnail {
       width: 100%;
@@ -205,7 +205,7 @@
       color: #1e293b;
     }
     .card-meta {
-      font-family: var(--font-tech);
+      font-family: var(--font-base);
       font-size: 0.8rem;
       margin-bottom: 12px;
       display: flex;
@@ -243,7 +243,7 @@
       gap: 6px;
       min-width: 110px;
       flex-shrink: 0;
-      font-family: var(--font-tech);
+      font-family: var(--font-base);
     }
     .news-date { font-size: 0.85rem; color: #64748b; font-weight: bold; }
     .news-body-inline { flex-grow: 1; font-size: 0.95rem; color: #334155; }
