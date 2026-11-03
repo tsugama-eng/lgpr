@@ -348,7 +348,6 @@ body {
 @media screen and (max-width: 750px) {
   #title {
     background-color: #ffffff;
-    padding: 15px 10px;
   }
 
   #title h1 {
