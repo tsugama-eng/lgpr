@@ -38,7 +38,6 @@ body {
   #title {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 30px 20px 20px 20px;
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
@@ -96,26 +95,26 @@ body {
     font-weight: 700;
     text-decoration: none;
     color: #333;
-    background: #f5f5f5;
-    border: 1px solid #ddd;
+    background: #fff;
+    border-left: 3px solid #ddd;
     transition: all 0.15s ease;
   }
 
   ul.menu a:hover {
-    background: #dddddd;
-    color: #000000;
+    background: #ddd;
+    color: #000;
   }
 
   ul.menu a.current {
-    background: var(--color-neon-green);
+    background: #fff;
     color: #000000;
-    border-color: var(--color-neon-green);
+    border: 3px solid #333;
     font-weight: bold;
   }
 
-  ul.menu a.current li {
-    background-color: #004180;
-  }
+  //ul.menu a.current li {
+  //  background-color: #004180;
+  //}
 
   /* コンテンツエリア（固定幅をmax-widthに変更してリキッド化） */
   div.detail {
@@ -392,24 +391,25 @@ body {
     border-radius: 0px;
     text-decoration: none;
     color: #333;
-    background: #f5f5f5;
-    border: 1px solid #ddd;
+    background: #fff;
+    border-left: 3px solid #ddd;
     font-family: var(--font-base);
     font-size: 0.8rem;
   }
 
   ul.menu a:hover {
-    background: #dddddd;
-    color: #000000;
+    background: #ddd;
+    color: #000;
   }
 
   ul.menu a.current {
-    background: var(--color-neon-green);
-    color: #000000;
+    background: #fff;
+    color: #000;
     font-weight: bold;
+    border: 3px solid #ddd;
   }
 
-  ul.menu a.current li { background-color: #004180; }
+  // ul.menu a.current li { background-color: #004180; }
 
   div.detail {
     clear: left;
