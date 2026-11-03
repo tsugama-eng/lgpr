@@ -943,8 +943,7 @@ body {
 
 /* 名前と役職のヘッダー */
 .member-header {
-  border-left: 4px solid #333;
-  padding-left: 15px;
+  padding-left: 0px;
 }
 .member-name-en { font-size: 1.4rem; font-weight: bold; margin-right: 10px; }
 .member-title-en { font-size: 0.9rem; color: #666; }
