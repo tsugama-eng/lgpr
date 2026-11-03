@@ -914,7 +914,7 @@ body {
 .news-badge-events { background: var(--color-neon-green); color: black; }
 .news-badge-general { background: #64748b; color: white; }
 
-/* 👥 Members Section Modern Adjustments */
+/* 👥 Members Section Modern Adjustments
 .member-container {
   display: flex;
   flex-direction: column;
@@ -1018,7 +1018,65 @@ body {
     flex-direction: column;
     gap: 2px;
   }
+} */
+
+/* ==========================================================================
+   👥 Peopleセクション：元の美しい構造を活かすピンポイント修正
+   ========================================================================== */
+
+/* 1. 全体のフォントをスマートなテック系ゴシックに変更 */
+div.self_intro p, 
+p.self_intro2, 
+p.self_intro3, 
+p.self_intro4, 
+table td {
+  font-family: 'IBM Plex Sans JP', -apple-system, BlinkMacSystemFont, sans-serif !important;
 }
+
+/* 2. 経歴テーブルの年号（数字）だけを美しい等幅フォントにして視認性を爆上げ */
+td.table_year,
+.timeline-year {
+  font-family: 'JetBrains Mono', monospace !important;
+  font-weight: 700;
+  color: #0f141c;
+  letter-spacing: 0.02em;
+}
+
+/* 3. 国旗とポートレート写真の横幅・位置関係のズレを完全に修正 */
+div.texts a.portrait {
+  position: absolute;
+  left: 8px;
+  top: 0;
+  width: 250px; /* 顔写真の横幅と完全に一致させる */
+  float: none;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* 💡 これで国旗が写真の真下中央に美しく揃います */
+  gap: 12px;          /* 写真と国旗の間の適度な隙間 */
+}
+
+/* 4. 写真自体のサイズ固定（ホバー処理などの干渉を防ぐ） */
+div.texts a.portrait img {
+  width: 100% !important;
+  height: auto;
+}
+
+/* 5. 国旗のスタイリングをスマートに */
+img.nationalflag {
+  height: 20px;
+  width: auto;
+  border: 1px solid #1e293b; /* サイバー感のある濃い枠線 */
+  margin: 0 auto !important;
+}
+
+/* 6. 左側の自己紹介文の枠線を、野暮ったい水色からシャープなグレー系テックカラーに */
+div.self_intro {
+  border-right: solid 1px var(--color-border);
+  border-bottom: solid 1px var(--color-border);
+  padding-right: 10px;
+  padding-bottom: 10px;
+}
+
 
 /* --------------------------------------------------
    4. Animation Keyframes (スライドショー用)
