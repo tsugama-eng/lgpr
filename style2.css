@@ -914,7 +914,7 @@ body {
 .news-badge-events { background: var(--color-neon-green); color: black; }
 .news-badge-general { background: #64748b; color: white; }
 
-/* 👥 Members Section Modern Adjustments
+/* 👥 Members Section Modern Adjustments */
 .member-container {
   display: flex;
   flex-direction: column;
@@ -1018,7 +1018,7 @@ body {
     flex-direction: column;
     gap: 2px;
   }
-} */
+}
 
 /* ==========================================================================
    👥 Peopleセクション：元の美しい構造を活かすピンポイント修正
