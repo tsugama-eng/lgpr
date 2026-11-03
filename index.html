@@ -553,28 +553,28 @@
      </div>
     
      <div id="honors" class="detail" style="display:none;">
-       <div class="subhead"><p><span><b>ACHIEVEMENTS</b></span></p></div>
+       <!-- <div class="subhead"><p><span><b>ACHIEVEMENTS</b></span></p></div> -->
        <div class="texts">
          <div id="honors-grants-container" style="margin-bottom: 30px;">
-           <h3 style="border-left: 5px solid #4CAF50; padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Grants & Funding / 外部資金・助成金</h3>
+           <h3 style="padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Grants & Funding / 外部資金・助成金</h3>
            <ul id="honors-grants-list" style="line-height: 1.6; padding-left: 20px; margin-left: 10px;"></ul>
          </div>
          <div id="honors-awards-container">
-           <h3 style="border-left: 5px solid #2196F3; padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Awards & Recognition / 受賞歴</h3>
+           <h3 style="padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Awards & Recognition / 受賞歴</h3>
            <ul id="honors-awards-list" style="line-height: 1.6; padding-left: 20px; margin-left: 10px;"></ul>
          </div>
        </div>
      </div>
     
      <div id="links" class="detail" style="display:none;">
-       <div class="subhead"><p><span><b>LINKS</b></span></p></div>
+       <!-- <div class="subhead"><p><span><b>LINKS</b></span></p></div> -->
        <div class="texts">
          <div id="links-tools-container" style="display:none; margin-bottom: 30px;">
-           <h3 style="border-left: 5px solid #4CAF50; padding: 10px 0 10px 10px; color: #333;">Web Tools & Databases / データベース・ツール</h3>
+           <h3 style="padding: 10px 0 10px 10px; color: #333;">Web Tools & Databases / データベース・ツール</h3>
            <ul id="links-tools-list" class="link" style="line-height: 1.6;"></ul>
          </div>
          <div id="links-affiliations-container" style="display:none;">
-           <h3 style="border-left: 5px solid #2196F3; padding: 10px 0 10px 10px; color: #333;">Affiliations / 所属・関連機関</h3>
+           <h3 style="padding: 10px 0 10px 10px; color: #333;">Affiliations / 所属・関連機関</h3>
            <ul id="links-affiliations-list" class="link" style="line-height: 1.6;"></ul>
          </div>
        </div>
@@ -829,10 +829,10 @@
       detailView.innerHTML = `
         <div class="detail-page-view">
           <button class="detail-page-back-btn" onclick="hideTopicDetailPage()">&larr; Back to List</button>
-          <div class="modal-lang-toggle" style="float: right; margin-top: 5px;">
+          <!-- <div class="modal-lang-toggle" style="float: right; margin-top: 5px;">
             <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('en', 'topic', ${idx})">English</span>
             <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('ja', 'topic', ${idx})">Japanese</span>
-          </div>
+          </div> -->
           <h2 style="margin-top:0; border-bottom:2px solid #4CAF50; padding-bottom:10px; margin-bottom:20px; font-size:1.5rem;">${t.title || ''}</h2>
           ${mainImgHtml}
           <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
