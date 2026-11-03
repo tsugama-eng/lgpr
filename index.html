@@ -265,6 +265,16 @@
       padding: 12px;
       background: #f3f3f3;
     }
+    /* 💡 クリック可能なカードのホバーエフェクトを追加 */
+    .clickable {
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease; /* スムーズに動かす設定 */
+    }
+    .clickable:hover {
+      transform: translateY(-5px); /* カードを上に5px浮かせる */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 影を強くして立体感を出す */
+    }
+
   </style>
 </head>
 
