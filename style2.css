@@ -12,7 +12,6 @@
 }
 
 :root {
-  --font-tech: 'JetBrains Mono', 'Share Tech Mono', monospace;
   --font-base: 'IBM Plex Sans JP', -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans JP", sans-serif;
   --color-cyber-blue: #4169E1;
   --color-neon-green: #00cc66;
@@ -55,7 +54,7 @@ body {
   }
 
   #subtitle {
-    font-family: var(--font-tech);
+    font-family: var(--font-base);
     font-size: 0.85rem;
     color: #64748b;
     font-weight: 400;
@@ -92,7 +91,7 @@ body {
     display: block;
     padding: 8px 16px;
     border-radius: 0px; /* 直角でシャープに */
-    font-family: var(--font-tech);
+    font-family: var(--font-base);
     font-size: 0.85rem;
     font-weight: 700;
     text-decoration: none;
@@ -130,7 +129,7 @@ body {
   }
 
   div.detail p span.language {
-    font-family: var(--font-tech);
+    font-family: var(--font-base);
     font-size: 0.85rem;
     padding: 2px 6px;
     cursor: pointer;
@@ -363,7 +362,7 @@ body {
   }
 
   #subtitle {
-    font-family: var(--font-tech);
+    font-family: var(--font-base);
     font-size: 0.88rem;
     margin: -10px 0 0 0;
   }
@@ -395,7 +394,7 @@ body {
     color: #333;
     background: #f5f5f5;
     border: 1px solid #ddd;
-    font-family: var(--font-tech);
+    font-family: var(--font-base);
     font-size: 0.8rem;
   }
 
@@ -425,7 +424,7 @@ body {
     color: #888888;
     border: solid 1px #888888;
     font-size: 0.85rem;
-    font-family: var(--font-tech);
+    font-family: var(--font-base);
   }
 
   div.detail ol { margin: 5px 0 0 35px; }
@@ -687,7 +686,7 @@ body {
 }
 
 .dashboard-card h3 {
-  font-family: var(--font-tech) !important;
+  font-family: var(--font-base) !important;
   font-size: 1.1rem;
   letter-spacing: 0.05em;
   margin: 0 0 12px 0 !important;
@@ -697,7 +696,7 @@ body {
 }
 
 .summary-bar {
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
   background: #f8fafc;
   padding: 12px 20px;
   font-weight: bold;
@@ -712,13 +711,13 @@ body {
 }
 
 .filter-tags strong {
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
   font-size: 0.9rem;
   margin-right: 10px;
 }
 
 .tag-btn {
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
   background: #f1f5f9;
   border: 1px solid var(--color-border);
   padding: 5px 12px;
@@ -772,7 +771,7 @@ body {
   min-width: 45px;
   max-width: 65px;
   margin: 0 6px;
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
 }
 
 .pure-chart-bars-container {
@@ -816,7 +815,7 @@ body {
   position: absolute;
   top: 2px;
   left: 6px;
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
   font-size: 10px;
   color: #94a3b8;
   z-index: 5;
@@ -846,7 +845,7 @@ body {
 }
 
 .card-meta {
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
   font-size: 0.8rem;
   margin-bottom: 12px;
   display: flex;
@@ -884,7 +883,7 @@ body {
   gap: 6px;
   min-width: 110px;
   flex-shrink: 0;
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
 }
 
 .news-date { font-size: 0.85rem; color: #64748b; font-weight: bold; }
@@ -1124,7 +1123,7 @@ body {
 }
 
 .dashboard-card h3 {
-  font-family: var(--font-tech) !important;
+  font-family: var(--font-base) !important;
   font-size: 1.1rem;
   letter-spacing: 0.05em;
   margin: 0 0 12px 0 !important;
@@ -1134,7 +1133,7 @@ body {
 }
 
 .summary-bar {
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
   background: #f8fafc;
   padding: 12px 20px;
   font-weight: bold;
@@ -1149,13 +1148,13 @@ body {
 }
 
 .filter-tags strong {
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
   font-size: 0.9rem;
   margin-right: 10px;
 }
 
 .tag-btn {
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
   background: #f1f5f9;
   border: 1px solid var(--color-border);
   padding: 5px 12px;
@@ -1209,7 +1208,7 @@ body {
   min-width: 45px;
   max-width: 65px;
   margin: 0 6px;
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
 }
 
 .pure-chart-bars-container {
@@ -1253,7 +1252,7 @@ body {
   position: absolute;
   top: 2px;
   left: 6px;
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
   font-size: 10px;
   color: #94a3b8;
   z-index: 5;
@@ -1283,7 +1282,7 @@ body {
 }
 
 .card-meta {
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
   font-size: 0.8rem;
   margin-bottom: 12px;
   display: flex;
@@ -1321,7 +1320,7 @@ body {
   gap: 6px;
   min-width: 110px;
   flex-shrink: 0;
-  font-family: var(--font-tech);
+  font-family: var(--font-base);
 }
 
 .news-date { font-size: 0.85rem; color: #64748b; font-weight: bold; }
