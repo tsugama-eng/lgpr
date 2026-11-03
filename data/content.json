@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "11/02/2026",
+  "lastUpdate": "11/03/2026",
   "members": [
     {
       "name_en": "Daisuke Tsugama",
@@ -5088,8 +5088,8 @@
       "summary": "International project to identify and utilize genes and DNA variants relevant to foxtail millet stress tolerance / アワのストレス耐性に関わる遺伝子とDNAバリアントを同定・利用するための国際プロジェクト",
       "body_ja": "アワ (foxtail millet、<i>Setaria italica</i> は日本でも古くから食用に栽培されてきた穀物です。現在は食卓に上ることは少ないものの、栄養豊富で、望ましい消化特性も有しています。400 Mb強と比較的小さなゲノムを持ち、その解読が2012年と比較的早く、自殖性も有し、形質転換も可能であるため、雑穀類のモデル植物と見なされています。私達は、インドネシアのボゴール農科大学の共同研究者と共に、インドネシアのアワ品種のストレス耐性等の向上に向けて、以下の研究を行っています。\n1. ストレス耐性等の形質に関連する遺伝子・DNAバリアントの同定\n2. 1に基づくDNAマーカーの作成と育種",
       "body_en": "Foxtail millet (<i>Setaria italica</i>) has been cultivated as a food crop in Japan for centuries. Though it is not as prevalent at the table today, it possesses a rich nutritional profile and desirable digestive properties. Its genome is relatively small at around 400 Mb, with its decoding completed by 2012, and it is self-fertilizing and genetically transformable. Consequently, it is regarded as a model millet species. In collaboration with researchers from IPB University, Indonesia, we have been conducting the following research aimed at enhancing stress tolerance and other desirable traits in local foxtail millet varieties in Indonesia:\n1. Identification of genetic and DNA variants associated with stress tolerance and other important traits.\n2. Development of DNA markers based on findings from study 1 for use in breeding programs.",
-      "pic_thumb": "https://lh3.googleusercontent.com/d/1XA_4t4NN4Oweh8ud7cBeFlLAhIOg-1RD",
-      "pic_main": "https://lh3.googleusercontent.com/d/1XA_4t4NN4Oweh8ud7cBeFlLAhIOg-1RD",
+      "pic_thumb": "https://lh3.googleusercontent.com/d/17qWPB5cjJ_7NqzU7yYDEkQ6X7-bYu8A-",
+      "pic_main": "https://lh3.googleusercontent.com/d/17qWPB5cjJ_7NqzU7yYDEkQ6X7-bYu8A-",
       "pic_sub": "",
       "references": "setaria,foxtail"
     },
@@ -5121,8 +5121,8 @@
       "summary": "Developing utility tools for batch anlayses and daily tasks / バッチ解析や日常業務のための便利ツール開発",
       "body_ja": "AI援用型プログラミングにより、遺伝子配列のバッチ (複数ファイルを用いるなどの) 解析や日常業務を効率化するため、ブラウザで駆動するアプリケーションを開発しています。自分用という側面が強いものの汎用性も重視しています。多くはLinksから直接お使いいただくことができ、ソースファイル (多くはHTML/JavaScript) をダウンロードいただけばオフライン環境でもお使いいただけます。一度ご覧いただけると嬉しいです。",
       "body_en": "We develop browser-based applications using AI-assisted programming to streamline everyday lab tasks and handle batch genetic sequence analysis across multiple files. While these tools were primarily built for our own daily work, they are designed with high versatility in mind. Most of them can be launched directly from the \"Links\" section of our website, and by downloading the source files (mostly HTML/JavaScript), they can also be used entirely offline. We would be delighted if you could take a look and try them out!",
-      "pic_thumb": "https://lh3.googleusercontent.com/d/1g4IRKtjBLu8qqqsntU2gBkwSK-xUHCHC",
-      "pic_main": "https://lh3.googleusercontent.com/d/1g4IRKtjBLu8qqqsntU2gBkwSK-xUHCHC",
+      "pic_thumb": "https://lh3.googleusercontent.com/d/1Bn8Luu0uuFDS7gOeV1fulJaeJwqk6lSQ",
+      "pic_main": "https://lh3.googleusercontent.com/d/1Bn8Luu0uuFDS7gOeV1fulJaeJwqk6lSQ",
       "pic_sub": "",
       "references": "sabe-owl"
     }
