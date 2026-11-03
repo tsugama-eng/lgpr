@@ -915,166 +915,128 @@ body {
 .news-badge-general { background: #64748b; color: white; }
 
 /* 👥 Members Section Modern Adjustments */
+/* メンバーセクション全体のコンテナ */
 .member-container {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 40px;
   margin-top: 20px;
+  font-family: sans-serif;
 }
 
+/* メンバー1人分のカード */
 .member-card {
   display: grid;
-  grid-template-columns: 150px 1fr;
+  grid-template-columns: 200px 1fr;
   gap: 30px;
-  background: #ffffff;
-  padding: 24px;
-  border: 1px solid var(--color-border);
+  border-bottom: 1px solid #eee;
+  padding-bottom: 30px;
 }
 
+/* メディア（写真・国旗）エリア */
+.member-media {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+}
+
+/* プロフィール写真（ホバーでフェードイン/アウトするモダンな実装） */
 .portrait-container {
   position: relative;
-  width: 130px;
-  height: 170px;
+  width: 150px;
+  height: 200px;
   overflow: hidden;
-  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
 }
-
 .portrait-container img {
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.3s ease;
+}
+/* 通常時はメイン画像(pic2)。ホバーされると消えて下の画像(pic3)が見える */
+.portrait-container img.main-pic {
+  z-index: 2;
+}
+.portrait-container:hover img.main-pic {
+  opacity: 0;
 }
 
-.portrait-container:hover .main-pic { opacity: 0; }
+.nationalflag {
+  width: 40px;
+  height: auto;
+  border: 1px solid #ddd;
+}
 
+/* プロフィール詳細エリア */
+.member-info {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+/* 名前と役職のヘッダー */
 .member-header {
-  border-left: 3px solid #0f141c;
-  padding-left: 12px;
-  margin-bottom: 15px;
+  border-left: 4px solid #333;
+  padding-left: 15px;
 }
+.member-name-en { font-size: 1.4rem; font-weight: bold; margin-right: 10px; }
+.member-title-en { font-size: 0.9rem; color: #666; }
+.member-name-ja { font-size: 1.1rem; color: #444; margin-left: 10px; }
+.member-title-ja { font-size: 0.85rem; color: #777; }
 
-.member-name-en {
-  font-family: var(--font-tech);
-  font-size: 1.25rem;
-  font-weight: 700;
-}
-
-.member-title-en {
-  font-family: var(--font-tech);
-  font-size: 0.85rem;
-  color: #64748b;
-  margin-left: 8px;
-}
-
-.member-name-ja {
-  font-size: 0.95rem;
-  color: #334155;
-}
-
+/* 自己紹介テキスト */
 .member-intro-list {
-  background: #f8fafc;
-  padding: 16px;
-  border: 1px solid var(--color-border);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #f9f9f9;
+  padding: 15px;
+  border-radius: 6px;
 }
+.member-intro-item { margin: 0; font-size: 0.95rem; line-height: 1.5; }
 
-.member-intro-item {
+/* 経歴タイムライン */
+.timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
   font-size: 0.9rem;
-  color: #475569;
-  margin-bottom: 4px;
 }
+.timeline-row { display: flex; gap: 20px; line-height: 1.4; }
+.timeline-year { font-weight: bold; min-width: 90px; color: #333; }
+.timeline-desc { color: #555; }
 
+/* 共同研究者・元メンバーのグリッドレイアウト */
 .sub-member-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 25px;
   margin-top: 20px;
 }
-
 .sub-member-card {
   background: #fff;
-  border: 1px solid var(--color-border);
-  border-radius: 0px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
   padding: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   gap: 15px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05);
 }
 
-/* スマホ表示（幅狭画面）時のメンバーカード等調整 */
-@media (max-width:768px) {
-  .member-card {
-    grid-template-columns: 1fr;
-  }
-  .member-media {
-    flex-direction: row;
-    justify-content: center;
-  }
-  .timeline-row {
-    flex-direction: column;
-    gap: 2px;
-  }
-}
-
-/* ==========================================================================
-   👥 Peopleセクション：元の美しい構造を活かすピンポイント修正
-   ========================================================================== */
-
-/* 1. 全体のフォントをスマートなテック系ゴシックに変更 */
-div.self_intro p, 
-p.self_intro2, 
-p.self_intro3, 
-p.self_intro4, 
-table td {
-  font-family: 'IBM Plex Sans JP', -apple-system, BlinkMacSystemFont, sans-serif !important;
-}
-
-/* 2. 経歴テーブルの年号（数字）だけを美しい等幅フォントにして視認性を爆上げ */
-td.table_year,
-.timeline-year {
-  font-family: 'JetBrains Mono', monospace !important;
-  font-weight: 700;
-  color: #0f141c;
-  letter-spacing: 0.02em;
-}
-
-/* 3. 国旗とポートレート写真の横幅・位置関係のズレを完全に修正 */
-div.texts a.portrait {
-  position: absolute;
-  left: 8px;
-  top: 0;
-  width: 250px; /* 顔写真の横幅と完全に一致させる */
-  float: none;
-  display: flex;
-  flex-direction: column;
-  align-items: center; /* 💡 これで国旗が写真の真下中央に美しく揃います */
-  gap: 12px;          /* 写真と国旗の間の適度な隙間 */
-}
-
-/* 4. 写真自体のサイズ固定（ホバー処理などの干渉を防ぐ） */
-div.texts a.portrait img {
-  width: 100% !important;
-  height: auto;
-}
-
-/* 5. 国旗のスタイリングをスマートに */
-img.nationalflag {
-  height: 20px;
-  width: auto;
-  border: 1px solid #1e293b; /* サイバー感のある濃い枠線 */
-  margin: 0 auto !important;
-}
-
-/* 6. 左側の自己紹介文の枠線を、野暮ったい水色からシャープなグレー系テックカラーに */
-div.self_intro {
-  border-right: solid 1px var(--color-border);
-  border-bottom: solid 1px var(--color-border);
-  padding-right: 10px;
-  padding-bottom: 10px;
+/* レスポンシブ対応（スマホ表示時は縦1列に） */
+@media (max-width: 768px) {
+  .member-card { grid-template-columns: 1fr; gap: 15px; }
+  .member-media { flex-direction: row; justify-content: space-between; width: 100%; }
+  .timeline-row { flex-direction: column; gap: 2px; margin-bottom: 5px; }
 }
 
 
