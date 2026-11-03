@@ -195,26 +195,6 @@ body {
     margin: 15px 0 10px 80px;
   }
 
-  div.harbin img, div.icrisat img, div.lgpr_pc img {
-    height: 250px;
-  }
-
-  div.harbin p, div.icrisat p, div.lgpr_pc p {
-    text-align: center;
-    width: auto;
-    margin: -5px 0 0 0;
-  }
-
-  div.icrisat {
-    float: left;
-    margin: 15px 0 25px 100px;
-  }
-
-  div.lgpr_pc {
-    float: right;
-    margin: 15px 0 0 20px;
-  }
-
   p.pagetop {
     margin: 0 0 20px 12px;
   }
@@ -317,15 +297,6 @@ body {
     font-size: 105%;
     line-height: 175%;
   }
-
-  /* 各植物イメージサイズ */
-  img.manhattan { width: 270px; margin: 0 0 0 20px; }
-  img.pm_field { width: 270px; margin: 10px 0 0 20px; }
-  img.aspara_sex { width: 220px; margin: 10px 0 0 20px; }
-  img.aspara_col { width: 180px; margin: 10px 0 0 20px; }
-  img.vip1_loc { width: 410px; margin: 50px 0 0 10px; }
-  img.vip1_ovv { width: 440px; margin: 70px 0 0 10px; }
-  img.brapa_exp { width: 330px; margin: 0 0 0 20px; }
 
   #others_en ul, #others_ja ul {
     margin: 20px 0 0 35px;
@@ -435,15 +406,6 @@ body {
   div.texts ul li { font-size: 1.05rem; margin: 0 0 10px 0; }
   div.texts ul li.ja { font-size: 1.1rem; margin: 0 0 20px 0; }
 
-  div.icrisat img, div.lgpr_pc img { height: 150px; }
-  div.labvideo p, div.icrisat p, div.lgpr_pc p {
-    text-align: center;
-    width: auto;
-    margin: -3px 0 0 0;
-    line-height: 125%;
-  }
-
-  div.lgpr_pc { float: right; margin: 10px 0 0 10px; }
   p.pagetop { display: none; }
 
   .gmap {
@@ -530,42 +492,6 @@ body {
     text-decoration: underline;
     color: #882255;
   }
-
-  img.manhattan {
-    width: 180px;
-    margin: 0 0 0 5px;
-  }
-
-  img.pm_field {
-    width: 180px;
-    margin: 10px 0 0 5px;
-  }
-
-  img.aspara_sex {
-    width: 150px;
-    margin: 0 0 0 5px;
-  }
-
-  img.aspara_col {
-    width: 150px;
-    margin: 10px 0 0 5px;
-  }
-
-  img.vip1_loc {
-    width: 175px;
-    margin: 0 0 0 5px;
-  }
-
-  img.vip1_ovv {
-    width: 175px;
-    margin: 10px 0 0 5px;
-  }
-
-  img.brapa_exp {
-    width: 175px;
-    margin: 0 0 0 5px;
-  }
-}
 
 /* --------------------------------------------------
    4. Animation Keyframes (スライドショー用)
