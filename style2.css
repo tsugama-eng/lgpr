@@ -889,9 +889,10 @@ body {
 .member-card {
   display: grid;
   grid-template-columns: 200px 1fr;
-  gap: 30px;
-  border-bottom: 1px solid #eee;
-  padding-bottom: 30px;
+  gap: 20px;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
 }
 
 /* メディア（写真・国旗）エリア */
