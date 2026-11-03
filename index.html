@@ -783,8 +783,12 @@
         mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${t.pic_main}"><img src="${t.pic_main}" alt="Main Image"></a></div>`;
       }
 
-      const bodyText = (currentLang === 'ja') ? (t.body_ja || t.summary) : (`t.body_en<br><br>t.body_ja` || t.summary);
+      // const t_body_en_ja = t.body_en + '' + 
+      
+      // const bodyText = (currentLang === 'ja') ? (t.body_ja || t.summary) : (t.body_en || t.summary);
+      const bodyText = (currentLang === 'ja') ? (t.body_ja || t.summary) : (`${t.body_en}<br><br>${t.body_ja}` || t.summary);
 
+      
       // 💡 変更点：純粋に pic_sub にデータがある場合のみ、本文の後に展開（使い回しを禁止）
       let subImgsHtml = '';
       if (t.pic_sub && t.pic_sub.trim() !== '') {
