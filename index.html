@@ -255,7 +255,7 @@
     .news-badge-events { background: var(--color-neon-green); color: black; }
     .news-badge-general { background: #2C6B37; color: white; }
 
-    .news-summary-text { color: #4CAF50; text-decoration: underline; }
+    .news-summary-text.clickable { color: #4CAF50; text-decoration: underline; }
 
     @media (max-width: 768px) {
       .news-timeline-item { flex-direction: column; gap: 8px; }
@@ -861,7 +861,7 @@
         mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${e.pic_main}"><img src="${e.pic_main}"></a></div>`;
       }
 
-      const bodyText = (currentLang === 'ja') ? (e.body_ja || e.summary) : (e.body_en || e.summary);
+      const bodyText = (currentLang === 'ja') ? (e.body_ja || e.summary) : (`${e.body_en}<br><br>${e.body_ja}` || e.summary);
 
       // 💡 変更点：純粋に pic_sub にデータがある場合のみ、本文の後に展開（使い回しを禁止）
       let subImgsHtml = '';
@@ -879,10 +879,10 @@
       detailView.innerHTML = `
         <div class="detail-page-view">
           <button class="detail-page-back-btn" onclick="hideEventDetailPage()">&larr; Back to List</button>
-          <div class="modal-lang-toggle" style="float: right; margin-top: 5px;">
+          <! -- <div class="modal-lang-toggle" style="float: right; margin-top: 5px;">
             <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('en', 'event', ${idx})">English</span>
             <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('ja', 'event', ${idx})">Japanese</span>
-          </div>
+          </div> -->
           <h2 style="margin-top:0; border-bottom:2px solid #4CAF50; padding-bottom:10px; margin-bottom:10px; font-size:1.5rem;">${e.title || ''}</h2>
           <div class="card-meta" style="margin-bottom:20px;">
             <span class="date-badge">${e.date || ''}</span>
@@ -1133,7 +1133,9 @@
         const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
         const clickAttribute = isClickable ? `onclick="showNewsDetailPage(${idx})"` : "";
         const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
-
+        const colorStyle = isClickable ? "color: #4CAF50;" : "color: #000;";
+        const textDecStyle = isClickable ? "text-decoration: underline;" : "text-decoration: none;";
+        
         let badgeClass = "news-badge-general";
         if(catLower.includes("paper")) badgeClass = "news-badge-papers";
         if(catLower.includes("people")) badgeClass = "news-badge-people";
@@ -1168,13 +1170,14 @@
         }
 
         container.innerHTML += `
-          <div class="news-timeline-item" ${clickAttribute} style="${cursorStyle}">
+          //<div class="news-timeline-item" ${clickAttribute} style="${cursorStyle}">
+          <div class="news-timeline-item" ${clickAttribute}>
             <div class="news-meta-inline">
               <span class="news-date">${n.date || ''}</span>
               <span class="${badgeClass}">${cat}</span>
             </div>
             <div class="news-body-inline">
-              <div class="news-summary-text">${summaryHtml}</div>
+              <div class="news-summary-text" style="${cursorStyle}; ${colorStyle}; ${textDecStyle}">${summaryHtml}</div>
             </div>
           </div>
         `;
