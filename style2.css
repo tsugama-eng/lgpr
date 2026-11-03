@@ -38,7 +38,6 @@ body {
   #title {
     max-width: 1200px;
     margin: 0 auto;
-    pedding: 0 20px;
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
@@ -46,6 +45,7 @@ body {
   }
 
   #title h1 {
+    pedding: 0 20px;
     font-size: 2.2rem;
     font-weight: 700;
     color: #000000;
@@ -89,7 +89,7 @@ body {
 
   ul.menu a {
     display: block;
-    padding: 8px 16px;
+    padding: 8px 8px;
     border-radius: 0px; /* 直角でシャープに */
     font-family: var(--font-base);
     font-size: 0.85rem;
@@ -108,8 +108,7 @@ body {
 
   ul.menu a.current {
     background: #fff;
-    color: #000000;
-    border: 3px solid #333;
+    color: #ddd;
     font-weight: bold;
   }
 
@@ -348,6 +347,7 @@ body {
    -------------------------------------------------- */
 @media screen and (max-width: 750px) {
   #title {
+    pedding: 0 20px;
     background-color: #ffffff;
     pedding: 0 20px;
   }
@@ -387,7 +387,7 @@ body {
 
   ul.menu a {
     display: block;
-    padding: 8px 14px;
+    padding: 8px 8px;
     border-radius: 0px;
     text-decoration: none;
     color: #333;
@@ -403,10 +403,9 @@ body {
   }
 
   ul.menu a.current {
-    background: #fff;
+    background: #ddd;
     color: #000;
     font-weight: bold;
-    border: 3px solid #ddd;
   }
 
   // ul.menu a.current li { background-color: #004180; }
