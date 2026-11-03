@@ -38,6 +38,7 @@ body {
   #title {
     max-width: 1200px;
     margin: 0 auto;
+    pedding: 0 20px;
     background-color: #ffffff;
     display: flex;
     justify-content: space-between;
@@ -348,11 +349,11 @@ body {
 @media screen and (max-width: 750px) {
   #title {
     background-color: #ffffff;
+    pedding: 0 20px;
   }
 
   #title h1 {
     font-size: 1.25rem;
-    padding: 0 0 0 5px;
     color: #000000;
     background-color: #ffffff;
     float: left;
