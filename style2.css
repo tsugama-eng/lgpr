@@ -45,7 +45,7 @@ body {
   }
 
   #title h1 {
-    pedding: 0 20px;
+    padding: 0 20px;
     font-size: 2.2rem;
     font-weight: 700;
     color: #000000;
@@ -107,8 +107,7 @@ body {
   }
 
   ul.menu a.current {
-    background: #fff;
-    color: #ddd;
+    background: #ddd;
     font-weight: bold;
   }
 
@@ -347,12 +346,11 @@ body {
    -------------------------------------------------- */
 @media screen and (max-width: 750px) {
   #title {
-    pedding: 0 20px;
     background-color: #ffffff;
-    pedding: 0 20px;
   }
 
   #title h1 {
+    padding: 0 20px;
     font-size: 1.25rem;
     color: #000000;
     background-color: #ffffff;
