@@ -375,7 +375,7 @@
               
               <!-- 1コ目：ワークフロー画像（ID変更済み） -->
               <div class="dashboard-card" style="flex: 1; min-width: 320px; max-width: 100%; box-sizing: border-box;">
-                <h3 style="margin-bottom:0px;">What We Create</h3> 
+                <h3 style="padding-bottom:0px;">What We Create</h3> 
                 <a href="https://lh3.googleusercontent.com/d/1mOHkryMcKelZ-5-FWctx4EXnabtniqpd" target="_blank">
                   <img src="https://lh3.googleusercontent.com/d/1mOHkryMcKelZ-5-FWctx4EXnabtniqpd" alt="Research Overview" style="width: 100%; height: 100%; object-fit: contain; border-radius: 0px;" title="What We Create">
                 </a>
@@ -393,7 +393,7 @@
               </div>
 
               <!-- 3コ目：生物種のエリアチャート -->
-              <div class="dashboard-card" style="flex: 1; min-width: 270px; min-height: 350px; box-sizing: border-box; align-self: flex-start;"> 
+              <div class="dashboard-card" style="flex: 1; min-width: 270px; max-width: 100%; min-height: 350px; box-sizing: border-box; align-self: flex-start; overflow:hidden;"> 
                 <h3>Research Organisms Trend</h3> 
                 <div id="species-chart-container" style="width:100%; height:200px; padding-top:10px;"></div> 
               </div> 
@@ -403,30 +403,38 @@
         </div>
 
          
-        <div class="subhead"><p><span><b>International Collaboration</b></span></p></div>
-
-        <div id="international_en" class="texts">
-           <p><span>As a member of the <a href="https://www.anesc.u-tokyo.ac.jp/en/" target="_blank">Asian Research Center for Bioresources and Environmental Sciences (ARC-BRES)</a> at the Graduate School of Agricultural and Life Sciences, The University of Tokyo, our lab aims to contribute to international collaboration and training young international researchers. Specifically, we have been conducting gene characterization related to stress tolerance and millet genomics studies with collaborators in China, India and Indonesia. Developing browser applications to democratize data analysis is also one of our international projects.</span></p>
-        </div>
-        <div id="international_ja" class="texts" style="display:none;">
-           <p><span>東京大学大学院農学生命科学研究科附属<a href="https://www.anesc.u-tokyo.ac.jp/en/" target="_blank">アジア生物資源環境研究センター（アジアセンター、ARC-BRES）</a>の一員として、国際共同研究とグローバル人材育成に貢献することも目指しています。具体的には、中国、インド、インドネシア等の共同研究者と共に、ストレス耐性関連遺伝子の機能解析や雑穀（ミレット）のゲノミクス研究を行っています。また、データ解析の民主化に向けたブラウザアプリケーション等の開発も、私たちの国際プロジェクトの一つです。</span></p>
-        </div>
-
-        <div style="display: flex; gap: 15px; justify-content: center; align-items: center; width: 100%; margin-top: 20px;">
-          <img src="https://lh3.googleusercontent.com/d/1BLqo2EOTRMtNcs4cEBiif5jH1Hb8AmhV" alt="ICRISAT_Field_Day_2026" style="width: 50%; height: 275px; object-fit: cover;" title="ICRISAT Pearl Millet Field Day 2026">
-          <img src="https://lh3.googleusercontent.com/d/1QZVoqggiSMuElEmZ6vKWhJ8PYHDdO2QO" alt="IPB_Students_Visit_2024" style="width: 50%; height: 275px; object-fit: cover;" title="Sakura Science Program 2024 with IPB University Students">
-        </div>
-
-        <!-- 🔥 Topページ用の簡易News枠 -->
-        <div class="subhead"><p><span><b>Recent News</b></span></p></div>
-        <div class="texts">
-          <div id="top-recent-news-list" class="news-list-timeline" style="margin-bottom: 25px; gap: 10px;">
-            Loading recent updates...
+        <!-- 📄 International Collaboration カード -->
+        <div style="border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; padding: 15px; background: #fff;"> 
+          <div class="subhead"><p><span><b>International Collaboration</b></span></p></div>
+          
+          <!-- 文章エリア -->
+          <div id="international_en" class="texts">
+             <p><span>As a member of the <a href="https://www.anesc.u-tokyo.ac.jp/en/" target="_blank">Asian Research Center for Bioresources and Environmental Sciences (ARC-BRES)</a> at the Graduate School of Agricultural and Life Sciences, The University of Tokyo, our lab aims to contribute to international collaboration and training young international researchers. Specifically, we have been conducting gene characterization related to stress tolerance and millet genomics studies with collaborators in China, India and Indonesia. Developing browser applications to democratize data analysis is also one of our international projects.</span></p>
+             <p><span>東京大学大学院農学生命科学研究科附属<a href="https://www.anesc.u-tokyo.ac.jp/en/" target="_blank">アジア生物資源環境研究センター（アジアセンター、ARC-BRES）</a>の一員として、国際共同研究とグローバル人材育成に貢献することも目指しています。具体的には、中国、インド、インドネシア等の共同研究者と共に、ストレス耐性関連遺伝子の機能解析や雑穀（ミレット）のゲノミクス研究を行っています。また、データ解析の民主化に向けたブラウザアプリケーション等の開発も、私たちの国際プロジェクトの一つです。</span></p>
           </div>
-          <div style="text-align: right; margin-right: 15px; margin-bottom: 25px;">
-            <a href="#news" onclick="switchPage('news')" style="font-weight: bold; font-size: 0.95rem; text-decoration: none; background: #eef7ee; color: #4CAF50; padding: 6px 14px; border-radius: 4px; border: 1px solid #4CAF50; display: inline-block; transition: background 0.2s;">
-              View All News &rarr;
-            </a>
+          <!-- 📸 画像ギャラリー（レスポンシブ・入りきらなければ改行） -->
+          <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: flex-start; width: 100%; margin-top: 20px;">
+            <div style="flex: 1; min-width: 280px; max-width: 100%;">
+              <img src="https://lh3.googleusercontent.com/d/1BLqo2EOTRMtNcs4cEBiif5jH1Hb8AmhV" alt="ICRISAT_Field_Day_2026" style="width: 100%; height: 275px; object-fit: cover; border-radius: 4px;" title="ICRISAT Pearl Millet Field Day 2026">
+            </div>
+            <div style="flex: 1; min-width: 280px; max-width: 100%;">
+              <img src="https://lh3.googleusercontent.com/d/1QZVoqggiSMuElEmZ6vKWhJ8PYHDdO2QO" alt="IPB_Students_Visit_2024" style="width: 100%; height: 275px; object-fit: cover; border-radius: 4px;" title="Sakura Science Program 2024 with IPB University Students">
+            </div>
+          </div>
+        </div>
+
+        <!-- 📰 Recent News カード -->
+        <div style="border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; padding: 15px; background: #fff;"> 
+          <div class="subhead"><p><span><b>Recent News</b></span></p></div>
+          <div class="texts">
+            <div id="top-recent-news-list" class="news-list-timeline" style="margin-bottom: 25px; gap: 10px;">
+              Loading recent updates...
+            </div>
+            <div style="text-align: right; margin-right: 15px; margin-bottom: 10px;">
+              <a href="#news" onclick="switchPage('news')" style="font-weight: bold; font-size: 0.95rem; text-decoration: none; background: #eef7ee; color: #4CAF50; padding: 6px 14px; border-radius: 4px; border: 1px solid #4CAF50; display: inline-block; transition: background 0.2s;">
+                View All News &rarr;
+              </a>
+            </div>
           </div>
         </div>
        
