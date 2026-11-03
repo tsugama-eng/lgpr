@@ -154,12 +154,7 @@ body {
 
   /* 見出し・サブヘッド */
   div.subhead {
-    margin: 20px 0 15px 0;
-  }
-
-  div.subhead p {
-    padding: 0 0 5px 5px;
-    margin: 0 0 10px 0;
+    margin: 0px 0 0px 0;
   }
 
   div.subhead p span {
@@ -171,7 +166,7 @@ body {
   div.texts p {
     text-align: justify;
     line-height: 180%;
-    margin: 5px 0 16px 15px;
+    margin: 0px 0 10px 0px;
   }
 
   div.texts p span {
@@ -425,17 +420,12 @@ body {
   div.detail ul.link { margin: 15px 0 0 20px; }
   div.detail ul.link li { font-size: 0.91rem; margin: 0 0 10px 0; text-align: justify; }
 
-  div.subhead p {
-    padding: 0 0 3px 5px;
-    margin: 0 0 5px 0;
-  }
-
   div.subhead p span { font-size: 1.2rem; font-weight: bold; }
 
   div.texts p {
     text-align: justify;
     line-height: 165%;
-    margin: 5px 0 10px 5px;
+    margin: 0px 0 10px 0px;
   }
 
   div.texts p span { font-size: 0.95rem; }
