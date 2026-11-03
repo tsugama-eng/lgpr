@@ -41,7 +41,6 @@ body {
     margin: 0 auto;
     padding: 30px 20px 20px 20px;
     background-color: #ffffff;
-    border-left: solid 50px #aaffff;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -68,13 +67,6 @@ body {
     height: 115px;
     width: auto;
     margin-top: 5px;
-  }
-
-  #titleborder {
-    height: 3.5px;
-    max-width: 1200px;
-    margin: 0 auto;
-    background-color: #00aaff;
   }
 
   /* メニュー */
@@ -358,7 +350,6 @@ body {
 @media screen and (max-width: 750px) {
   #title {
     background-color: #ffffff;
-    border-left: solid 15px #aaffff;
     padding: 15px 10px;
   }
 
@@ -382,13 +373,6 @@ body {
   #title img {
     height: 80px;
     padding: 5px 0 0 5px;
-  }
-
-  #titleborder {
-    height: 3px;
-    width: 98%;
-    background-color: #00aaff;
-    margin: 0 auto;
   }
 
   ul.menu {
