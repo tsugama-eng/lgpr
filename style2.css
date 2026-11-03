@@ -154,22 +154,17 @@ body {
 
   /* 見出し・サブヘッド */
   div.subhead {
-    margin: 35px 0 15px 0;
+    margin: 20px 0 15px 0;
   }
 
   div.subhead p {
     padding: 0 0 5px 5px;
-    border-bottom: solid 2px #00aaff;
     margin: 0 0 10px 0;
   }
 
   div.subhead p span {
     font-size: 1.55rem;
     font-weight: 700;
-  }
-
-  div.subhead p span#vip1_subtitle {
-    font-size: 100%;
   }
 
   /* テキストブロック */
@@ -432,12 +427,10 @@ body {
 
   div.subhead p {
     padding: 0 0 3px 5px;
-    border-bottom: solid 2px #00aaff;
     margin: 0 0 5px 0;
   }
 
   div.subhead p span { font-size: 1.2rem; font-weight: bold; }
-  div.subhead p span#vip1_subtitle { font-size: 88%; }
 
   div.texts p {
     text-align: justify;
