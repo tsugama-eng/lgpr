@@ -833,7 +833,7 @@
             <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('en', 'topic', ${idx})">English</span>
             <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('ja', 'topic', ${idx})">Japanese</span>
           </div> -->
-          <h2 style="margin-top:0; border-bottom:2px solid #4CAF50; padding-bottom:10px; margin-bottom:20px; font-size:1.5rem;">${t.title || ''}</h2>
+          <h2 style="margin-top:0; padding-bottom:10px; margin-bottom:20px; font-size:1.5rem;">${t.title || ''}</h2>
           ${mainImgHtml}
           <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
           ${subImgsHtml}
@@ -883,7 +883,7 @@
             <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('en', 'event', ${idx})">English</span>
             <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('ja', 'event', ${idx})">Japanese</span>
           </div> -->
-          <h2 style="margin-top:0; border-bottom:2px solid #4CAF50; padding-bottom:10px; margin-bottom:10px; font-size:1.5rem;">${e.title || ''}</h2>
+          <h2 style="margin-top:0; padding-bottom:10px; margin-bottom:10px; font-size:1.5rem;">${e.title || ''}</h2>
           <div class="card-meta" style="margin-bottom:20px;">
             <span class="date-badge">${e.date || ''}</span>
             <span class="category-badge">${e.category || ''}</span>
@@ -1170,7 +1170,6 @@
         }
 
         container.innerHTML += `
-          //<div class="news-timeline-item" ${clickAttribute} style="${cursorStyle}">
           <div class="news-timeline-item" ${clickAttribute}>
             <div class="news-meta-inline">
               <span class="news-date">${n.date || ''}</span>
@@ -1190,7 +1189,7 @@
       const listView = document.getElementById('news-list-view');
       const detailView = document.getElementById('news-detail-page');
 
-      const bodyText = (currentLang === 'ja') ? (n.body_ja || n.summary) : (n.body_en || n.summary);
+      const bodyText = (currentLang === 'ja') ? (n.body_ja || n.summary) : (`${n.body_en}<br>${n.body_ja}` || n.summary);
 
       detailView.innerHTML = `
         <div class="detail-page-view">
@@ -1240,6 +1239,8 @@
         const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
         const clickAttribute = isClickable ? `onclick="navigateToNewsDetail(${idx})"` : "";
         const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
+        const colorStyle = isClickable ? "color: #4CAF50;" : "color: #000;";
+        const textDecStyle = isClickable ? "text-decoration: underline;" : "text-decoration: none;";
 
         let badgeClass = "news-badge-general";
         if(catLower.includes("paper")) badgeClass = "news-badge-papers";
@@ -1250,13 +1251,13 @@
 
         // 行間をさらに詰めてコンパクトにしたタイムライン形式
         container.innerHTML += `
-          <div class="news-timeline-item" ${clickAttribute} style="${cursorStyle} padding: 8px 10px; border-bottom: 1px dotted #eee;">
+          <div class="news-timeline-item" ${clickAttribute} style="padding: 8px 10px; border-bottom: 1px dotted #eee;">
             <div class="news-meta-inline" style="min-width: 90px;">
               <span class="news-date" style="font-size:0.85rem;">${n.date || ''}</span>
               <span class="${badgeClass}" style="font-size:0.75rem; padding:1px 4px;">${cat}</span>
             </div>
             <div class="news-body-inline" style="font-size:0.9rem;">
-              <div class="news-summary-text">${summaryHtml}</div>
+              <div class="news-summary-text" style="${cursorStyle}; ${colorStyle}; ${textDecStyle};">${summaryHtml}</div>
             </div>
           </div>
         `;
