@@ -1,6 +1,5 @@
 <p align="center">
-  <img src="lgpr.png" alt="Automated Website Generation & Update System" width="15%" style="vertical-align: middle; margin-right: 20px;" />
-  <img src="lgpr_system.png" alt="System Icon" width="75%" style="vertical-align: middle;" />
+  <img src="lgpr_system.png" alt="System Icon" width="90%" style="vertical-align: middle;" />
 </p>
 
 # Automated Website Generation & Update System
