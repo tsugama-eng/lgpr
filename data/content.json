@@ -5002,6 +5002,20 @@
       "pic": "https://lh3.googleusercontent.com/d/1FzoP3fsoynEI7j7dGfBqZ1-XCcguDjcD"
     },
     {
+      "item": "CLOBRE Repository",
+      "category": "Tools & Platforms",
+      "description": "",
+      "link": "",
+      "pic": ""
+    },
+    {
+      "item": "LGPR Website Repository",
+      "category": "Tools & Platforms",
+      "description": "",
+      "link": "",
+      "pic": ""
+    },
+    {
       "item": "COW-ROC",
       "category": "Tools & Platforms",
       "description": "Browser application for codon weight-based codon optimization and Ribo-seq-weighted cumulative codon frequencies in model species / コドン重みモデルを用いたコドン最適化とモデル生物におけるリボソーム占有領域内コドン頻度のブラウジング用ブラウザアプリ",
@@ -5009,7 +5023,7 @@
       "pic": "https://lh3.googleusercontent.com/d/1cJsdZInLnemKkwbquQU7gvHQNoyX7j42"
     },
     {
-      "item": "Tsugama's GitHub repositories",
+      "item": "Tsugama's GitHub Repositories",
       "category": "Tools & Platforms",
       "description": "For source code of the above tools and others",
       "link": "https://github.com/tsugama-eng",
