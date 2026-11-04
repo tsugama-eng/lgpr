@@ -828,11 +828,7 @@
 
       detailView.innerHTML = `
         <div class="detail-page-view">
-          <button class="detail-page-back-btn" onclick="hideTopicDetailPage()" style="border: none; background-color: #ffffff; color: #4CAF50; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 16px;">&larr; Back to List</button>
-          <!-- <div class="modal-lang-toggle" style="float: right; margin-top: 5px;">
-            <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('en', 'topic', ${idx})">English</span>
-            <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('ja', 'topic', ${idx})">Japanese</span>
-          </div> -->
+          <button class="detail-page-back-btn" onclick="hideTopicDetailPage()" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 16px;">&larr; Back to List</button>
           <h2 style="margin-top:0; padding-bottom:10px; margin-bottom:20px; font-size:1.5rem;">${t.title || ''}</h2>
           ${mainImgHtml}
           <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
@@ -878,11 +874,7 @@
 
       detailView.innerHTML = `
         <div class="detail-page-view">
-          <button class="detail-page-back-btn" onclick="hideEventDetailPage()" style="border: none; background-color: #ffffff; color: #4CAF50; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 16px;">&larr; Back to List</button>
-          <! -- <div class="modal-lang-toggle" style="float: right; margin-top: 5px;">
-            <span class="language" style="color:${currentLang==='en'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='en'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('en', 'event', ${idx})">English</span>
-            <span class="language" style="color:${currentLang==='ja'?'#0000ff':'#888888'}; border:solid 1px ${currentLang==='ja'?'#0000ff':'#ccc'}" onclick="setInlinePageLang('ja', 'event', ${idx})">Japanese</span>
-          </div> -->
+          <button class="detail-page-back-btn" onclick="hideEventDetailPage()" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 16px;">&larr; Back to List</button>
           <h2 style="margin-top:0; padding-bottom:10px; margin-bottom:10px; font-size:1.5rem;">${e.title || ''}</h2>
           <div class="card-meta" style="margin-bottom:20px;">
             <span class="date-badge">${e.date || ''}</span>
