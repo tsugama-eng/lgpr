@@ -68,10 +68,10 @@
       "grade": "M2",
       "title_en": "M2",
       "title_ja": "修士2年",
-      "intro1": "Like: Soccer, hiking, museums　サッカー、登山、博物館\nBelieve: “Where there’s a will, there’s a way.”　為せば成る",
+      "intro1": "Like: Soccer, Manchester United, hiking, museums, rap music　サッカー、マンチェスター・ユナイテッド、登山、博物館、ラップ\nBelieve: “Where there’s a will, there’s a way.”　為せば成る\nWant to: Stand on the shoulders of giants　巨人の肩の上に立つ",
       "intro2": "2025-present -- Master's student. Working to develop a vector that can drive transgene expression in bacteria, yeast and plants.",
       "pic1": "https://lh3.googleusercontent.com/d/1Hz-A8TWEcYHOXW96V6S8mB9UMt8rMzJ1",
-      "pic2": "zuo1.png",
+      "pic2": "https://lh3.googleusercontent.com/d/19COoW0A6YYV_Bq8GS6VYD34YGHaJFf5x",
       "pic3": "",
       "pic2_id": "zuo1",
       "pic3_id": ""
@@ -4960,39 +4960,60 @@
   },
   "links": [
     {
-      "item": "TGIF-DB (Terse Genomics Interface for Developing Botany)",
+      "item": "TGIF-DB",
       "category": "Tools & Platforms",
       "description": "Database for genomics of pearl millet, garden asparagus and other crops 作物遺伝子機能アノテーション閲覧機能を重視したデータベース",
       "link": "http://park.itc.u-tokyo.ac.jp/lgpr/rlgpr",
       "pic": "https://lh3.googleusercontent.com/d/10slnMUFZln6YI4yX5FllI-gL5djVjspP"
     },
     {
-      "item": "GExA (Grass Expression Atlas)",
+      "item": "GExA",
       "category": "Tools & Platforms",
       "description": "Database of RNA-seq-based gene expression in millet and other grass species 雑穀等の遺伝子発現データベース",
       "link": "https://gexa.anesc.u-tokyo.ac.jp/",
-      "pic": ""
+      "pic": "https://lh3.googleusercontent.com/d/1nBkxMNmpIIGgC8NwyM0YEjFrOkQId0aI"
     },
     {
-      "item": "SABE-OWL (Sequence Analysis Batch Engine On the Web (Lite))",
+      "item": "DEAR-OWL",
       "category": "Tools & Platforms",
-      "description": "Browser application for a batch comparison between reference and query sequences; HELPA for phasing mixed tracecs is also available リファレンス-クエリ間での遺伝子配列比較とサンガーシーケンシングでの混合シグナルの分離をバッチで行うためのブラウザアプリ",
+      "description": "DESeq2-based and EdgeR-like gene differential expression analysis on the web browser / 遺伝子発現差分解析用ブラウザアプリ",
+      "link": "http://park.itc.u-tokyo.ac.jp/lgpr/deseq2",
+      "pic": "https://lh3.googleusercontent.com/d/1Fa7RfrbrTIoPQNh79suZRiSlE8xwUqlX"
+    },
+    {
+      "item": "MEAM-OWL",
+      "category": "Tools & Platforms",
+      "description": "Sequence motif enrichment analysis with five different algorithms on a web browser / 5個の異なるアルゴリズムで配列モチーフ出現頻度を評価できるブラウザアプリ",
+      "link": "https://tsugama-eng.github.io/meam-owl/",
+      "pic": "https://lh3.googleusercontent.com/d/1iBSSPaPH8db_G9jTATDlAuAPGNsm72xF"
+    },
+    {
+      "item": "SABE-OWL",
+      "category": "Tools & Platforms",
+      "description": "For a batch comparison between reference and query sequences; HELPA for phasing mixed tracecs is also available / リファレンス-クエリ間での遺伝子配列比較とサンガーシーケンシングでの混合シグナルの分離をバッチで行えるブラウザアプリ",
       "link": "https://tsugama-eng.github.io/sabe-owl/",
-      "pic": ""
+      "pic": "https://lh3.googleusercontent.com/d/1X5aGi_6nVI-H3f2zO2hfo3FaloqYLoI7"
+    },
+    {
+      "item": "NESCOW",
+      "category": "Tools & Platforms",
+      "description": "Local LLM (Ollama)-based writing assistant for non-native English speakers / ノンネイティブ英語話者のためのライティングアシスタント (要Ollama)",
+      "link": "https://tsugama-eng.github.io/nescow/",
+      "pic": "https://lh3.googleusercontent.com/d/1FzoP3fsoynEI7j7dGfBqZ1-XCcguDjcD"
     },
     {
       "item": "COW-ROC (Codon Weight and Ribosome-Occupied Codon Utilization Platform)",
       "category": "Tools & Platforms",
-      "description": "Browser application for codon weight-based codon optimization and Ribo-seq-weighted cumulative codon frequencies in model species コドン重みモデルを用いたコドン最適化とモデル生物におけるリボソーム占有領域内コドン頻度のブラウジング用ブラウザアプリ",
+      "description": "Browser application for codon weight-based codon optimization and Ribo-seq-weighted cumulative codon frequencies in model species / コドン重みモデルを用いたコドン最適化とモデル生物におけるリボソーム占有領域内コドン頻度のブラウジング用ブラウザアプリ",
       "link": "https://cowroc.anesc.u-tokyo.ac.jp/",
-      "pic": ""
+      "pic": "https://lh3.googleusercontent.com/d/1cJsdZInLnemKkwbquQU7gvHQNoyX7j42"
     },
     {
       "item": "Tsugama's GitHub repositories",
       "category": "Tools & Platforms",
       "description": "For source code of the above tools and others",
       "link": "https://github.com/tsugama-eng",
-      "pic": ""
+      "pic": "https://lh3.googleusercontent.com/d/1lhBw9vwl1h03pim-EWNlqsAg4GiwKCXz"
     },
     {
       "item": "NCBI (National Center for Biotechnology Information)",
@@ -5011,42 +5032,42 @@
     {
       "item": "TAIR (The Arabidopsis Information Resource)",
       "category": "External Resources",
-      "description": "Arabidopsis comprehensive gene information resource シロイヌナズナの遺伝子データベース",
+      "description": "Arabidopsis comprehensive gene information resource / シロイヌナズナの遺伝子データベース",
       "link": "https://www.arabidopsis.org/index.jsp",
       "pic": ""
     },
     {
       "item": "ARC-BRES アジア生物資源環境研究センター",
       "category": "Affiliations",
-      "description": "Research center which this lab belongs to 私達の研究室が属する研究センター",
+      "description": "Research center which this lab belongs to / 私達の研究室が属する研究センター",
       "link": "https://www.anesc.u-tokyo.ac.jp/en/",
       "pic": ""
     },
     {
       "item": "AE-Bio (Department of Agricultural and Environmental Biology) 農業生物学専修 / 生産・環境生物学専攻",
       "category": "Affiliations",
-      "description": "Department which students in this lab belong to 私達の研究室の学生が所属することになる専攻",
+      "description": "Department which students in this lab belong to / 私達の研究室の学生が所属することになる専攻",
       "link": "https://www.ab.a.u-tokyo.ac.jp/",
       "pic": ""
     },
     {
       "item": "ISAS (Institute for Sustainable Agro-ecosystem Services) 生態調和農学機構",
       "category": "Affiliations",
-      "description": "Institute (Nishi-tokyo Tanashi Campus) where crop production fields and this lab are located 圃場と私達の研究室を擁する大学院附属施設",
+      "description": "Institute (Nishi-tokyo Tanashi Campus) where crop production fields and this lab are located / 圃場と私達の研究室を擁する大学院附属施設",
       "link": "https://www.isas.a.u-tokyo.ac.jp/en/",
       "pic": ""
     },
     {
       "item": "Graduate School of Agricultural and Life Sciences 大学院農学生命科学研究科",
       "category": "Affiliations",
-      "description": "Graduate school which we belong to 私達が所属する大学院",
+      "description": "Graduate school which we belong to / 私達が所属する大学院",
       "link": "https://www.a.u-tokyo.ac.jp/english/",
       "pic": ""
     },
     {
       "item": "The University of Tokyo 東京大学",
       "category": "Affiliations",
-      "description": "Our University 私達の大学",
+      "description": "Our University / 私達の大学",
       "link": "https://www.u-tokyo.ac.jp/en/index.html",
       "pic": ""
     }
