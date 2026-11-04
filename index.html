@@ -462,10 +462,14 @@
              <p><span>This website is automatically generated and updated using Google Sheets, GAS, Researchmap, and GitHub Pages.</span></p>
              <p><span>このウェブサイトは Google Sheets、GAS、Researchmap、GitHub Pagesを用いて半自動的に生成・更新されています。</span></p>
           </div>
-          <!-- 📸 画像ギャラリー（レスポンシブ・入りきらなければ改行） -->
+          <!-- 📸 画像ギャラリー（見切れ防止・レスポンシブ対応） -->
           <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: flex-start; width: 100%; margin-top: 20px;">
             <div style="flex: 1; min-width: 280px; max-width: 75%;">
-              <img src="https://lh3.googleusercontent.com/d/1j8mInuX4hszltpnfAZOB3YRd1yIqzrJn" alt="LGPR_Website_System" style="width: 100%; height: 275px; object-fit: cover; border-radius: 4px;" title="LGPR Website System">
+              <!-- 💡 height を auto に、object-fit を contain に変更し、さらに最大高さを制限して綺麗に収めています -->
+              <img src="https://lh3.googleusercontent.com/d/1j8mInuX4hszltpnfAZOB3YRd1yIqzrJn" 
+                   alt="LGPR_Website_System" 
+                   style="width: 100%; height: auto; max-height: 450px; object-fit: contain; border-radius: 4px;" 
+                   title="LGPR Website System">
             </div>
           </div>
         </div>
