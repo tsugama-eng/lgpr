@@ -1174,7 +1174,7 @@
       });
     }
 
-    // 💡 新設：Newsの通常ページ風・詳細画面の表示処理（Clickableなカテゴリのみ遷移）
+    // 💡 Newsの通常ページ風・詳細画面の表示処理（Clickableなカテゴリのみ遷移）
     window.showNewsDetailPage = function(idx) {
       const n = window.globalNewsData[idx];
       const listView = document.getElementById('news-list-view');
@@ -1184,11 +1184,11 @@
 
       detailView.innerHTML = `
         <div class="detail-page-view">
-          <button class="detail-page-back-btn" onclick="hideNewsDetailPage()">&larr; Back to List</button>
+          <button class="detail-page-back-btn" onclick="hideNewsDetailPage()" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 0px;">&larr; Back to List</button>
           <h2 style="margin-top:0; border-bottom:2px solid #4CAF50; padding-bottom:10px; margin-bottom:15px; font-size:1.5rem;">${n.title || ''}</h2>
           <div class="card-meta" style="margin-bottom:20px;">
-            <span class="date-badge" style="background:#4169E1;">${n.date || ''}</span>
-            <span class="category-badge" style="color:#4169E1; border-color:#4169E1; background:#f4f7fc;">${n.category || 'General'}</span>
+            <span class="date-badge">${n.date || ''}</span>
+            <span class="category-badge" style="color:#2C6B337; border-color:#2C6B37; background:#f1f5f9;">${n.category || 'General'}</span>
           </div>
           <div class="detail-page-text"><p>${bodyText}</p></div>
         </div>
