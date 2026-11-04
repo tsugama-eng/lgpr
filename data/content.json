@@ -5002,7 +5002,7 @@
       "pic": "https://lh3.googleusercontent.com/d/1FzoP3fsoynEI7j7dGfBqZ1-XCcguDjcD"
     },
     {
-      "item": "COW-ROC (Codon Weight and Ribosome-Occupied Codon Utilization Platform)",
+      "item": "COW-ROC",
       "category": "Tools & Platforms",
       "description": "Browser application for codon weight-based codon optimization and Ribo-seq-weighted cumulative codon frequencies in model species / コドン重みモデルを用いたコドン最適化とモデル生物におけるリボソーム占有領域内コドン頻度のブラウジング用ブラウザアプリ",
       "link": "https://cowroc.anesc.u-tokyo.ac.jp/",
