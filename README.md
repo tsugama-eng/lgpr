@@ -57,6 +57,8 @@ To keep the codebase minimal, we reused the existing `.project-grid` and `.proje
 
 ---
 
+# Automated Website Generation & Update System
+
 Google スプレッドシートおよび Researchmap API を活用し、研究室ウェブサイト（HTML/JavaScript）のコンテンツを自動で更新・配信するシステムです。
 
 ## 📊 システム概要図
