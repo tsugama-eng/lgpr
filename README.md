@@ -4,7 +4,7 @@
 
 # Automated Website Generation & Update System
 
-This is an integrated system designed to fully automate the content updates and deployment of the lab website (HTML/JavaScript) (https://tsugama-eng.github.io/lgpr/) by leveraging Google Sheets and the Researchmap API.
+This is an integrated system designed to fully automate the content updates and deployment of our lab website (HTML/JavaScript) (https://tsugama-eng.github.io/lgpr/) by leveraging Google Sheets and the Researchmap API.
 
 ## 📊 System Architecture Diagram
 The system automatically coordinates data flows as illustrated in the architecture diagram below:
@@ -63,7 +63,7 @@ To keep the codebase minimal, we reused the existing `.project-grid` and `.proje
 
 # Automated Website Generation & Update System
 
-私達の研究室HP（https://tsugama-eng.github.io/lgpr/）のGoogle スプレッドシートおよび Researchmap API を活用し、研究室ウェブサイト（HTML/JavaScript）のコンテンツを自動で更新・配信するシステムです。
+私達の研究室HP (https://tsugama-eng.github.io/lgpr/) のGoogle スプレッドシートおよび Researchmap API を活用し、研究室ウェブサイト（HTML/JavaScript）のコンテンツを自動で更新・配信するシステムです。
 
 ## 📊 システム概要図
 本システムは以下のフロー（構成図通り）で自動連携を行っています。
