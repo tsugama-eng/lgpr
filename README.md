@@ -1,5 +1,62 @@
 # Automated Website Generation & Update System
 
+This is an integrated system designed to fully automate the content updates and deployment of the lab website (HTML/JavaScript) by leveraging Google Sheets and the Researchmap API.
+
+## 📊 System Architecture Diagram
+The system automatically coordinates data flows as illustrated in the architecture diagram below:
+
+1. **Researchmap Synchronization**: `GAS: syncAllResearchmap` fetches the latest publication and award records via the Researchmap API. **[1. Request -> 2. Return]**
+2. **Spreadsheet Ingestion**: The retrieved data is populated into the "Google Spreadsheet for Researchmap". **[3. Update]**
+3. **Automated News/Event Extraction**: `GAS: updateHomepageNews` detects new papers or updates in lab members (e.g., graduations, Ph.D. awards) and automatically integrates them into the "News" sheet. **[4. News]**
+4. **GitHub Deployment**: `GAS: pushHpDataToGitHub` merges all data streams and commits them directly to this repository as `content.json` and `news.json`. **[5. Integration -> 6. Push]**
+5. **Client-side Rendering**: The HTML/JavaScript on the website reads these JSON files and dynamically renders a modern, tech-inspired responsive UI for users.
+
+---
+
+## 🛠️ Latest Update: Links Section Expansion & Optimization
+
+To present databases and web tools in a more visually intuitive and engaging manner, we have **expanded the Links section data structure and overhauled the UI using a lightweight style-override approach**.
+
+### 1. Data Structure Expansion (3-Category System)
+The categories managed in the Google Sheet (`Links`) have been categorized into **three distinct sections**:
+*   **`Tools & Platforms`** (formerly Web Tools & Databases): Databases, software, and platforms developed by the lab. *(Rendered as visual grid cards)*
+*   **`Affiliations`**: Linked organizations, academic societies, and research centers. *(Rendered as clean text lists)*
+*   **`External Resources`** `[★ Newly Added]`: Other relevant external tools or references. *(Rendered as clean text lists)*
+
+### 2. Automatic Direct Link Conversion for Square Logos
+*   By adding a logo image filename (e.g., `Turnip.avif`) in the 5th column (Column E) of the `Links` sheet, the GAS `fileLinkMap` automatically looks up the file in the designated Google Drive folder.
+*   The system extracts the unique File ID and converts it into a web-accessible direct link URL (`https://googleusercontent.com{ID}`), passing it smoothly into the `pic` property within the final JSON payload.
+
+### 3. Client UI Revamp (Reusing Existing CSS via Pinpoint Style Overrides)
+To keep the codebase minimal, we reused the existing `.project-grid` and `.project-card` classes instead of introducing heavy new CSS classes.
+
+*   **Square (1:1) Icon Frame**: Applied pinpoint inline styling (`aspect-ratio: 1/1; width: 110px;`) to automatically fit any square logo into a centralized, modern app-dashboard layout.
+*   **Seamless Interaction**: The cards naturally inherit the existing `.clickable:hover` transition. When hovered, the card floats upwards by 5px with a deeper drop-shadow, preserving the lab's cohesive biotech-dashboard aesthetic.
+
+---
+
+## 📁 Key File Structure
+
+*   `style2.css` / Inline CSS: Defines the overall tech aesthetic (monospace fonts, clean geometric borders) and houses the core responsive grid frameworks (`.project-grid` / `.project-card`).
+*   `index.html` (JavaScript Section): Handles client-side rendering inside `loadLabData()` to dynamically split incoming links into three distinct containers (`#links-tools-container`, `#links-affiliations-container`, `#links-external-container`).
+*   `GAS Codes (Google Apps Script)`:
+    *   `syncAllResearchmap()`: Automatically syncs data from Researchmap.
+    *   `updateHomepageNews()`: Tracks sheet changes and automatically formats and feeds new logs into the News stream.
+    *   `pushHpDataToGitHub()`: Cleans data streams, resolves the newly added 5th column image references, and pushes the final JSON outputs to GitHub.
+
+---
+
+## 🚀 Operation & Maintenance Workflow
+
+1.  **Adding a New Tool or Resource**:
+    *   Open the `Links` sheet in your main lab Google Spreadsheet.
+    *   Set the `category` column to `Tools & Platforms`, `Affiliations`, or `External Resources`.
+    *   If selecting `Tools & Platforms`, enter the exact filename (including the extension) of the square logo sitting in the designated Google Drive folder into Column E.
+2.  **Automated Deployment**:
+    *   The scheduled GAS triggers will run automatically, update the JSON files on GitHub, and reflect the new assets instantly on the live website.
+
+---
+
 Google スプレッドシートおよび Researchmap API を活用し、研究室ウェブサイト（HTML/JavaScript）のコンテンツを自動で更新・配信するシステムです。
 
 ## 📊 システム概要図
