@@ -5004,16 +5004,16 @@
     {
       "item": "CLOBRE Repository",
       "category": "Tools & Platforms",
-      "description": "",
-      "link": "",
-      "pic": ""
+      "description": "Code repository for CLOBRE, a local LLM-based batch manuscript review assistant / バッチ査読の補助ツールCLOBREのコードレポジトリ",
+      "link": "https://github.com/tsugama-eng/clobre",
+      "pic": "https://lh3.googleusercontent.com/d/1G1yIkWL0q2q4AwWg_yfSAcVhaZGDKr74"
     },
     {
       "item": "LGPR Website Repository",
       "category": "Tools & Platforms",
-      "description": "",
+      "description": "Automated website generation and update system used in Tsugama Lab / 本研究室のウェブサイト自動生成・更新システム",
       "link": "",
-      "pic": ""
+      "pic": "https://lh3.googleusercontent.com/d/1uJGqpJCoO5_P85-qYOIrrkTLR9OsZlaE"
     },
     {
       "item": "COW-ROC",
