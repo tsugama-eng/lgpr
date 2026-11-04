@@ -1,3 +1,8 @@
+<p align="center">
+  <img src="lgpr.png" alt="Automated Website Generation & Update System" width="25%" style="vertical-align: middle; margin-right: 20px;" />
+  <img src="lgpr_system.png" alt="System Icon" width="75%" style="vertical-align: middle;" />
+</p>
+
 # Automated Website Generation & Update System
 
 This is an integrated system designed to fully automate the content updates and deployment of the lab website (HTML/JavaScript) by leveraging Google Sheets and the Researchmap API.
