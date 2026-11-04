@@ -1078,7 +1078,7 @@
           });
         }
 
-        // --- 🔗 リンクデータの描画処理 ---
+        // --- 🔗 リンクデータの描画処理（既存クラス流用＋ピンポイント上書き版） ---
         const toolsListDiv = document.getElementById('links-tools-list');
         const affListDiv = document.getElementById('links-affiliations-list');
         if (toolsListDiv) toolsListDiv.innerHTML = '';
@@ -1086,10 +1086,47 @@
         let hasTools = false; let hasAffiliations = false;
         
         if (data.links && data.links.length > 0) {
+          // 既存のグリッドクラスをそのまま流用
+          if (toolsListDiv) {
+            toolsListDiv.className = "project-grid"; 
+            toolsListDiv.style.listStyle = "none";
+            toolsListDiv.style.padding = "0";
+            toolsListDiv.style.marginLeft = "0";
+          }
+
           data.links.forEach(l => {
-            const linkHtml = `<li style="margin-bottom:12px;"><a href="${l.link}" target="_blank" rel="noopener" style="font-weight:bold; font-size:1.05rem;">${l.item}</a><br><span style="font-size:0.9rem; color:#555; margin-left:5px;">${l.description || ''}</span></li>`;
-            if (l.category === "Web Tools & Databases" && toolsListDiv) { hasTools = true; toolsListDiv.innerHTML += linkHtml; }
-            else if (l.category === "Affiliations" && affListDiv) { hasAffiliations = true; affListDiv.innerHTML += linkHtml; }
+            if (l.category === "Web Tools & Databases" || l.category === "Tools & Platforms") {
+              hasTools = true;
+              const logoSrc = (l.pic && l.pic.trim() !== '') ? l.pic : 'Turnip.jpg';
+              
+              if (toolsListDiv) {
+                // 既存の project-card, clickable, card-content などをすべて流用
+                toolsListDiv.innerHTML += `
+                  <li class="project-card clickable" onclick="window.open('${l.link}', '_blank', 'noopener')" style="margin-bottom:0; align-items:center; text-align:center; padding-top:20px;">
+                    
+                    <!-- 💡 流用しつつ、ピンポイントで正方形（1:1）のアイコン枠に上書き -->
+                    <div style="width:110px; aspect-ratio:1/1; background:#f8fafc; border:1px solid var(--color-border); display:flex; align-items:center; justify-content:center; overflow:hidden; padding:10px;">
+                      <img src="${logoSrc}" alt="${l.item}" style="width:100%; height:100%; object-fit:contain; border:none;">
+                    </div>
+                    
+                    <div class="card-content" style="padding:20px 15px; width:100%;">
+                      <h3 class="card-title" style="font-size:1.1rem; margin-bottom:10px;">
+                        <a href="${l.link}" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="color:inherit; text-decoration:none;">${l.item}</a>
+                      </h3>
+                      <p class="card-summary" style="font-size:0.85rem; margin-bottom:0; text-align:justify; line-height:1.5;">${l.description || ''}</p>
+                    </div>
+
+                  </li>
+                `;
+              }
+            } else if (l.category === "Affiliations" && affListDiv) {
+              hasAffiliations = true;
+              affListDiv.innerHTML += `
+                <li style="margin-bottom:12px;">
+                  <a href="${l.link}" target="_blank" rel="noopener" style="font-weight:bold; font-size:1.05rem;">${l.item}</a><br>
+                  <span style="font-size:0.9rem; color:#555; margin-left:5px;">${l.description || ''}</span>
+                </li>`;
+            }
           });
         }
         if (hasTools && document.getElementById('links-tools-container')) document.getElementById('links-tools-container').style.display = 'block';
