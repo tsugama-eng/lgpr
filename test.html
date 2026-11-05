@@ -494,11 +494,12 @@
           <!-- 📸 画像ギャラリー（見切れ防止・レスポンシブ対応） -->
           <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: flex-start; width: 100%; margin-top: 20px;">
             <div style="flex: 1; min-width: 280px; max-width: 100%;">
-              <!-- 💡 height を auto に、object-fit を contain に変更し、さらに最大高さを制限して綺麗に収めています -->
-              <img src="https://lh3.googleusercontent.com/d/1j8mInuX4hszltpnfAZOB3YRd1yIqzrJn" 
+              <a href="https://github.com/tsugama-eng/lgpr" target="_blank">
+                <img src="https://lh3.googleusercontent.com/d/1j8mInuX4hszltpnfAZOB3YRd1yIqzrJn" 
                    alt="LGPR_Website_System" 
                    style="width: 100%; height: auto; max-height: 450px; object-fit: contain; border-radius: 4px;" 
                    title="LGPR Website System">
+              </a>
             </div>
           </div>
         </div>
@@ -1252,7 +1253,8 @@
         const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
         const clickAttribute = isClickable ? `onclick="showNewsDetailPage(${idx})"` : "";
         const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
-        const colorStyle = isClickable ? "color: #2C6B37;" : "color: #000;";
+        // const colorStyle = isClickable ? "color: #2C6B37;" : "color: #000;";
+        const colorStyle = isClickable ? "color: #000;" : "color: #000;";
         const textDecStyle = isClickable ? "text-decoration: underline;" : "text-decoration: none;";
         
         let badgeClass = "news-badge-general";
@@ -1358,7 +1360,8 @@
         const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
         const clickAttribute = isClickable ? `onclick="navigateToNewsDetail(${idx})"` : "";
         const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
-        const colorStyle = isClickable ? "color: #2C6B37;" : "color: #000;";
+        //const colorStyle = isClickable ? "color: #2C6B37;" : "color: #000;";
+        const colorStyle = isClickable ? "color: #000;" : "color: #000;";
         const textDecStyle = isClickable ? "text-decoration: underline;" : "text-decoration: none;";
 
         let badgeClass = "news-badge-general";
