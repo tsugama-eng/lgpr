@@ -1360,7 +1360,8 @@
         const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
         const clickAttribute = isClickable ? `onclick="navigateToNewsDetail(${idx})"` : "";
         const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
-        const colorStyle = isClickable ? "color: #2C6B37;" : "color: #000;";
+        //const colorStyle = isClickable ? "color: #2C6B37;" : "color: #000;";
+        const colorStyle = isClickable ? "color: #000;" : "color: #000;";
         const textDecStyle = isClickable ? "text-decoration: underline;" : "text-decoration: none;";
 
         let badgeClass = "news-badge-general";
