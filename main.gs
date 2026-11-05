@@ -133,13 +133,21 @@ function pushHpDataToGitHub() {
     }
   }
 
-  // 3. Topics データの取得
+  // 3. Topics データの取得（GAS修正部分）
   var topicsRaw = getSheetDataAsObjects(bk, "Topics");
   var topicsData = topicsRaw.map(function(t) {
     return {
-      id: t.id, title: t.title, summary: t.summary, body_ja: t.body_ja, body_en: t.body_en,
-      pic_thumb: getUrlOrName(t.pic_thumb), pic_main: getUrlOrName(t.pic_main), pic_sub: getUrlOrName(t.pic_sub),
-      references: t.references
+      id: t.id, 
+      title: t.title, 
+      summary: t.summary, 
+      body_ja: t.body_ja, 
+      body_en: t.body_en,
+      pic_thumb: getUrlOrName(t.pic_thumb), 
+      pic_main: getUrlOrName(t.pic_main), 
+      pic_sub: getUrlOrName(t.pic_sub),
+      references: t.references,
+      featured_order: t.featured_order ? parseInt(t.featured_order, 10) : null,
+      featured_img: getUrlOrName(t.featured_img) // ファイル名からGoogle Drive直リンクURLへ自動変換
     };
   });
 
