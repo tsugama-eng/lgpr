@@ -17,7 +17,7 @@ The system automatically coordinates data flows as illustrated in the architectu
 
 ---
 
-## Important GAS Functions
+## Important GAS Functions (in `main.gs`)
     *   `syncAllResearchmap()`: Automatically syncs data from Researchmap.
     *   `updateHomepageNews()`: Tracks sheet changes and automatically formats and feeds new logs into the News stream.
     *   `pushHpDataToGitHub()`: Cleans data streams, resolves the newly added 5th column image references, and pushes the final JSON outputs to GitHub.
@@ -39,7 +39,7 @@ The system automatically coordinates data flows as illustrated in the architectu
 
 ---
 
-## GASにおける主要な関数
+## GAS (`main.gs`) における主要な関数
     *   `syncAllResearchmap()`: Researchmap からのデータ同期。
     *   `updateHomepageNews()`: スプレッドシート内PeopleとEventsの変更、新規論文の公開を検知して News を生成。
     *   `pushHpDataToGitHub()`: データを収集・統合して GitHub へプッシュ。
