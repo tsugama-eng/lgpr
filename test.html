@@ -355,24 +355,13 @@
     </ul>
 
      <!-- 1. TOP セクション -->
+     <!-- 1. TOP セクション 内の該当箇所 -->
      <div id="top" class="detail">
         <h2>FEATURED TOPICS</h2>
-        <!-- 📸 代表的なトピックの画像ギャラリー（4枚並び） -->
-        <!-- <div class="top-featured-gallery" style="margin: 20px 0; padding: 0 15px;"> -->
         <div class="top-featured-gallery">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 465px), 1fr)); gap: 12px;">
-            <div style="background: #fff; overflow: hidden; position: relative;">
-              <img src="https://lh3.googleusercontent.com/d/1hj0nK69rAh2HxQ-cDAxQ3rCpEZP6YMqL" alt="Featured Topic 1" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; display: block;">
-            </div>
-            <div style="background: #fff; overflow: hidden; position: relative;">
-              <img src="https://lh3.googleusercontent.com/d/1nHGOQXTnp7B5txv0NX0Uym2KgPekxgLm" alt="Featured Topic 2" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; display: block;">
-            </div>
-            <div style="background: #fff; overflow: hidden; position: relative;">
-              <img src="https://lh3.googleusercontent.com/d/1_4nGwzsVDPF29nVj4Vn6TeKhq7HRmWfn" alt="Featured Topic 3" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; display: block;">
-            </div>
-            <div style="background: #fff; overflow: hidden; position: relative;">
-              <img src="https://lh3.googleusercontent.com/d/1F56tzqKLOrHf-uVKMuhns8YwOOEkl6yr" alt="Featured Topic 4" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; display: block;">
-            </div>
+          <!-- 💡 静的な要素を削除し、動的生成用のコンテナに置き換え -->
+          <div id="featured-gallery-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 465px), 1fr)); gap: 12px;">
+            Loading Featured Topics...
           </div>
         </div>
 
