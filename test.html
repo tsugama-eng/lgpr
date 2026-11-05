@@ -1,0 +1,1514 @@
+<!DOCTYPE HTML>
+<html lang="ja">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <title>Tsugama Lab</title>
+  <meta name="description" content="Daisuke Tsugama lab for genomics of plant resources" />
+  <meta name="keywords" content="津釜,高野,東京大学,東大,植物,ゲノミクス..." />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- 💡 テック感を出すためのGoogle Fonts（等幅フォントとモダンゴシック）を追加 -->
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=IBM+Plex+Sans+JP:wght@400;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" type="text/css" href="style.css" />
+  <link rel="shortcut icon" href="lgpr.png">
+  
+  <style>
+    /* 💡 HTML側のインラインスタイルを、等幅フォントをベースとしたダッシュボードUIへ刷新 */
+    :root {
+      --font-tech: 'JetBrains Mono', monospace;
+      --font-base: 'IBM Plex Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+      --color-bg-dark: #0f141c;
+      --color-border: #e2e8f0;
+      --color-neon-green: #00cc66;
+      --color-cyber-blue: #4169E1;
+    }
+
+    .dashboard-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 24px;
+      margin: 25px 0;
+    }
+    .dashboard-card {
+      flex: 1;
+      min-width: 320px;
+      border: 1px solid var(--color-border);
+      background: #ffffff;
+      padding: 5px;
+      border-radius: 0px; /* 直角にして無機質感を強調 */
+      box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+    }
+    .dashboard-card h3 {
+      font-family: var(--font-base);
+      letter-spacing: 0.05em;
+      margin-top: 0;
+      padding-bottom: 8px;
+      font-size: 1.1rem;
+      color: #111;
+    }
+    .summary-bar {
+      font-family: var(--font-base);
+      background: #f8fafc;
+      padding: 12px 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      color: #334155;
+    }
+    .filter-tags {
+      margin-bottom: 20px;
+      font-family: var(--font-base);
+    }
+    .filter-tags strong {
+      font-family: var(--font-base);
+      font-size: 0.9rem;
+      margin-right: 10px;
+    }
+    .tag-btn {
+      font-family: var(--font-base);
+      background: #f1f5f9;
+      border: 1px solid var(--color-border);
+      padding: 5px 12px;
+      margin-right: 6px;
+      margin-bottom: 6px;
+      border-radius: 0px;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.2s;
+    }
+    .tag-btn:hover {
+      background: #e2e8f0;
+    }
+    .tag-btn.active {
+      background: #111;
+      color: #fff;
+      border-color: #111;
+    }
+    .search-box {
+      width: 100%;
+      padding: 10px 12px;
+      margin-bottom: 15px;
+      border: 1px solid var(--color-border);
+      border-radius: 0px;
+      font-family: var(--font-base);
+      font-size: 0.95rem;
+      box-sizing: border-box;
+      background: #f8fafc;
+      transition: all 0.2s;
+    }
+    .search-box:focus {
+      outline: none;
+      background: #ffffff;
+      border-color: #111;
+    }
+    #network-container {
+      width: 100%;
+      height: 250px;
+      background-color: #ffffff;
+      border: 1px solid var(--color-border);
+    }
+
+    /* 📊 論文出版数グラフ（等幅フォント適用） */
+    .pure-chart-container {
+      display: flex;
+      align-items: flex-end;
+      justify-content: flex-start;
+      height: 190px;
+      padding-top: 25px;
+      padding-bottom: 5px;
+      border-bottom: 2px solid #111;
+      border-left: 2px solid #111;
+      overflow-x: auto;
+    }
+    .pure-chart-bar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      flex: 1;
+      min-width: 45px;
+      max-width: 65px;
+      margin: 0 6px;
+      font-family: var(--font-base);
+    }
+    .pure-chart-bars-container {
+      display: flex;
+      align-items: flex-end;
+      width: 100%;
+      height: 140px;
+      gap: 4px;
+    }
+    .pure-chart-bar {
+      flex: 1;
+      border-radius: 0px;
+      transition: opacity 0.2s;
+    }
+    .pure-chart-bar:hover { opacity: 0.8; }
+    .bar-total { background-color: #9AA0A6; }
+    .bar-owned { background-color: #2C6B37 }
+    .pure-chart-value {
+      font-size: 0.75rem;
+      margin-bottom: 4px;
+      font-weight: 700;
+      text-align: center;
+    }
+    .pure-chart-label {
+      font-size: 0.8rem;
+      margin-top: 6px;
+      color: #475569;
+      font-weight: bold;
+    }
+
+    /* 📸 Topics & Events カード（グリッド化と計測機器フレーム） */
+    .project-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 24px;
+      margin-top: 20px;
+    }
+    .project-card {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: #fff;
+      border: 1px solid var(--color-border);
+      position: relative;
+    }
+    /* 計測機器っぽさを出す四隅の+マークを疑似要素で実装 */
+    .project-card::before {
+      content: '+'; position: absolute; top: 2px; left: 6px; font-family: var(--font-base); font-size: 10px; color: #94a3b8;
+    }
+    .card-thumbnail {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      object-fit: cover;
+      border-bottom: 1px solid var(--color-border);
+    }
+    .card-content {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .card-title {
+      font-family: var(--font-base);
+      font-weight: 700;
+      margin-top: 0;
+      margin-bottom: 12px;
+      font-size: 1.15rem;
+      color: #1e293b;
+    }
+    .card-meta {
+      font-family: var(--font-base);
+      font-size: 0.8rem;
+      margin-bottom: 12px;
+      display: flex;
+      gap: 8px;
+    }
+    .card-summary {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: #475569;
+      margin-bottom: 15px;
+    }
+    .date-badge {
+      background: #1e293b; color: white; padding: 2px 6px; font-weight: bold;
+    }
+    .category-badge {
+      background: #f1f5f9; color: #1e293b; padding: 2px 6px; border: 1px solid var(--color-border);
+    }
+
+    /* 📄 自動化されたNewsタイムライン */
+    .news-list-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 0px;
+    }
+    .news-timeline-item {
+      display: flex;
+      gap: 24px;
+      padding: 14px 16px;
+      border-bottom: 1px solid var(--color-border);
+      align-items: flex-start;
+    }
+    .news-meta-inline {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 110px;
+      flex-shrink: 0;
+      font-family: var(--font-base);
+    }
+    .news-date { font-size: 0.85rem; color: #64748b; font-weight: bold; }
+    .news-body-inline { flex-grow: 1; font-size: 0.95rem; color: #334155; }
+    
+    .news-badge-papers, .news-badge-people, .news-badge-events, .news-badge-general {
+      font-size: 0.7rem; padding: 2px 6px; text-align: center; font-weight: bold; width: fit-content;
+    }
+    .news-badge-papers { background: var(--color-cyber-blue); color: white; }
+    .news-badge-people { background: #9c27b0; color: white; }
+    .news-badge-events { background: var(--color-neon-green); color: black; }
+    .news-badge-general { background: #2C6B37; color: white; }
+
+    .news-summary-text.clickable { color: #2C6B37; text-decoration: underline; }
+
+    @media (max-width: 768px) {
+      .news-timeline-item { flex-direction: column; gap: 8px; }
+      .news-meta-inline { flex-direction: row; align-items: center; }
+    }
+    .top-featured-gallery{
+      max-width: 1200px;
+      margin: auto;
+      padding: 12px;
+      background: #f3f3f3;
+    }
+    /* 💡 クリック可能なカードのホバーエフェクトを追加 */
+    .clickable {
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease; /* スムーズに動かす設定 */
+    }
+    .clickable:hover {
+      transform: translateY(-5px); /* カードを上に5px浮かせる */
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 影を強くして立体感を出す */
+    }
+
+  </style>
+</head>
+
+<body>
+  <div id="title">
+     <h1><span style="font-size: 155%; font-weight: bold;">TSUGAMA LAB</span><br>Wet Genomics &times; Tech</h1>
+  </div>
+  
+  <div style="clear:left;background-color:#ffffff;">
+
+    <ul class="menu">
+    
+      <li>
+        <a href="#top"
+           onclick="switchPage('top')"
+           class="current">
+          TOP
+        </a>
+      </li>
+   
+      <li>
+        <a href="#topics"
+           onclick="switchPage('topics')">
+          TOPICS
+        </a>
+      </li>
+
+      <li>
+        <a href="#people"
+           onclick="switchPage('people')">
+          PEOPLE
+        </a>
+      </li>
+      
+      <li>
+        <a href="#papers"
+           onclick="switchPage('papers')">
+          PAPERS
+        </a>
+      </li>
+    
+      <li>
+        <a href="#honors"
+           onclick="switchPage('honors')">
+          HONORS
+        </a>
+      </li>
+
+      <li>
+        <a href="#events"
+           onclick="switchPage('events')">
+          EVENTS
+        </a>
+      </li>
+
+      <li>
+        <a href="#news"
+           onclick="switchPage('news')">
+          NEWS
+        </a>
+      </li>
+
+      <li>
+        <a href="#links"
+           onclick="switchPage('links')">
+          RESOURCES
+        </a>
+      </li>
+
+      <li>
+        <a href="#contact"
+           onclick="switchPage('contact')">
+          CONTACT
+        </a>
+      </li>
+      
+    </ul>
+
+     <!-- 1. TOP セクション -->
+     <div id="top" class="detail">
+        <h2>FEATURED TOPICS</h2>
+        <!-- 📸 代表的なトピックの画像ギャラリー（4枚並び） -->
+        <!-- <div class="top-featured-gallery" style="margin: 20px 0; padding: 0 15px;"> -->
+        <div class="top-featured-gallery">
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 465px), 1fr)); gap: 12px;">
+            <div style="background: #fff; overflow: hidden; position: relative;">
+              <img src="https://lh3.googleusercontent.com/d/1hj0nK69rAh2HxQ-cDAxQ3rCpEZP6YMqL" alt="Featured Topic 1" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; display: block;">
+            </div>
+            <div style="background: #fff; overflow: hidden; position: relative;">
+              <img src="https://lh3.googleusercontent.com/d/1nHGOQXTnp7B5txv0NX0Uym2KgPekxgLm" alt="Featured Topic 2" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; display: block;">
+            </div>
+            <div style="background: #fff; overflow: hidden; position: relative;">
+              <img src="https://lh3.googleusercontent.com/d/1_4nGwzsVDPF29nVj4Vn6TeKhq7HRmWfn" alt="Featured Topic 3" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; display: block;">
+            </div>
+            <div style="background: #fff; overflow: hidden; position: relative;">
+              <img src="https://lh3.googleusercontent.com/d/1F56tzqKLOrHf-uVKMuhns8YwOOEkl6yr" alt="Featured Topic 4" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; display: block;">
+            </div>
+          </div>
+        </div>
+
+        <div style="border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; padding: 15px; background: #fff;"> 
+          <div class="subhead"><p><span><b>What We Create</b></span></p></div> 
+          
+          <div id="intro_en" class="texts"> 
+            <!-- 上段：文章エリア（横幅いっぱいに広げる） -->
+            <div style="margin-bottom: 25px; width: 100%;"> 
+              <p><span style="font-size: 1.14rem; font-weight: 410;">We build technologies, software, and experimental systems for faster and simpler genome editing and crop improvement.</span></p> 
+              <p><span style="font-size: 1.14rem; font-weight: 410;">迅速で簡便なゲノム編集と作物改良に向けて、技術・ソフトウェア・実験システムを開発しています。</span></p> 
+            </div> 
+            
+            <!-- 下段：3個横並びエリア（入りきらなければ自動で改行） -->
+            <div style="display: flex; flex-wrap: wrap; gap: 15px; align-items: stretch; justify-content: flex-start; width: 100%; box-sizing: border-box;">
+              
+              <!-- 1コ目：ワークフロー画像（ID変更済み） -->
+              <div class="dashboard-card" style="flex: 1; min-width: 320px; max-width: 100%; box-sizing: border-box; padding: 0px !important;">
+                <h3 style="padding: 5px 5px 10px 5px; margin: 0; line-height: 1.1;"><b>Workflow</b></h3> 
+                <a href="https://lh3.googleusercontent.com/d/1mOHkryMcKelZ-5-FWctx4EXnabtniqpd" target="_blank" style="display: block; line-height: 0; font-size: 0; padding: 0; margin: 0;">
+                  <img src="https://lh3.googleusercontent.com/d/1mOHkryMcKelZ-5-FWctx4EXnabtniqpd" alt="Research Overview" style="width: 100%; height: auto; display: block; border-radius: 0px; margin: 0; padding: 0;" title="Workflow">
+                </a>
+              </div>
+              
+              <!-- 2コ目：時代別ワードクラウド -->
+              <div class="dashboard-card" style="flex: 1.2; min-width: 320px; box-sizing: border-box;"> 
+                <h3 style="padding: 5px 5px 10px 0px; margin: 0; line-height: 1.1;"><b>Keywords</b></h3> 
+                <div class="filter-tags" style="margin-bottom: 10px; text-align: center;"> 
+                  <button class="tag-btn" onclick="switchCloudEra('2009-2018', this)">09-18</button> 
+                  <button class="tag-btn" onclick="switchCloudEra('2018-2024', this)">18-24</button> 
+                  <button id="default-cloud-btn" class="tag-btn active" onclick="switchCloudEra('2024-', this)">24-Present</button> 
+                </div> 
+                <div id="top-wordcloud-container" style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: center; min-height: 120px; background:#fff; border-radius:4px; padding:10px;"></div> 
+              </div>
+
+              <!-- 3コ目：生物種のエリアチャート -->
+              <div class="dashboard-card" style="flex: 1; min-width: 270px; max-width: 100%; min-height: 320px; box-sizing: border-box; align-self: flex-start; overflow:hidden;"> 
+                <h3 style="padding: 5px 5px 10px 0px; margin: 0; line-height: 1.1;"><b>Materials</b></h3> 
+                <div id="species-chart-container" style="width:100%; height:200px; padding-top:10px;"></div> 
+              </div> 
+        
+            </div>
+          </div> 
+        </div>
+
+         
+        <!-- 📄 International Collaboration カード -->
+        <div style="border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; padding: 15px; background: #fff; width: 100%; box-sizing: border-box;">
+          <div class="subhead"><p><span><b>International Collaboration</b></span></p></div>
+          
+          <!-- 文章エリア -->
+          <div id="international_en" class="texts">
+             <p><span>As a member of the <a href="https://www.anesc.u-tokyo.ac.jp/en/" target="_blank">Asian Research Center for Bioresources and Environmental Sciences (ARC-BRES)</a> at the Graduate School of Agricultural and Life Sciences, The University of Tokyo, our lab aims to contribute to international collaboration and training young international researchers.</span></p>
+             <p><span>東京大学大学院農学生命科学研究科附属<a href="https://www.anesc.u-tokyo.ac.jp/en/" target="_blank">アジア生物資源環境研究センター（アジアセンター、ARC-BRES）</a>の一員として、国際共同研究とグローバル人材育成に貢献することも目指しています。</span></p>
+          </div>
+          <!-- 📸 画像ギャラリー（レスポンシブ・入りきらなければ改行） -->
+          <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: flex-start; width: 100%; margin-top: 20px;">
+            <div style="flex: 1; min-width: 280px; max-width: 100%;">
+              <img src="https://lh3.googleusercontent.com/d/1BLqo2EOTRMtNcs4cEBiif5jH1Hb8AmhV" alt="ICRISAT_Field_Day_2026" style="width: 100%; height: 275px; object-fit: cover; border-radius: 4px;" title="ICRISAT Pearl Millet Field Day 2026">
+            </div>
+            <div style="flex: 1; min-width: 280px; max-width: 100%;">
+              <img src="https://lh3.googleusercontent.com/d/1QZVoqggiSMuElEmZ6vKWhJ8PYHDdO2QO" alt="IPB_Students_Visit_2024" style="width: 100%; height: 275px; object-fit: cover; border-radius: 4px;" title="Sakura Science Program 2024 with IPB University Students">
+            </div>
+          </div>
+        </div>
+
+        <!-- 📰 Recent News カード -->
+        <div style="border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; padding: 15px; background: #fff; width: 100%; box-sizing: border-box;">
+          <div class="subhead"><p><span><b>Recent News</b></span></p></div>
+          <div class="texts">
+            <div id="top-recent-news-list" class="news-list-timeline" style="margin-bottom: 25px; gap: 10px;">
+              Loading recent updates...
+            </div>
+            <div style="text-align: right; margin-right: 15px; margin-bottom: 10px;">
+              <a href="#news" onclick="switchPage('news')" style="font-weight: bold; font-size: 0.95rem; text-decoration: underline; padding: 6px 14px; color: #000; display: inline-block; transition: background 0.2s;">
+                View All News &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+       <!-- 📰 This Website カード -->
+        <div style="border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; padding: 15px; background: #fff; width: 100%; box-sizing: border-box;">
+          <div class="subhead"><p><span><b>This Website</b></span></p></div>
+          <!-- 文章エリア -->
+          <div id="international_en" class="texts">
+             <p><span>This website is automatically generated and updated using Google Sheets, GAS, Researchmap, and GitHub Pages.</span></p>
+             <p><span>このウェブサイトは Google Sheets、GAS、Researchmap、GitHub Pagesを用いて半自動的に生成・更新されています。</span></p>
+          </div>
+          <!-- 📸 画像ギャラリー（見切れ防止・レスポンシブ対応） -->
+          <div style="display: flex; flex-wrap: wrap; gap: 15px; justify-content: flex-start; width: 100%; margin-top: 20px;">
+            <div style="flex: 1; min-width: 280px; max-width: 100%;">
+              <!-- 💡 height を auto に、object-fit を contain に変更し、さらに最大高さを制限して綺麗に収めています -->
+              <img src="https://lh3.googleusercontent.com/d/1j8mInuX4hszltpnfAZOB3YRd1yIqzrJn" 
+                   alt="LGPR_Website_System" 
+                   style="width: 100%; height: auto; max-height: 450px; object-fit: contain; border-radius: 4px;" 
+                   title="LGPR Website System">
+            </div>
+          </div>
+        </div>
+       
+     </div>
+
+     <!-- 💡 新設: 1.5 News セクション -->
+     <div id="news" class="detail" style="display:none;">
+       <div id="news-list-view">
+         <div class="subhead"><p><span><b>NEWS</b></span></p></div>
+         <div id="news-content" class="news-list-timeline">Loading News...</div>
+       </div>
+       <!-- 通常ページ風の詳細画面用コンテナ -->
+       <div id="news-detail-page" style="display:none;"></div>
+     </div>
+    
+     <!-- 2. Topics セクション -->
+     <div id="topics" class="detail" style="display:none;">
+       <div id="topics-list-view">
+         <!-- <p class="language_sel">
+           <span id="English_topics" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="switchLangSections('en', 'topics')">English</span>
+           <span id="Japanese_topics" class="language" onclick="switchLangSections('ja', 'topics')">Japanese</span>
+         </p> -->
+         <div class="subhead"><p><span><b>TOPICS</b></span></p></div>
+         <div id="topics-content" class="project-grid">Loading Topics...</div>
+       </div>
+       <!-- 💡 通常ページ風の詳細画面用コンテナ -->
+       <div id="topics-detail-page" style="display:none;"></div>
+     </div>
+
+     <!-- 2.5 Events セクション -->
+     <div id="events" class="detail" style="display:none;">
+       <div id="events-list-view">
+         <!-- <p class="language_sel">
+           <span id="English_events" class="language" style="color:#0000ff; border:solid 2px #0000ff" onclick="switchLangSections('en', 'events')">English</span>
+           <span id="Japanese_events" class="language" onclick="switchLangSections('ja', 'events')">Japanese</span>
+         </p> -->
+         <div class="subhead"><p><span><b>EVENTS</b></span></p></div>
+         <div id="events-content" class="project-grid">Loading Events...</div>
+       </div>
+       <!-- 💡 通常ページ風の詳細画面用コンテナ -->
+       <div id="events-detail-page" style="display:none;"></div>
+     </div>
+
+     <div id="people" class="detail" style="display:none;">
+       <div class="subhead"><p><span><b>Members</b></span></p></div>
+       <div id="current-members"></div>
+       <div id="collaborators-container" style="clear:both; display:none; margin-top: 20px;">
+         <div class="subhead" style="clear:right;"><p><span><b>Collaborators</b></span></p></div>
+         <div id="collaborators-list"></div>
+       </div>
+       <div id="alumni-container" style="clear:both; display:none; margin-top: 20px;">
+         <div class="subhead" style="clear:right;"><p><span><b>Alumni</b></span></p></div>
+         <div id="alumni-list"></div>
+       </div>
+     </div>
+
+     <div id="papers" class="detail" style="display:none;">
+       <div class="subhead"><p><span><b>PAPERS</b></span></p></div>
+       <p><span id="last-update">Last update: 書込中...</span></p>
+       
+       <div class="texts">
+         
+         <!-- 📊 グラフを配置 -->
+         <div class="dashboard-card" style="margin-bottom: 20px;">
+            <h3>Publications per Year</h3>
+            <div id="pure-chart-container" class="pure-chart-container"></div>
+         </div>
+
+         <!-- 📈 総数・国際共著比率のサマリーバー -->
+         <div id="summary-bar" class="summary-bar">
+           Summary: Total Papers: -- / International: --
+         </div>
+
+         <!-- 🔍 フリーワード検索窓 -->
+         <p style="margin: 15px 0 15px 0px; display: flex; align-items: center; gap: 10px;">
+           <strong style="white-space: nowrap;">Search Papers:</strong>
+           <input type="text" id="paper-search" class="search-box" style="margin: 0; flex: 1;" placeholder="Input a keyword to search papers...">
+         </p>
+
+         <!-- 🏷️ 刷新したハッシュタグ（トピック絞り込み） -->
+         <div class="filter-tags">
+           <strong>Filter by Topic:</strong>
+           <button class="tag-btn active" onclick="filterByTopic('all')">#All</button>
+           <button class="tag-btn" onclick="filterByTopic('international')">#International</button>
+           <button class="tag-btn" onclick="filterByTopic('tools')">#Tools & Systems</button>
+           <button class="tag-btn" onclick="filterByTopic('stress')">#Abiotic Stress</button>
+           <button class="tag-btn" onclick="filterByTopic('arabidopsis')">#Arabidopsis</button>
+           <button class="tag-btn" onclick="filterByTopic('crops')">#Crop</button>
+         </div>
+
+         <h3>▼ Publication List (Latest First)</h3>
+         <ol id="papers-list"></ol>
+       </div>
+     </div>
+    
+     <div id="honors" class="detail" style="display:none;">
+       <!-- <div class="subhead"><p><span><b>HONORS</b></span></p></div> -->
+       <div class="texts">
+         <div id="honors-grants-container" style="margin-bottom: 30px;">
+           <h3 style="padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Grants & Funding / 外部資金・助成金</h3>
+           <ul id="honors-grants-list" style="line-height: 1.6; padding-left: 20px; margin-left: 10px;"></ul>
+         </div>
+         <div id="honors-awards-container">
+           <h3 style="padding: 5px 0 5px 10px; color: #333; font-size: 1.2rem; margin-bottom: 15px;">Awards & Recognition / 受賞歴</h3>
+           <ul id="honors-awards-list" style="line-height: 1.6; padding-left: 20px; margin-left: 10px;"></ul>
+         </div>
+       </div>
+     </div>
+    
+     <div id="links" class="detail" style="display:none;">
+       <div class="texts">
+         <div id="links-tools-container" style="display:none; margin-bottom: 30px;">
+           <h3 style="padding: 10px 0 10px 10px; color: #333;"><strong>Web Tools & Platforms</strong></h3>
+           <div id="links-tools-list" class="project-grid"></div>
+         </div>
+         <div id="links-external-container" style="display:none;">
+           <h3 style="padding: 10px 0 10px 10px; color: #333;"><strong>External Resources</strong></h3>
+           <ul id="links-external-list" class="link" style="line-height: 1.6;"></ul>
+         </div>
+         <div id="links-affiliations-container" style="display:none; margin-bottom: 30px;">
+           <h3 style="padding: 10px 0 10px 10px; color: #333;"><strong>Affiliations</strong></h3>
+           <ul id="links-affiliations-list" class="link" style="line-height: 1.6;"></ul>
+         </div>
+       </div>
+     </div>
+
+     <!-- 💡 class="detail" を復活させ、位置ズレを解消 -->
+     <div id="contact" class="detail" style="display:none;">
+        <!-- 💡 font-weight: normal; を追加して、強制的な太字化をここでピンポイントで解除 -->
+        <div style="border: 1px solid #ddd; margin-top: 20px; border-radius: 8px; padding: 15px; background: #fff; max-width: 1200px; font-weight: normal;"> 
+          <div class="subhead"><p><span><b>Contact Information</b></span></p></div>
+
+          <div id="contact_en" class="texts">
+             <p><span>Undergraduate students in Major in Applied Biology and Major in International Sustainable Agriculture Development can choose our lab to conduct research for the graduation thesis. Students entering master's and Ph.D. courses of <a href="https://www.ab.a.u-tokyo.ac.jp/" target="_blank">Department of Agricultural and Environmental Biology</a> can also join us. A post-doc or a researcher who has no financial support is not acceptable, but may be helped to apply together for scholarship and/or research grants.</span></p>
+             <p><span>東京大学農学部農業生物学専修と国際開発農学専修の学生さんは、卒論研究実施先として当研究室を選択することができます。<a href="https://www.ab.a.u-tokyo.ac.jp/" target="_blank">生産・環境生物学専攻</a>の修士・博士課程に進学・入学を希望される方も、希望配属先として当研究室を選択することができます。ポスドクや研究員の方は、奨学金や助成金をお持ちでなければ受け入れられませんが、それらに応募するお手伝いは可能かもしれません（要相談）。</span></p>
+
+             <p style="margin-bottom:3px;"><span><b>Contact Person:</b> Daisuke Tsugama 津釜大侑</span></p>
+             <p style="margin-bottom:3px;"><span><b>E-mail:</b> tsugama[-at-]g.ecc.u-tokyo.ac.jp<span class="hidden"><br></span> (replace [-at-] with @)</span></p>
+             <p style="margin-bottom:3px;"><span><b>Tel:</b> +81-80 7373 5307 (080-7373-5307)</span></p>
+             <p style="margin-bottom:3px;"><span><b>Address:</b> 1-1-1 Midori-cho, Nishi-tokyo-shi, Tokyo 188-0002, Japan (~20 min by train from Shinjuku Terminal)</span></p>
+             <p style="margin-bottom:3px;"><span><b>研究室所在地:</b> 〒188-0002 東京都西東京市緑町1-1-1 東京大学生態調和農学機構内 (旧東大農場内)</span></p>
+            <iframe class="gmap" src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d12954.835647249565!2d139.5316872!3d35.7333768!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6018ef4ef8ac7dbd%3A0x951b9a8a5816bcbc!2zMS1jaMWNbWUtMS0xIE1pZG9yaWNoxY0sIE5pc2hpdG9reW8sIFTFjWt5xY0tdG8gMTg4LTAwMDI!5e0!3m2!1sen!2sjp!4v1573127341862!5m2!1sen!2sjp" width="100%" height="450" frameborder="0" style="border:0; border-radius: 4px; margin-top: 15px;" allowfullscreen=""></iframe>
+          </div>
+        </div>
+     </div>
+   
+  </div>
+
+  <!-- 💡 詳細表示用のポップアップ土台 -->
+  <div id="detail-modal" class="modal-overlay" onclick="closeModal(event)"></div>
+  
+  <script>
+    // グローバルデータ保持用
+    let globalPapersData = [];
+    let globalTopicsData = [];
+    let globalEventsData = [];
+    let currentLang = 'en'; // デフォルト言語
+    let currentChart = null;
+    let currentNetwork = null;
+    let isPapersDashboardRendered = false;
+
+    // 🌍 国際共著者の定義オブジェクト
+    const internationalCollaborators = {
+      "gupta": 2000, "ardie": 2000, "liu": 2000, "chen": 2000, "gelvin": 2000, "yoon": 2022,
+    };
+
+    // 多言語切り替え用トグル
+    function switchLangSections(lang, section) {
+      currentLang = lang;
+      const enBtn = document.getElementById(`English_${section}`);
+      const jaBtn = document.getElementById(`Japanese_${section}`);
+      
+      if(lang === 'en') {
+        enBtn.style.color = '#0000ff'; enBtn.style.border = 'solid 2px #0000ff';
+        jaBtn.style.color = '#888888'; jaBtn.style.border = 'solid 1px #888888';
+      } else {
+        jaBtn.style.color = '#0000ff'; jaBtn.style.border = 'solid 2px #0000ff';
+        enBtn.style.color = '#888888'; enBtn.style.border = 'solid 1px #888888';
+      }
+      
+      // 対象セクションを再レンダリング
+      if(section === 'topics') renderTopics(globalTopicsData, globalPapersData);
+      if(section === 'events') renderEvents(globalEventsData);
+      if(section === 'news')   renderNews(window.globalNewsData);
+    }
+
+    // 💡 修正：メニュークリック時に詳細画面をリセットして一覧（List View）に戻す
+    function switchPage(pageId) {
+      const pages = document.querySelectorAll('.detail');
+      pages.forEach(page => page.style.display = 'none');
+
+      const targetPage = document.getElementById(pageId);
+      if (targetPage) targetPage.style.display = 'block';
+  　　
+      const menuLinks = document.querySelectorAll('.menu a');
+      menuLinks.forEach(link => link.classList.remove('current'));
+
+      const activeLink = document.querySelector(`.menu a[href="#${pageId}"]`);
+      if (activeLink) activeLink.classList.add('current');
+
+      // 詳細表示をリセット
+      if (pageId === 'topics') hideTopicDetailPage();
+      if (pageId === 'events') hideEventDetailPage();
+      if (pageId === 'news')   hideNewsDetailPage(); // 💡追記
+
+      if (pageId === 'papers') {
+        if (!isPapersDashboardRendered && globalPapersData.length > 0) {
+          renderPapersDashboard(globalPapersData);
+          isPapersDashboardRendered = true;
+        }
+        setTimeout(() => { if(currentNetwork) currentNetwork.fit(); }, 200);
+      }
+    }
+
+    // 1. 各論文の著者立ち位置を判定する関数
+    function checkAuthorStatus(paper) {
+      let rawAuthors = [];
+      try {
+        const parsed = JSON.parse(paper["authors.en"] || paper["authors.ja"] || "[]");
+        rawAuthors = parsed.map(o => o.name.trim().toLowerCase());
+      } catch(e) {
+        rawAuthors = (paper["authors.en"] || paper["authors.ja"] || "").split(',').map(n => n.trim().toLowerCase());
+      }
+      const status = { isFirst: false, isCorresponding: false, isOwned: false };
+      if (rawAuthors.length === 0) return status;
+
+      let dateStr = paper["publication_date"] || "";
+      let pubYear = dateStr.match(/^\d{4}/) ? parseInt(dateStr.substring(0, 4), 10) : 0;
+
+      status.isFirst = rawAuthors[0].includes("tsugama");
+      const isLast = rawAuthors[rawAuthors.length - 1].includes("tsugama");
+      status.isCorresponding = (pubYear >= 2016 && (isLast || status.isFirst));
+      status.isOwned = (status.isFirst || status.isCorresponding);
+      return status;
+    }
+    
+    // 🛠️ 論文が国際共著かどうかを判定する関数
+    function checkIsInternational(paper) {
+      let rawAuthors = [];
+      try {
+        const parsed = JSON.parse(paper["authors.en"] || paper["authors.ja"] || "[]");
+        rawAuthors = parsed.map(o => o.name.trim().toLowerCase());
+      } catch(e) {
+        rawAuthors = (paper["authors.en"] || paper["authors.ja"] || "").split(',').map(n => n.trim().toLowerCase());
+      }
+      let dateStr = paper["publication_date"] || "";
+      let pubYear = dateStr.match(/^\d{4}/) ? parseInt(dateStr.substring(0, 4), 10) : 0;
+
+      return rawAuthors.some(authorFullName => {
+        for (const lastName in internationalCollaborators) {
+          if (internationalCollaborators.hasOwnProperty(lastName)) {
+            if (authorFullName.includes(lastName)) {
+              return pubYear >= internationalCollaborators[lastName];
+            }
+          }
+        }
+        return false;
+      });
+    }
+
+    // 💡 修正：Topicsをコンパクトにカード化し、クリックで通常ページ風の詳細へ切り替える
+    function renderTopics(topics, papers) {
+      const container = document.getElementById('topics-content');
+      if (!container) return;
+      container.innerHTML = '';
+      if(!topics || topics.length === 0) {
+        container.innerHTML = '<p style="color:#999; padding-left:20px;">No research topics found.</p>';
+        return;
+      }
+
+      topics.forEach((t, idx) => {
+        const title = t.title || "No Title";
+        const summary = t.summary || ""; 
+        const imgSrc = t.pic_thumb || t.pic_main || t.pic_sub || "Turnip.jpg";
+
+        container.innerHTML += `
+          <div class="project-card clickable" onclick="showTopicDetailPage(${idx})">
+            <img src="${imgSrc}" class="card-thumbnail" alt="Topic Thumbnail">
+            <div class="card-content">
+              <h3 class="card-title">${title}</h3>
+              <p class="card-summary">${summary}</p>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // 💡 Eventsをコンパクトにカード化し、クリックで通常ページ風の詳細へ切り替える
+    function renderEvents(events) {
+      const container = document.getElementById('events-content');
+      if (!container) return;
+      container.innerHTML = '';
+      if(!events || events.length === 0) {
+        container.innerHTML = '<p style="color:#999; padding-left:20px;">No lab events found.</p>';
+        return;
+      }
+
+      events.forEach((e, idx) => {
+        const title = e.title || "No Title";
+        const summary = e.summary || "";
+        const imgSrc = e.pic_thumb || e.pic_main || e.pic_sub || "Turnip.jpg";
+
+        container.innerHTML += `
+          <div class="project-card clickable" onclick="showEventDetailPage(${idx})">
+            <img src="${imgSrc}" class="card-thumbnail" alt="Event Thumbnail">
+            <div class="card-content">
+              <h3 class="card-title">${title}</h3>
+              <div class="card-meta">
+                <span class="date-badge">${e.date || ''}</span>
+                <span class="category-badge">${e.category || ''}</span>
+              </div>
+              <p class="card-summary">${summary}</p>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // 💡 修正：Topics詳細（メイン画像全体表示＆サムネ使い回し排除版）
+    window.showTopicDetailPage = function(idx) {
+      const t = globalTopicsData[idx];
+      const listView = document.getElementById('topics-list-view');
+      const detailView = document.getElementById('topics-detail-page');
+      
+      let mainImgHtml = '';
+      if (t.pic_main && t.pic_main.match(/\w/)) {
+        mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${t.pic_main}"><img src="${t.pic_main}" alt="Main Image"></a></div>`;
+      }
+
+      // const t_body_en_ja = t.body_en + '' + 
+      
+      // const bodyText = (currentLang === 'ja') ? (t.body_ja || t.summary) : (t.body_en || t.summary);
+      const bodyText = (currentLang === 'ja') ? (t.body_ja || t.summary) : (`${t.body_en}<br><br>${t.body_ja}` || t.summary);
+
+      
+      // 💡 変更点：純粋に pic_sub にデータがある場合のみ、本文の後に展開（使い回しを禁止）
+      let subImgsHtml = '';
+      if (t.pic_sub && t.pic_sub.trim() !== '') {
+        const subImagesArray = t.pic_sub.split(',').map(url => url.trim()).filter(url => url !== '' && url !== t.pic_main);
+        if (subImagesArray.length > 0) {
+          subImgsHtml = '<div class="detail-sub-image-gallery">';
+          subImagesArray.forEach(url => {
+            subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img src="${url}" alt="Sub Image"></a>`;
+          });
+          subImgsHtml += '</div>';
+        }
+      }
+
+      let refPapersHtml = '';
+      if (t.references && t.references.trim() !== '') {
+        const keywords = t.references.split(',').map(k => k.trim().toLowerCase()).filter(k => k !== '');
+        let matched = globalPapersData.filter(p => {
+          const titleEn = (p["paper_title.en"] || "").toLowerCase();
+          const titleJa = (p["paper_title.ja"] || "").toLowerCase();
+          return keywords.some(kw => titleEn.includes(kw) || titleJa.includes(kw));
+        }).sort((a, b) => (b["publication_date"] || "").localeCompare(a["publication_date"] || ""));
+
+        if (matched.length > 0) {
+          refPapersHtml = `<div class="card-references" style="margin-top:30px; padding:20px; font-size:1rem;"><h4 style="font-size:1.1rem; margin-bottom:12px;">▼ Related Publications (Auto-Matched)</h4><ol style="padding-left:20px;">`;
+          matched.forEach(p => {
+            const pTitle = p["paper_title.en"] || p["paper_title.ja"] || "";
+            const pAuthors = parseNames(p["authors.en"] || p["authors.ja"]);
+            const pJournal = p["publication_name.en"] || p["publication_name.ja"] || "";
+            const pVolume = p["volume"] ? ` Vol. ${p["volume"]}` : "";
+            const pPages = p["starting_page"] ? `, pp. ${p["starting_page"]}-${p["ending_page"] || p["starting_page"]}` : "";
+            let year = (p["publication_date"] || "").substring(0, 4);
+            refPapersHtml += `<li style="margin-bottom:12px; line-height:1.5;"><strong>${pTitle}</strong><br><span style="color:#555; font-size:0.9rem;">${pAuthors}</span><br><span style="color:#777; font-style:italic; font-size:0.9rem;">${pJournal}</span>${pVolume}${pPages}${year ? ` (${year})` : ''}.${formatDoi(p["identifiers.doi"])}</li>`;
+          });
+          refPapersHtml += `</ol></div>`;
+        }
+      }
+
+      detailView.innerHTML = `
+        <div class="detail-page-view">
+          <button class="detail-page-back-btn" onclick="hideTopicDetailPage()" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 0px;">&larr; Back to List</button>
+          <h2 style="margin-top:0; padding-bottom:10px; margin-bottom:20px; font-size:1.5rem;">${t.title || ''}</h2>
+          ${mainImgHtml}
+          <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
+          ${subImgsHtml}
+          ${refPapersHtml}
+        </div>
+      `;
+
+      listView.style.display = 'none';
+      detailView.style.display = 'block';
+    };
+
+    window.hideTopicDetailPage = function() {
+      document.getElementById('topics-list-view').style.display = 'block';
+      document.getElementById('topics-detail-page').style.display = 'none';
+    };
+
+    // 💡 修正：Events詳細（メイン画像全体表示＆サムネ使い回し排除版）
+    window.showEventDetailPage = function(idx) {
+      const e = globalEventsData[idx];
+      const listView = document.getElementById('events-list-view');
+      const detailView = document.getElementById('events-detail-page');
+
+      let mainImgHtml = '';
+      if (e.pic_main && e.pic_main.match(/\w/)) {
+        mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${e.pic_main}"><img src="${e.pic_main}"></a></div>`;
+      }
+
+      const bodyText = (currentLang === 'ja') ? (e.body_ja || e.summary) : (`${e.body_en}<br><br>${e.body_ja}` || e.summary);
+
+      // 💡 変更点：純粋に pic_sub にデータがある場合のみ、本文の後に展開（使い回しを禁止）
+      let subImgsHtml = '';
+      if (e.pic_sub && e.pic_sub.trim() !== '') {
+        const subImagesArray = e.pic_sub.split(',').map(url => url.trim()).filter(url => url !== '' && url !== e.pic_main);
+        if (subImagesArray.length > 0) {
+          subImgsHtml = '<div class="detail-sub-image-gallery">';
+          subImagesArray.forEach(url => {
+            subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img src="${url}"></a>`;
+          });
+          subImgsHtml += '</div>';
+        }
+      }
+
+      detailView.innerHTML = `
+        <div class="detail-page-view">
+          <button class="detail-page-back-btn" onclick="hideEventDetailPage()" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 0px;">&larr; Back to List</button>
+          <h2 style="margin-top:0; padding-bottom:10px; margin-bottom:10px; font-size:1.5rem;">${e.title || ''}</h2>
+          <div class="card-meta" style="margin-bottom:20px;">
+            <span class="date-badge">${e.date || ''}</span>
+            <span class="category-badge">${e.category || ''}</span>
+          </div>
+          ${mainImgHtml}
+          <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
+          ${subImgsHtml}
+        </div>
+      `;
+
+      listView.style.display = 'none';
+      detailView.style.display = 'block';
+    };
+    
+    window.hideEventDetailPage = function() {
+      document.getElementById('events-list-view').style.display = 'block';
+      document.getElementById('events-detail-page').style.display = 'none';
+    };
+
+    // 💡 詳細画面内での言語トグル関数
+    window.setInlinePageLang = function(lang, type, idx) {
+      currentLang = lang;
+      if (type === 'topic') showTopicDetailPage(idx);
+      if (type === 'event') showEventDetailPage(idx);
+    };
+
+    // --- メインデータロード関数の拡張対応版 ---
+    async function loadLabData() {
+      try {
+        // 💡 【追記・変更】 Promise.all を使い、content.json と news.json を同時に並列読み込みする
+        const [contentRes, newsRes] = await Promise.all([
+          fetch("data/content.json"),
+          fetch("data/news.json")
+        ]);
+       
+        const data = await contentRes.json();
+        const newsData = await newsRes.json(); // 💡【追記】
+   
+        if (document.getElementById('last-update')) {
+          document.getElementById('last-update').innerText = "Last update: " + data.lastUpdate;
+        }
+
+        // グローバルメモリへ格納
+        globalPapersData = data.papers || [];
+        globalTopicsData = data.topics || [];
+        globalEventsData = data.events || [];
+       
+        // 💡 【追記】 分離されたNewsシート由来のデータをグローバル配列に保持
+        window.globalNewsData = newsData.news || [];
+        
+        // --- 👥 メンバー情報の描画 (完全維持) ---
+        const currentDiv = document.getElementById('current-members');
+        const colListDiv = document.getElementById('collaborators-list');
+        const almListDiv = document.getElementById('alumni-list');
+    
+        if (currentDiv) currentDiv.innerHTML = '';
+        if (colListDiv) colListDiv.innerHTML = '';
+        if (almListDiv) almListDiv.innerHTML = '';
+    
+        let hasCol = false;
+        let hasAlm = false;
+
+        if (currentDiv) currentDiv.className = "member-container";
+        if (colListDiv) colListDiv.className = "sub-member-grid";
+        if (almListDiv) almListDiv.className = "sub-member-grid";
+    
+        if (data.members) {
+          data.members.forEach(m => {
+            if (m.lab !== 'LGPR') return;
+            const isAlumni = m.grade && m.grade.match(/Alumni/i);
+            const isCollaborator = m.grade && m.grade.match(/Collaborator/i);
+      
+            let introListHtml = '';
+            if (m.intro1) {
+              const lines = m.intro1.split('\n').filter(l => l.trim() !== '');
+              introListHtml = `<div class="member-intro-list">` + lines.map(line => `<p class="member-intro-item">${line}</p>`).join('') + `</div>`;
+            }
+
+            let timelineHtml = '';
+            if (m.intro2 && m.intro2.trim() !== '') {
+              const rows = m.intro2.split('\n').filter(l => l.includes('--'));
+              if (rows.length > 0) {
+                timelineHtml = `<div class="timeline">` + rows.map(row => {
+                  const [year, desc] = row.split('--');
+                  return `<div class="timeline-row"><div class="timeline-year">${year.trim()}</div><div class="timeline-desc">${desc.trim()}</div></div>`;
+                }).join('') + `</div>`;
+              }
+            }
+      
+            let mediaHtml = '<div class="member-media">';
+            if (!isAlumni) {
+              if (m.pic2) {
+                mediaHtml += `<div class="portrait-container">`;
+                if (m.pic3 && m.pic3.trim() !== '' && m.pic3.match(/\w/)) {
+                  mediaHtml += `<img src="${m.pic3}" alt="${m.name_en}" class="hover-pic">`;
+                }
+                mediaHtml += `<img src="${m.pic2}" alt="${m.name_en}" class="main-pic">`;
+                mediaHtml += `</div>`;
+              }
+            }
+            if (m.pic1) mediaHtml += `<img src="${m.pic1}" class="nationalflag" alt="flag">`;
+            mediaHtml += '</div>';
+      
+            if (!isAlumni && !isCollaborator && currentDiv) {
+              currentDiv.innerHTML += `
+                <div class="member-card">
+                  ${mediaHtml}
+                  <div class="member-info">
+                    <div class="member-header">
+                      <span class="member-name-en">${m.name_en}</span>
+                      <span class="member-title-en">${m.title_en || ''}</span>
+                      <br>
+                      <span class="member-name-ja">${m.name_ja || ''}</span>
+                      <span class="member-title-ja">${m.title_ja || ''}</span>
+                    </div>
+                    ${introListHtml}
+                    ${timelineHtml}
+                  </div>
+                </div>
+              `;
+            } else if (m.name_en !== 'Daisuke Tsugama' && isCollaborator && colListDiv) {
+              hasCol = true;
+              colListDiv.innerHTML += `<div class="sub-member-card">${mediaHtml}<div><div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div><div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div><div style="font-size:0.85rem; color:#444; line-height:1.4;">${m.title_en || ''}<br>${m.title_ja || ''}</div></div></div>`;
+            } else if (isAlumni && almListDiv) {
+              hasAlm = true;
+              almListDiv.innerHTML += `<div class="sub-member-card">${mediaHtml}<div><div style="font-weight:bold; font-size:1.1rem;">${m.name_en}</div><div style="font-size:0.9rem; color:#666; margin-bottom:10px;">${m.name_ja || ''}</div><div style="font-size:0.85rem; color:#444; line-height:1.4;">${m.title_en || ''}<br>${m.title_ja || ''}</div></div></div>`;
+            }
+          });
+        }
+        
+        if (hasCol && document.getElementById('collaborators-container')) document.getElementById('collaborators-container').style.display = 'block';
+        if (hasAlm && document.getElementById('alumni-container')) document.getElementById('alumni-container').style.display = 'block';
+
+        // --- 📊 トレンドグラフ・ワードクラウドの描画 ---
+        if (data.topCharts) {
+          window.globalTopCharts = data.topCharts;
+          renderSpeciesAreaChart(data.topCharts.speciesTrend);
+          setTimeout(() => {
+            const defaultBtn = document.getElementById("default-cloud-btn");
+            if (defaultBtn) defaultBtn.click();
+          }, 100);
+        }
+
+        // 🔍 論文フリーワード検索
+        const searchInput = document.getElementById('paper-search');
+        if (searchInput) {
+          searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase();
+            const filtered = globalPapersData.filter(p => {
+              const titleEn = (p["paper_title.en"] || "").toLowerCase();
+              const titleJa = (p["paper_title.ja"] || "").toLowerCase();
+              const descEn = (p["description.en"] || "").toLowerCase();
+              const authors = parseNames(p["authors.en"] || p["authors.ja"]).toLowerCase();
+              return titleEn.includes(query) || titleJa.includes(query) || descEn.includes(query) || authors.includes(query);
+            });
+            renderPapersListOnly(filtered);
+          });
+        }
+
+        // --- 🏆 外部資金・受賞歴の描画処理 ---
+        const grantsListDiv = document.getElementById('honors-grants-list');
+        const awardsListDiv = document.getElementById('honors-awards-list');
+        
+        if (grantsListDiv && data.honors && data.honors.grants && data.honors.grants.length > 0) {
+          grantsListDiv.innerHTML = '';
+          data.honors.grants.forEach(g => {
+            const system = (g["system_name.ja"] && g["system_name.en"] && g["system_name.ja"] !== g["system_name.en"]) ? `${g["system_name.ja"]} (${g["system_name.en"]})` : (g["system_name.ja"] || g["system_name.en"]);
+            const category = (g["category.ja"] && g["category.en"] && g["category.ja"] !== g["category.en"]) ? `${g["category.ja"]} (${g["category.en"]})` : (g["category.ja"] || g["category.en"]);
+            const title = (g["research_project_title.ja"] && g["research_project_title.en"] && g["research_project_title.ja"] !== g["research_project_title.en"]) ? `${g["research_project_title.ja"]} / ${g["research_project_title.en"]}` : (g["research_project_title.ja"] || g["research_project_title.en"]);
+            const period = (g["from_date"] && g["to_date"]) ? `${g["from_date"].substring(0, 4)}-${g["to_date"].substring(0, 4)}` : g["from_date"] ? g["from_date"].substring(0, 4) : "";
+            const pi = (g["investigators.ja"] && g["investigators.en"] && g["investigators.ja"] !== g["investigators.en"]) ? `${parseNames(g["investigators.ja"])} (${parseNames(g["investigators.en"])})` : parseNames(g["investigators.ja"]);
+
+            let kakenAddonHtml = "";
+            let grantNumber = g["identifiers.grant_number"] || "";
+            let seeAlsoUrl = "";
+            if (grantNumber && typeof grantNumber === "string") {
+              try { var pN = JSON.parse(grantNumber); if (Array.isArray(pN) && pN.length > 0) grantNumber = pN[0]; } catch(e) { grantNumber = grantNumber.replace(/[\[\]"']/g, "").trim(); }
+            }
+            const seeAlsoRaw = g["see_also"] || "";
+            if (seeAlsoRaw && typeof seeAlsoRaw === "string") {
+              try { var pS = JSON.parse(seeAlsoRaw); seeAlsoUrl = Array.isArray(pS) ? (pS[0]["@id"] || "") : (pS["@id"] || ""); } catch(e) { if (seeAlsoRaw.trim().startsWith("http")) seeAlsoUrl = seeAlsoRaw.trim(); }
+            }
+            if ((system + category + seeAlsoRaw + seeAlsoUrl).toLowerCase().includes("kaken")) {
+              let addonParts = [];
+              if (grantNumber) addonParts.push(`Grant Number: <strong>${grantNumber}</strong>`);
+              if (seeAlsoUrl) addonParts.push(`<a href="${seeAlsoUrl}" target="_blank" rel="noopener" style="color:#2C6B37; text-decoration:underline; font-weight:bold;">[KAKEN Project Page]</a>`);
+              if (addonParts.length > 0) kakenAddonHtml = `<br><span style="font-size:0.9rem; color:#444; margin-left:5px;">${addonParts.join(" / ")}</span>`;
+            }
+
+            grantsListDiv.innerHTML += `<li style="margin-bottom:15px; font-size:1.05rem; line-height:1.5;"><strong>${system} ${category}</strong><br><span style="color:#111;">「${title}」</span> <span style="color:#666; font-size:0.95rem;">(${period})</span><br><span style="font-size:0.9rem; color:#555; margin-left:5px;">研究組織: ${pi}</span>${kakenAddonHtml}</li>`;
+          });
+        }
+
+        if (awardsListDiv && data.honors && data.honors.awards && data.honors.awards.length > 0) {
+          awardsListDiv.innerHTML = '';
+          data.honors.awards.forEach(a => {
+            const awardName = (a["award_name.ja"] && a["award_name.en"] && a["award_name.ja"] !== a["award_name.en"]) ? `${a["award_name.ja"]} (${a["award_name.en"]})` : (a["award_name.ja"] || a["award_name.en"]);
+            const association = (a["association.ja"] && a["association.en"] && a["association.ja"] !== a["association.en"]) ? `${a["association.ja"]} (${a["association.en"]})` : (a["association.ja"] || a["association.en"]);
+            const awardTitle = (a["award_title.ja"] && a["award_title.en"] && a["award_title.ja"] !== a["award_title.en"]) ? `${a["award_title.ja"]} / ${a["award_title.en"]}` : (a["award_title.ja"] || a["award_title.en"]);
+            awardsListDiv.innerHTML += `<li style="margin-bottom:15px; font-size:1.05rem; line-height:1.5;"><strong>${awardName}</strong> - ${association} <span style="color:#666; font-size:0.95rem;">(${a["award_date"] || ""})</span><br><span style="font-size:0.95rem; color:#444; margin-left:5px; display:inline-block; margin-top:2px;">対象業績: 「${awardTitle}」</span></li>`;
+          });
+        }
+
+        // --- 🔗 リンクデータの描画処理（3カテゴリ・既存流用コンパクト版） ---
+        const toolsListDiv = document.getElementById('links-tools-list');
+        const affListDiv = document.getElementById('links-affiliations-list');
+        const extListDiv = document.getElementById('links-external-list'); // ★追加
+        
+        if (toolsListDiv) toolsListDiv.innerHTML = '';
+        if (affListDiv) affListDiv.innerHTML = '';
+        if (extListDiv) extListDiv.innerHTML = ''; // ★追加
+        
+        let hasTools = false; let hasAffiliations = false; let hasExternal = false; // ★追加
+        
+        if (data.links && data.links.length > 0) {
+          data.links.forEach(l => {
+            // 1. カード表示（Tools & Platforms 枠）
+            if (l.category === "Tools & Platforms" || l.category === "Web Tools & Databases") {
+              hasTools = true;
+              const logoSrc = (l.pic && l.pic.trim() !== '') ? l.pic : 'Turnip.jpg';
+              
+              if (toolsListDiv) {
+                toolsListDiv.innerHTML += `
+                  <div class="project-card clickable" onclick="window.open('${l.link}', '_blank', 'noopener')" style="margin-bottom:0; align-items:center; text-align:center; padding-top:20px;">
+                    <div style="width:110px; aspect-ratio:1/1; background:#f8fafc; border:1px solid var(--color-border); display:flex; align-items:center; justify-content:center; overflow:hidden; padding:10px;">
+                      <img src="${logoSrc}" alt="${l.item}" style="width:100%; height:100%; object-fit:contain; border:none;">
+                    </div>
+                    <div class="card-content" style="padding:20px 15px; width:100%;">
+                      <h3 class="card-title" style="font-size:1.1rem; margin-bottom:10px;">
+                        <a href="${l.link}" target="_blank" rel="noopener" onclick="event.stopPropagation();" style="color:inherit; text-decoration:none;">${l.item}</a>
+                      </h3>
+                      <p class="card-summary" style="font-size:0.85rem; margin-bottom:0; text-align:justify; line-height:1.5;">${l.description || ''}</p>
+                    </div>
+                  </div>
+                `;
+              }
+            } 
+            // 2. 通常リンク表示（Affiliations 枠）
+            else if (l.category === "Affiliations" && affListDiv) {
+              hasAffiliations = true;
+              affListDiv.innerHTML += `
+                <li style="margin-bottom:12px;">
+                  <a href="${l.link}" target="_blank" rel="noopener" style="font-weight:bold; font-size:1.05rem;">${l.item}</a><br>
+                  <span style="font-size:0.9rem; color:#555; margin-left:5px;">${l.description || ''}</span>
+                </li>`;
+            } 
+            // 3. 通常リンク表示（External Resources 枠 ★新規追加）
+            else if (l.category === "External Resources" && extListDiv) {
+              hasExternal = true;
+              extListDiv.innerHTML += `
+                <li style="margin-bottom:12px;">
+                  <a href="${l.link}" target="_blank" rel="noopener" style="font-weight:bold; font-size:1.05rem;">${l.item}</a><br>
+                  <span style="font-size:0.9rem; color:#555; margin-left:5px;">${l.description || ''}</span>
+                </li>`;
+            }
+          });
+        }
+        
+        // それぞれデータが存在する場合のみ表示をONにする
+        if (hasTools && document.getElementById('links-tools-container')) document.getElementById('links-tools-container').style.display = 'block';
+        if (hasAffiliations && document.getElementById('links-affiliations-container')) document.getElementById('links-affiliations-container').style.display = 'block';
+        if (hasExternal && document.getElementById('links-external-container')) document.getElementById('links-external-container').style.display = 'block'; // ★追加
+
+        // --- 💡 新設コンポーネントの初期描画を実行 ---
+        renderTopics(globalTopicsData, globalPapersData);
+        renderEvents(globalEventsData);
+        renderNews(window.globalNewsData);
+        renderTopRecentNews(window.globalNewsData); 
+        
+      } catch (error) {
+        console.error("データの読み込みに失敗しました:", error);
+      }
+    }
+
+    // 💡 修正版：Newsデータを一覧カードグリッドに表示（ロゴ廃止・Papers/Peopleのリンク排除・パース補正版）
+    function renderNews(newsList) {
+      const container = document.getElementById('news-content');
+      if (!container) return;
+      container.innerHTML = '';
+      if(!newsList || newsList.length === 0) {
+        container.innerHTML = '<p style="color:#999; padding-left:20px;">No recent news found.</p>';
+        return;
+      }
+
+      newsList.forEach((n, idx) => {
+        const title = n.title || "Notice";
+        const cat = (n.category || "General").trim();
+        const catLower = cat.toLowerCase();
+        
+        const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
+        const clickAttribute = isClickable ? `onclick="showNewsDetailPage(${idx})"` : "";
+        const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
+        const colorStyle = isClickable ? "color: #2C6B37;" : "color: #000;";
+        const textDecStyle = isClickable ? "text-decoration: underline;" : "text-decoration: none;";
+        
+        let badgeClass = "news-badge-general";
+        if(catLower.includes("paper")) badgeClass = "news-badge-papers";
+        if(catLower.includes("people")) badgeClass = "news-badge-people";
+        if(catLower.includes("event")) badgeClass = "news-badge-events";
+
+        let summaryHtml = n.summary || "";
+        if (summaryHtml.includes('[{"name":')) {
+          try {
+            // もし生データに近い形になっていた場合、著者を綺麗に再パースしてHTML化
+            const parts = summaryHtml.split('\n');
+            const lead = parts[0] || "";
+            const mainTitle = parts[1] || "";
+            const jsonIdx = summaryHtml.indexOf('[');
+            const doiIdx = summaryHtml.indexOf('(2026)');
+            
+            let authorsStr = "";
+            if (jsonIdx !== -1) {
+              const endJsonIdx = summaryHtml.indexOf(']', jsonIdx);
+              const jsonStr = summaryHtml.substring(jsonIdx, endJsonIdx + 1);
+              const parsedAuthors = JSON.parse(jsonStr);
+              authorsStr = parsedAuthors.map(o => o.name).join(", ");
+            }
+            
+            summaryHtml = `<span>${lead}</span><br><strong>${mainTitle}</strong><br><span style="color:#555; font-size:0.88rem;">${authorsStr}</span>`;
+            if (doiIdx !== -1) {
+              summaryHtml += `<br><span style="color:#777; font-size:0.85rem;">(2026)</span>`;
+            }
+          } catch(e) {
+            // パース失敗時は、不自然なJSON文字列ブラケットを除去するだけの安全処理
+            summaryHtml = summaryHtml.replace(/[\[\]\{\}"']/g, "").replace(/name:/g, "");
+          }
+        }
+
+        container.innerHTML += `
+          <div class="news-timeline-item" ${clickAttribute}>
+            <div class="news-meta-inline">
+              <span class="news-date">${n.date || ''}</span>
+              <span class="${badgeClass}">${cat}</span>
+            </div>
+            <div class="news-body-inline">
+              <div class="news-summary-text" style="${cursorStyle}; ${colorStyle}; ${textDecStyle}">${summaryHtml}</div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // 💡 Newsの通常ページ風・詳細画面の表示処理（Clickableなカテゴリのみ遷移）
+    window.showNewsDetailPage = function(idx) {
+      const n = window.globalNewsData[idx];
+      const listView = document.getElementById('news-list-view');
+      const detailView = document.getElementById('news-detail-page');
+
+      const bodyText = (currentLang === 'ja') ? (n.body_ja || n.summary) : (`${n.body_en}<br>${n.body_ja}` || n.summary);
+
+      detailView.innerHTML = `
+        <div class="detail-page-view">
+          <button class="detail-page-back-btn" onclick="hideNewsDetailPage()" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 0px;">&larr; Back to List</button>
+          <h2 style="margin-top:0; padding-bottom:10px; margin-bottom:15px; font-size:1.5rem;">${n.title || ''}</h2>
+          <div class="card-meta" style="margin-bottom:20px;">
+            <span class="date-badge">${n.date || ''}</span>
+            <span class="category-badge" style="color:#2C6B37; border-color:#2C6B37; background:#f1f5f9;">${n.category || 'General'}</span>
+          </div>
+          <div class="detail-page-text"><p>${bodyText}</p></div>
+        </div>
+      `;
+
+      listView.style.display = 'none';
+      detailView.style.display = 'block';
+    };
+
+    window.hideNewsDetailPage = function() {
+      document.getElementById('news-list-view').style.display = 'block';
+      document.getElementById('news-detail-page').style.display = 'none';
+    };
+
+    window.hideNewsDetailPage = function() {
+      document.getElementById('news-list-view').style.display = 'block';
+      document.getElementById('news-detail-page').style.display = 'none';
+    };
+
+    // 🔥 Topページに最新5〜10件のお知らせをレンダリングする関数
+    function renderTopRecentNews(newsList) {
+      const container = document.getElementById('top-recent-news-list');
+      if (!container) return;
+      container.innerHTML = '';
+      if (!newsList || newsList.length === 0) {
+        container.innerHTML = '<p style="color:#999;">No recent updates.</p>';
+        return;
+      }
+
+      // 先頭7件（お好みに合わせて 5 や 10 に変更してください）をスライス
+      const recentItems = newsList.slice(0, 7);
+
+      recentItems.forEach((n, idx) => {
+        const title = n.title || "Notice";
+        const cat = (n.category || "General").trim();
+        const catLower = cat.toLowerCase();
+        
+        // Papers と People 以外は詳細画面へ飛べるように設定
+        const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
+        const clickAttribute = isClickable ? `onclick="navigateToNewsDetail(${idx})"` : "";
+        const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
+        const colorStyle = isClickable ? "color: #2C6B37;" : "color: #000;";
+        const textDecStyle = isClickable ? "text-decoration: underline;" : "text-decoration: none;";
+
+        let badgeClass = "news-badge-general";
+        if(catLower.includes("paper")) badgeClass = "news-badge-papers";
+        if(catLower.includes("people")) badgeClass = "news-badge-people";
+        if(catLower.includes("event")) badgeClass = "news-badge-events";
+
+        let summaryHtml = n.summary || "";
+
+        // 行間をさらに詰めてコンパクトにしたタイムライン形式
+        container.innerHTML += `
+          <div class="news-timeline-item" ${clickAttribute} style="padding: 8px 10px; border-bottom: 1px dotted #eee;">
+            <div class="news-meta-inline" style="min-width: 90px;">
+              <span class="news-date" style="font-size:0.85rem;">${n.date || ''}</span>
+              <span class="${badgeClass}" style="font-size:0.75rem; padding:1px 4px;">${cat}</span>
+            </div>
+            <div class="news-body-inline" style="font-size:0.9rem;">
+              <div class="news-summary-text" style="${cursorStyle}; ${colorStyle}; ${textDecStyle};">${summaryHtml}</div>
+            </div>
+          </div>
+        `;
+      });
+    }
+
+    // 🔥 Topページの簡易ニュースをクリックした時に、Newsタブの詳細画面へ直接ワープさせる関数
+    window.navigateToNewsDetail = function(idx) {
+      switchPage('news'); // Newsタブに切り替え
+      showNewsDetailPage(idx); // 詳細ビューを展開
+      document.getElementById('news').scrollIntoView({ behavior: 'smooth' }); // スムーズスクロール
+    };
+    
+    // 各種ヘルパー関数群
+    function parseNames(jsonStr) {
+      if (!jsonStr) return "";
+      try { const arr = JSON.parse(jsonStr); return arr.map(obj => obj.name).join(", "); } catch(e) { return jsonStr; }
+    }
+
+    function formatDoi(doiField) {
+      if (!doiField || doiField.trim() === "") return "";
+      try {
+        let cleanDoi = doiField.replace(/[\[\]"']/g, "").trim();
+        if (cleanDoi !== "") return ` DOI: <a href="https://doi.org/${cleanDoi}" target="_blank" rel="noopener">${cleanDoi}</a>`;
+      } catch(e) {}
+      return "";
+    }
+
+    function renderSummaryBar(papers) {
+      const total = papers.length;
+      let internationalCount = 0; let totalFirst = 0; let totalCorresponding = 0; let totalOwned = 0;
+      papers.forEach(p => {
+        if (checkIsInternational(p)) internationalCount++;
+        const status = checkAuthorStatus(p);
+        if (status.isFirst) totalFirst++;
+        if (status.isCorresponding) totalCorresponding++;
+        if (status.isOwned) totalOwned++;
+      });
+      const intRatio = total > 0 ? Math.round((internationalCount / total) * 100) : 0;
+      const summaryBar = document.getElementById('summary-bar');
+      if (summaryBar) {
+        summaryBar.innerHTML = `Summary: Total Papers: <strong>${total}</strong> (First: <strong>${totalFirst}</strong> / Corresponding: <strong>${totalCorresponding}</strong> / Total Owned: <strong>${totalOwned}</strong>) / International: <strong>${internationalCount} (${intRatio}%)</strong>`;
+      }
+    }
+
+    function renderPapersDashboard(papers) {
+      renderSummaryBar(papers);
+      renderPureYearsChart(papers);
+      renderPapersListOnly(papers);
+    }
+
+    function renderPureYearsChart(papers) {
+      const container = document.getElementById('pure-chart-container');
+      if (!container) return;
+      container.innerHTML = '';
+      const countsByYear = {};
+      papers.forEach(p => {
+        let dateStr = p["publication_date"] || "";
+        let year = dateStr.match(/^\d{4}/) ? dateStr.substring(0, 4) : "Unknown";
+        if(year !== "Unknown") {
+          if (!countsByYear[year]) countsByYear[year] = { total: 0, first: 0, corresponding: 0, owned: 0 };
+          countsByYear[year].total += 1;
+          const status = checkAuthorStatus(p);
+          if (status.isFirst) countsByYear[year].first += 1;
+          if (status.isCorresponding) countsByYear[year].corresponding += 1;
+          if (status.isOwned) countsByYear[year].owned += 1;
+        }
+      });
+      const sortedYears = Object.keys(countsByYear).sort();
+      if (sortedYears.length === 0) return;
+      const maxCount = Math.max(...Object.values(countsByYear).map(v => v.total));
+      sortedYears.forEach(year => {
+        const item = countsByYear[year];
+        const totalHeight = maxCount > 0 ? (item.total / maxCount) * 130 : 0;
+        const ownedHeight = maxCount > 0 ? (item.owned / maxCount) * 130 : 0;
+        const wrapper = document.createElement('div');
+        wrapper.className = 'pure-chart-bar-wrapper';
+        wrapper.innerHTML = `
+          <div class="pure-chart-value" style="font-size:0.95rem; color:#444; white-space:nowrap; text-align:center; line-height:1.1;">
+            ${item.total} : <span style="color:#FF9800; font-weight:bold;">${item.owned}</span><br>
+            <span style="color:#888; font-size:0.88rem;">(${item.first}/${item.corresponding})</span>
+          </div>
+          <div class="pure-chart-bars-container">
+            <div class="pure-chart-bar bar-total" style="height:${totalHeight}px;" title="Total: ${item.total}"></div>
+            <div class="pure-chart-bar bar-owned" style="height:${ownedHeight}px;" title="Owned: ${item.owned}"></div>
+          </div>
+          <div class="pure-chart-label">${year}</div>
+        `;
+        container.appendChild(wrapper);
+      });
+    }
+
+    function filterByTopic(topic) {
+      const btns = document.querySelectorAll('.filter-tags .tag-btn');
+      btns.forEach(btn => btn.classList.remove('active'));
+      if (event && event.target) event.target.classList.add('active');
+      let filtered = globalPapersData || [];
+      if (topic === 'all') { renderPapersListOnly(filtered); return; }
+      if (topic === 'international') { filtered = filtered.filter(p => checkIsInternational(p)); }
+      else if (topic === 'tools') {
+        filtered = filtered.filter(p => {
+          const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
+          return text.includes('tool') || text.includes('database') || text.includes('server') || text.includes('software') || text.includes('owl') || text.includes('machine learning') || text.includes('llm') || text.includes('system');
+        });
+      } else if (topic === 'stress') {
+        filtered = filtered.filter(p => {
+          const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
+          return text.includes('stress') || text.includes('mechanical') || text.includes('gravity') || text.includes('touch') || text.includes('salt') || text.includes('drought') || text.includes('tolerance');
+        });
+      } else if (topic === 'arabidopsis') {
+        filtered = filtered.filter(p => {
+          const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
+          return text.includes('arabidopsis') || text.includes('thaliana');
+        });
+      } else if (topic === 'crops') {
+        filtered = filtered.filter(p => {
+          const text = ((p["paper_title.en"]||"") + (p["paper_title.ja"]||"") + (p["description.en"]||"")).toLowerCase();
+          return text.includes('millet') || text.includes('brassica') || text.includes('rapa') || text.includes('asparagus') || text.includes('buckwheat');
+        });
+      }
+      renderPapersListOnly(filtered);
+    }
+    
+    function renderPapersListOnly(papers) {
+      const papersListDiv = document.getElementById('papers-list');
+      if (!papersListDiv) return;
+      papersListDiv.innerHTML = '';
+      if(papers.length === 0) { papersListDiv.innerHTML = '<p style="color:#999;padding-left:20px;">該当する論文が見つかりません。</p>'; return; }
+      papers.forEach(p => {
+        const title = p["paper_title.en"] || p["paper_title.ja"] || "";
+        const authors = parseNames(p["authors.en"] || p["authors.ja"]);
+        const journal = p["publication_name.en"] || p["publication_name.ja"] || "";
+        const volume = p["volume"] ? ` Vol. ${p["volume"]}` : "";
+        const pages = p["starting_page"] ? `, pp. ${p["starting_page"]}-${p["ending_page"] || p["starting_page"]}` : "";
+        let yearOnly = (p["publication_date"] || "").substring(0, 4);
+        papersListDiv.innerHTML += `<li style="margin-bottom:15px; font-size:1.05rem;"><strong>${title}</strong><br><span style="color:#444;">${authors}</span><br><span style="color:#666; font-style:italic;">${journal}</span>${volume}${pages}${yearOnly ? ` (${yearOnly})` : ""}.${formatDoi(p["identifiers.doi"])}</li>`;
+      });
+    }
+
+    function renderSpeciesAreaChart(trendData) {
+      const container = document.getElementById('species-chart-container');
+      if (!container || !trendData || trendData.length === 0) return;
+      const width = 450; const height = 200; const paddingLeft = 38; const paddingRight = 15; const paddingTop = 15; const paddingBottom = 35;
+      const chartWidth = width - paddingLeft - paddingRight; const chartHeight = height - paddingTop - paddingBottom;
+      const speciesList = ["Arabidopsis", "Asparagus", "Buckwheat", "Millet", "Rice"];
+      const colors = { "Arabidopsis": "#4CAF50", "Asparagus": "#8BC34A", "Buckwheat": "#9C27B0", "Millet": "#FFC107", "Rice": "#03A9F4" };
+      const numPoints = trendData.length;
+      let speciesLayers = {}; speciesList.forEach(sp => { speciesLayers[sp] = []; });
+      trendData.forEach((d, idx) => {
+        const x = paddingLeft + (idx / (numPoints - 1)) * chartWidth;
+        let yearHitsTotal = 0; speciesList.forEach(sp => { yearHitsTotal += (d[sp] || 0); });
+        if (yearHitsTotal === 0) yearHitsTotal = 1;
+        let currentYOffset = 0;
+        speciesList.forEach(sp => {
+          currentYOffset += (d[sp] || 0) / yearHitsTotal;
+          speciesLayers[sp].push({x: x, y: paddingTop + chartHeight - (currentYOffset * chartHeight)});
+        });
+      });
+      let svgHtml = `<svg viewBox="0 0 ${width} ${height}" style="width:100%; max-width:100%; height:auto; display:block;">`;
+      trendData.forEach((d, idx) => {
+        const x = paddingLeft + (idx / (numPoints - 1)) * chartWidth;
+        if (idx === 0 || idx === numPoints - 1 || d.year % 5 === 0) {
+          svgHtml += `<text x="${x}" y="${paddingTop + chartHeight + 16}" font-size="10" text-anchor="middle" fill="#666" font-family="sans-serif">${d.year}</text>`;
+        }
+      });
+      [0, 0.5, 1].forEach(pct => {
+        const y = paddingTop + chartHeight - (pct * chartHeight);
+        svgHtml += `<line x1="${paddingLeft}" y1="${y}" x2="${width-paddingRight}" y2="${y}" stroke="#e5e5e5" stroke-width="1"/>`;
+        svgHtml += `<text x="${paddingLeft - 6}" y="${y + 4}" font-size="9" text-anchor="end" fill="#777">${pct * 100}%</text>`;
+      });
+      for (let i = speciesList.length - 1; i >= 0; i--) {
+        const sp = speciesList[i]; const currentPoints = speciesLayers[sp]; let polygonPoints = [];
+        currentPoints.forEach(p => { polygonPoints.push(`${p.x},${p.y}`); });
+        if (i === 0) { for (let j = currentPoints.length - 1; j >= 0; j--) { polygonPoints.push(`${currentPoints[j].x},${paddingTop + chartHeight}`); } }
+        else { const prevPoints = speciesLayers[speciesList[i - 1]]; for (let j = prevPoints.length - 1; j >= 0; j--) { polygonPoints.push(`${prevPoints[j].x},${prevPoints[j].y}`); } }
+        svgHtml += `<polygon points="${polygonPoints.join(" ")}" fill="${colors[sp]}" opacity="0.88"><title>${sp}</title></polygon>`;
+      }
+      svgHtml += `</svg>`;
+      let legendHtml = `<div style="display:flex; flex-wrap:wrap; justify-content:center; gap:16px; margin-top:4px; padding:8px 0; border-top:1px solid #eee;">`;
+      speciesList.forEach(sp => { legendHtml += `<div style="display:flex; align-items:center; gap:6px;"><div style="width:14px; height:14px; background-color:${colors[sp]}; border-radius:3px;"></div><span style="font-size:0.95rem; font-weight:bold; color:#333; font-family:sans-serif;">${sp}</span></div>`; });
+      container.innerHTML = legendHtml + svgHtml;
+    }
+
+    function switchCloudEra(eraName, btnElement) {
+      const btns = btnElement.parentNode.querySelectorAll('.tag-btn'); btns.forEach(b => b.classList.remove('active')); btnElement.classList.add('active');
+      const container = document.getElementById('top-wordcloud-container'); if (!container || !window.globalTopCharts) return;
+      const eraData = window.globalTopCharts.wordCloud.find(e => e.period === eraName);
+      if (!eraData || eraData.keywords.length === 0) { container.innerHTML = '<span style="color:#999; font-size:0.9rem;">No data for this period</span>'; return; }
+      const counts = eraData.keywords.map(k => k.count); const maxCount = Math.max(...counts) || 1; const minCount = Math.min(...counts) || 0;
+      const shuffledKeywords = [...eraData.keywords].sort(() => Math.random() - 0.5);
+      container.innerHTML = shuffledKeywords.map(kw => {
+        const size = maxCount === minCount ? 18 : 12 + ((kw.count - minCount) / (maxCount - minCount)) * 16;
+        const randomHue = 100 + Math.floor(Math.random() * 120);
+        return `<span style="font-size:${size}px; color:hsl(${randomHue},60%,40%); font-weight:bold; padding:0px 4px; line-height:1.1; display:inline-block; cursor:default;" title="Count: ${kw.count}">${kw.text}</span>`;
+      }).join('');
+    }
+    
+    window.onload = loadLabData;
+    
+  </script>
+</body>
+</html>
