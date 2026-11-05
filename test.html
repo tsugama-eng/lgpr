@@ -300,15 +300,20 @@
     }
     
     .sub-gallery-img-link {
-      flex: 1;
-      min-width: 280px;      /* 👈 スマホ幅（約320px〜）を考慮し、1枚あたりの最小幅を確保 */
+      /* 💡 flex-basisを「45%以上（約半分）」に指定し、
+         gap（隙間）の余白を計算（calc）で差し引くことで、PCで確実に「横2枚」をキープします */
+      flex: 1 1 calc(50% - 12px); 
+  
+      /* 💡 スマホなどの超ミニ画面（横幅320px以下）でもデザインが崩れないようにする安全弁 */
+      min-width: 280px;      
       max-width: 100%;
     }
-    
+
     .sub-gallery-img-link img {
       width: 100%;
-      height: auto;          /* 縦横比を維持 */
+      height: auto;          /* 縦横比を絶対に崩さない */
       object-fit: cover;
+      display: block;
     }
     
   </style>
