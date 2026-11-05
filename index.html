@@ -276,6 +276,46 @@
       box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1); /* 影を強くして立体感を出す */
     }
 
+    /* 💡 詳細ページのメイン画像ラッパーと画像の制御 */
+    .detail-page-main-image-wrapper {
+      width: 100%;
+      margin-bottom: 20px;
+      text-align: center; /* 画像を中央寄せに */
+    }
+    
+    .detail-page-main-image-wrapper img {
+      width: 100%;           /* 基本は親要素の幅いっぱいに広げる */
+      max-width: 700px;      /* 👈 PCで見た時に引き伸ばされすぎないよう、上限（お好みで調整）を設定 */
+      height: auto;          /* 👈 縦横比（アスペクト比）を絶対に崩さないための必須設定 */
+      object-fit: cover;     /* 万が一比率が指定されていても綺麗に収める */
+      display: inline-block;
+    }
+    
+    /* 💡 サブ画像ギャラリーもスマホで崩れないように調整 */
+    .detail-sub-image-gallery {
+      display: flex;
+      flex-wrap: wrap;       /* スマホ画面に入り切らない場合は自動で折り返す */
+      gap: 12px;
+      margin-top: 20px;
+    }
+    
+    .sub-gallery-img-link {
+      /* 💡 flex-basisを「45%以上（約半分）」に指定し、
+         gap（隙間）の余白を計算（calc）で差し引くことで、PCで確実に「横2枚」をキープします */
+      flex: 1 1 calc(50% - 12px); 
+  
+      /* 💡 スマホなどの超ミニ画面（横幅320px以下）でもデザインが崩れないようにする安全弁 */
+      min-width: 280px;      
+      max-width: 100%;
+    }
+
+    .sub-gallery-img-link img {
+      width: 100%;
+      height: auto;          /* 縦横比を絶対に崩さない */
+      object-fit: cover;
+      display: block;
+    }
+    
   </style>
 </head>
 
