@@ -5004,7 +5004,9 @@
       "pic_thumb": "https://lh3.googleusercontent.com/d/1QOOz-3BPiljX9t7rCAOkIboWMR_gkpYW",
       "pic_main": "https://lh3.googleusercontent.com/d/1QOOz-3BPiljX9t7rCAOkIboWMR_gkpYW",
       "pic_sub": "",
-      "references": ""
+      "references": "",
+      "featured_order": 1,
+      "featured_img": "https://lh3.googleusercontent.com/d/1hj0nK69rAh2HxQ-cDAxQ3rCpEZP6YMqL"
     },
     {
       "id": "owl",
@@ -5015,7 +5017,9 @@
       "pic_thumb": "https://lh3.googleusercontent.com/d/1fdG8V7VfUcFwOsOrx2HmTKqussSvTOpY",
       "pic_main": "https://lh3.googleusercontent.com/d/1fdG8V7VfUcFwOsOrx2HmTKqussSvTOpY",
       "pic_sub": "",
-      "references": "dear-owl"
+      "references": "dear-owl",
+      "featured_order": 2,
+      "featured_img": "https://lh3.googleusercontent.com/d/1nHGOQXTnp7B5txv0NX0Uym2KgPekxgLm"
     },
     {
       "id": "expression",
@@ -5026,7 +5030,9 @@
       "pic_thumb": "https://lh3.googleusercontent.com/d/12HuIQknk47_RmgVf0sMHVPEJjg9Gz_fx",
       "pic_main": "https://lh3.googleusercontent.com/d/12HuIQknk47_RmgVf0sMHVPEJjg9Gz_fx",
       "pic_sub": "https://lh3.googleusercontent.com/d/18QoL_sb4J_8hH7xQvp-L-OlmuQNnW_Om",
-      "references": ""
+      "references": "",
+      "featured_order": null,
+      "featured_img": ""
     },
     {
       "id": "transgene",
@@ -5037,7 +5043,9 @@
       "pic_thumb": "https://lh3.googleusercontent.com/d/1Wr5j12sSJ_butml51MWiFJp0qmGvSe8F",
       "pic_main": "https://lh3.googleusercontent.com/d/1Wr5j12sSJ_butml51MWiFJp0qmGvSe8F",
       "pic_sub": "https://lh3.googleusercontent.com/d/1fadrJ64OFcPz7WuiezU134OLhefquM76",
-      "references": "tsgmac,particle,escherichia"
+      "references": "tsgmac,particle,escherichia",
+      "featured_order": 3,
+      "featured_img": "https://lh3.googleusercontent.com/d/1_4nGwzsVDPF29nVj4Vn6TeKhq7HRmWfn"
     },
     {
       "id": "pm",
@@ -5048,7 +5056,9 @@
       "pic_thumb": "https://lh3.googleusercontent.com/d/1z02zu-I1Jtr239KgoG8Nh415LQaF19I5",
       "pic_main": "https://lh3.googleusercontent.com/d/1z02zu-I1Jtr239KgoG8Nh415LQaF19I5",
       "pic_sub": "https://lh3.googleusercontent.com/d/1SvZuXJFD2OtUd4HZjMIrLwPiyO60NGuU,https://lh3.googleusercontent.com/d/1Tu0md7kVbsplkJquNRPJ_34DQguD0WQ5",
-      "references": "pearl"
+      "references": "pearl",
+      "featured_order": null,
+      "featured_img": ""
     },
     {
       "id": "fm",
@@ -5059,7 +5069,9 @@
       "pic_thumb": "https://lh3.googleusercontent.com/d/17qWPB5cjJ_7NqzU7yYDEkQ6X7-bYu8A-",
       "pic_main": "https://lh3.googleusercontent.com/d/17qWPB5cjJ_7NqzU7yYDEkQ6X7-bYu8A-",
       "pic_sub": "",
-      "references": "setaria,foxtail"
+      "references": "setaria,foxtail",
+      "featured_order": 4,
+      "featured_img": "https://lh3.googleusercontent.com/d/1F56tzqKLOrHf-uVKMuhns8YwOOEkl6yr"
     },
     {
       "id": "vip1",
@@ -5070,7 +5082,9 @@
       "pic_thumb": "https://lh3.googleusercontent.com/d/1JWJz-YJ_vmK3Xp4UBAvpaNZG-WFE5jx2",
       "pic_main": "https://lh3.googleusercontent.com/d/1JWJz-YJ_vmK3Xp4UBAvpaNZG-WFE5jx2",
       "pic_sub": "https://lh3.googleusercontent.com/d/1dS8_pL3LlYHMYKzf3PrC1Z1SyPHIs1kV",
-      "references": "vip1,mechanical"
+      "references": "vip1,mechanical",
+      "featured_order": null,
+      "featured_img": ""
     },
     {
       "id": "color",
@@ -5081,7 +5095,9 @@
       "pic_thumb": "https://lh3.googleusercontent.com/d/1AR9LlMo_zw-RvzAspJLnvXWBNpHVFClx",
       "pic_main": "https://lh3.googleusercontent.com/d/1AR9LlMo_zw-RvzAspJLnvXWBNpHVFClx",
       "pic_sub": "",
-      "references": ""
+      "references": "",
+      "featured_order": null,
+      "featured_img": ""
     },
     {
       "id": "utility",
@@ -5092,7 +5108,9 @@
       "pic_thumb": "https://lh3.googleusercontent.com/d/1Bn8Luu0uuFDS7gOeV1fulJaeJwqk6lSQ",
       "pic_main": "https://lh3.googleusercontent.com/d/1Bn8Luu0uuFDS7gOeV1fulJaeJwqk6lSQ",
       "pic_sub": "",
-      "references": "sabe-owl"
+      "references": "sabe-owl",
+      "featured_order": null,
+      "featured_img": ""
     }
   ],
   "events": [
