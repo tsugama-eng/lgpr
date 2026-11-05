@@ -1150,12 +1150,50 @@
         renderEvents(globalEventsData);
         renderNews(window.globalNewsData);
         renderTopRecentNews(window.globalNewsData); 
+        renderFeaturedGallery(globalTopicsData);
         
       } catch (error) {
         console.error("データの読み込みに失敗しました:", error);
       }
     }
 
+    // 💡 Featured Topicsを動的に生成し、クリックイベントを付与する関数
+    function renderFeaturedGallery(topics) {
+      const container = document.getElementById('featured-gallery-container');
+      if (!container) return;
+
+      // featured_orderが指定されているものを抽出し、昇順にソート
+      const featuredTopics = topics
+        .filter(t => t.featured_order !== null && t.featured_order !== undefined && !isNaN(t.featured_order))
+        .sort((a, b) => a.featured_order - b.featured_order);
+
+      if (featuredTopics.length === 0) {
+        container.innerHTML = '<p style="color:#999; padding-left:10px;">No featured topics available.</p>';
+        return;
+      }
+
+      container.innerHTML = '';
+      featuredTopics.forEach(t => {
+        // 全体データ (globalTopicsData) 内におけるこのトピックの本来のインデックスを探す
+        const originalIdx = topics.findIndex(orig => orig.id === t.id);
+        const imgSrc = t.featured_img || t.pic_main || t.pic_thumb;
+
+        container.innerHTML += `
+          <div class="clickable" onclick="navigateToTopicDetail(${originalIdx})" style="background: #fff; overflow: hidden; position: relative;">
+            <img src="${imgSrc}" alt="${t.title || 'Featured Topic'}" style="width: 100%; aspect-ratio: 21/9; object-fit: cover; display: block;">
+          </div>
+        `;
+      });
+    }
+
+    // 💡 追加：画像クリック時にトピックタブの詳細画面へ直接ワープさせるジャンプ関数
+    window.navigateToTopicDetail = function(originalIdx) {
+      if (originalIdx === -1) return;
+      switchPage('topics'); // Topicsタブに切り替え
+      showTopicDetailPage(originalIdx); // 対象トピックの詳細ビューを展開
+      document.getElementById('topics').scrollIntoView({ behavior: 'smooth' }); // スムーズスクロール
+    };
+    
     // 💡 修正版：Newsデータを一覧カードグリッドに表示（ロゴ廃止・Papers/Peopleのリンク排除・パース補正版）
     function renderNews(newsList) {
       const container = document.getElementById('news-content');
