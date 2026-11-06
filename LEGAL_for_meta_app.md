@@ -1,0 +1,24 @@
+# Legal Documents (Terms of Service & Privacy Policy)
+
+This document outlines the Terms of Service and Privacy Policy for our Meta Application (automated posting system).
+
+---
+
+## 1. Terms of Service (利用規約)
+
+* **EN:** This application is built solely for the purpose of automatically syncing and posting updates from our laboratory website to our official Facebook/Instagram page. By using or interacting with this system, you agree that it operates automatically to share lab activities. The software is provided "as is", without warranty of any kind, as specified in our MIT License.
+* **JA:** 本アプリケーションは、当研究室のウェブサイトの更新情報を公式Facebook/Instagramページへ自動的に同期・投稿する目的でのみ運用されています。本システムがラボの活動報告を自動投稿することに同意するものとします。本ソフトウェアは、MITライセンスに基づき、明示または黙示の保証なしに「現状のまま」提供されます。
+
+---
+
+## 2. Privacy Policy (プライバシーポリシー)
+
+* **EN:** We care about data privacy. This application only accesses the necessary website content to generate social media posts. We do not collect, harvest, store, or share any personal data of Facebook or Instagram users. 
+* **JA:** 当研究室はデータのプライバシーを重視しています。本アプリケーションは、ソーシャルメディアの投稿を生成するために必要なウェブサイトのコンテンツにのみアクセスします。FacebookまたはInstagramユーザーの個人情報を収集、蓄積、または第三者と共有することは一切ありません。
+
+---
+
+## 3. User Data Deletion (ユーザーデータの削除について)
+
+* **EN:** Since this application does not store, retain, or database any personal user data, there is no data to delete. For any privacy-related inquiries or data requests, please contact us by opening an Issue in this GitHub repository.
+* **JA:** 本アプリケーションはユーザーの個人データを一切蓄積・保持しないため、削除すべきデータは存在しません。プライバシーに関するお問い合わせやデータ削除のご要望は、本GitHubリポジトリのIssue（課題）からご連絡ください。
