@@ -1209,17 +1209,6 @@ body {
   position: relative;
 }
 
-.project-card::before {
-  content: '+';
-  position: absolute;
-  top: 2px;
-  left: 6px;
-  font-family: var(--font-base);
-  font-size: 10px;
-  color: #94a3b8;
-  z-index: 5;
-}
-
 .card-thumbnail {
   width: 100%;
   aspect-ratio: 16 / 9;
