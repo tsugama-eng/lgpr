@@ -2,6 +2,7 @@
   "lastUpdate": "11/07/2026",
   "news": [
     {
+      "id": "2026-12-01-Papers-1",
       "date": "2026-12-01",
       "category": "Papers",
       "title": "Update in Papers",
@@ -11,6 +12,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-10-23-Papers-1",
       "date": "2026-10-23",
       "category": "Papers",
       "title": "Update in Papers",
@@ -20,6 +22,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-10-22-Papers-1",
       "date": "2026-10-22",
       "category": "Papers",
       "title": "Update in Papers",
@@ -29,6 +32,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-10-21-Papers-1",
       "date": "2026-10-21",
       "category": "Papers",
       "title": "Update in Papers",
@@ -38,6 +42,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-10-10-Overseas-1",
       "date": "2026-10-10",
       "category": "Overseas",
       "title": "ICRISAT Visit 2026 / ICRISAT訪問2026",
@@ -47,6 +52,7 @@
       "news_pic": "icrisat2026_gupta.jpg,icrisat2026_main.jpg,Field_Day_2026.jpg,icrisat2026_thumb.jpg"
     },
     {
+      "id": "2026-09-30-People-1",
       "date": "2026-09-30",
       "category": "People",
       "title": "Update in People",
@@ -56,6 +62,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-09-02-Papers-1",
       "date": "2026-09-02",
       "category": "Papers",
       "title": "Update in Papers",
@@ -65,6 +72,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-08-01-Papers-1",
       "date": "2026-08-01",
       "category": "Papers",
       "title": "Update in Papers",
@@ -74,6 +82,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-07-05-Overseas-1",
       "date": "2026-07-05",
       "category": "Overseas",
       "title": "IPB Visit 2026 / ボゴール農科大学訪問2026",
@@ -83,6 +92,7 @@
       "news_pic": "ipb2026_japan.jpg,ipb2026_thumb.jpg,ipb2026_sub.jpg"
     },
     {
+      "id": "2026-05-29-Papers-1",
       "date": "2026-05-29",
       "category": "Papers",
       "title": "Update in Papers",
@@ -92,6 +102,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-05-19-Papers-1",
       "date": "2026-05-19",
       "category": "Papers",
       "title": "Update in Papers",
@@ -101,6 +112,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-05-18-Papers-1",
       "date": "2026-05-18",
       "category": "Papers",
       "title": "Update in Papers",
@@ -110,6 +122,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-05-18-Papers-2",
       "date": "2026-05-18",
       "category": "Papers",
       "title": "Update in Papers",
@@ -119,6 +132,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-03-26-Papers-1",
       "date": "2026-03-26",
       "category": "Papers",
       "title": "Update in Papers",
@@ -128,6 +142,7 @@
       "news_pic": ""
     },
     {
+      "id": "2026-03-01-Papers-1",
       "date": "2026-03-01",
       "category": "Papers",
       "title": "Update in Papers",
@@ -137,6 +152,7 @@
       "news_pic": ""
     },
     {
+      "id": "2025-02-18-Invitation-1",
       "date": "2025-02-18",
       "category": "Invitation",
       "title": "Dr. Shashi Kumar Gupta's Visit to Japan / SKグプタ博士訪日",
@@ -146,6 +162,7 @@
       "news_pic": "gupta2025_isas.jpg,gupta2025_main.jpg,gupta2025_thumb.jpg"
     },
     {
+      "id": "2024-10-20-Invitation-1",
       "date": "2024-10-20",
       "category": "Invitation",
       "title": "Sakura Science Program 2024 / さくらサイエンスプログラム2024",
@@ -155,6 +172,7 @@
       "news_pic": "sakura2024_sub2.jpg,sakura2024_thumb.jpg,sakura2024_sub1.jpg"
     },
     {
+      "id": "2024-10-02-Overseas-1",
       "date": "2024-10-02",
       "category": "Overseas",
       "title": "ICRISAT Visit 2024 / ICRISAT訪問2024",
@@ -164,6 +182,7 @@
       "news_pic": "icrisat2024_thumb.jpg"
     },
     {
+      "id": "2024-05-26-Overseas-1",
       "date": "2024-05-26",
       "category": "Overseas",
       "title": "IPB Visit 2024 / ボゴール農科大学訪問2024",
@@ -173,6 +192,7 @@
       "news_pic": "ipb2024_thumb.jpg,ipb2024_postlecture.jpg,ipb2024_faculty.jpg,ipb2024_division.jpg,ipb2024_editors.jpg,ipb2024_supervision.jpg,ipb2024_ProfSyukur.jpg,ipb2024_FieldVisit.jpg"
     },
     {
+      "id": "2024-03-26-Invitation-1",
       "date": "2024-03-26",
       "category": "Invitation",
       "title": "Dr. Sehnkui Liu's Visit to Japan / 柳参奎先生訪日",
