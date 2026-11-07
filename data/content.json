@@ -4996,7 +4996,7 @@
   ],
   "topics": [
     {
-      "id": "topics-chuma",
+      "id": "chuma",
       "title": "CHUMA: Beyond the Limits<br>限界突破×新マッパー",
       "summary": "A brute-force algorithm for fast, lightweight sequence mapping that goes beyond the application limits / 脳筋アルゴリズムによる高速・軽量マッピングでアプリケーション限界を突破する",
       "body_ja": "次世代シーケンシング (NGS) のためのブラウザアプリケーション群「OWLシリーズ」を完成させる上で、大きなボトルネックとなっていたのが「大量のNGSリードのリファレンス配列へのマッピング」と「任意のタンパク質配列とGOタームとのオンザフライでの紐づけ・エンリッチメント解析」でした。既存のアルゴリズムは、動的計画法や確率計算といった多大な計算資源を消費する処理を必要とするためです。\n私達は、コンピュータ処理において最速・最軽量である「ハッシュルックアップ」と「インクリメント」に着目し、配列マッピングの主要なプロセスをこれらだけで完結させる新アルゴリズム「CHUMA (Character-level Hash-Utilizing Mapping Algorithm)」を構想し、これをNGSリードマッパー兼バリアントコーラーの「CHO-MVC（チョーマヴシー）」、そして高速タンパク質マッパーの「CHOMP（チョンピー）」として実装しました。そして、これらをコアエンジンとすることで上述のボトルネックを克服したブラウザアプリケーション「MCHO-OWL」「GOATER-OWL」を開発しました。これでNGS用OWLシリーズが一応の完成を迎えたことになります。\nアルゴリズムが非常に単純かつ軽量であることからCHUMAの拡張可能性は大きく、(コマンドラインでですが) 計算資源をフル活用した解析高速化や、ブラウザでの高速タンパク質ドメイン・モチーフ同定等への応用も進める予定です。",
@@ -5009,7 +5009,7 @@
       "featured_img": "img/chuma_top.png"
     },
     {
-      "id": "topics-owl",
+      "id": "owl",
       "title": "OWL Tools for NGS<br>OWLでNGS",
       "summary": "Completing NGS data analyses on a web browser / NGSデータ解析をウェブブラウザで完結させる",
       "body_ja": "次世代シーケンシング (next-generation sequencing、NGS) は大量のゲノム・遺伝子配列データを取得する技術であり、大きな応用可能性を有するものの、その解析は「誰もができる」ものではありません。これは、NGSデータ解析ツールの多くが、多くの計算資源を使うことを前提としたコマンドラインインターフェース (CLI) を採用していることによります。グラフィカルユーザーインターフェース (GUI) によるNGSデータ解析プラットフォームも提供されているものの、これはサーバーでCLIを動かすというシステムによるため、ユーザーはデータをサーバーに送信し、サーバーが解析を行うまで順番待ち (queueing) を行う必要があります。これはデータの機密性保持と高速解析とは相容れないものです。\nこの問題を解決するため、私達は、NGSデータ解析用のウェブブラウザアプリケーション群「KINGS-OWL (Kaleidoscopically Integrated NGS Suite On the Web (Lite)」の開発を進めています。「計算量が少ないCLIツールはそのままブラウザ言語 (JavaScript) に移植する」「計算量が多いCLIツールについては計算量削減の可能性を検証し、可能ならそれを実現する」「新たな軽量・高速アルゴリズムを実装する」「複数ツールを統合したインターフェースを作る」という多角的なアプローチを採用しています。開発は、AI援用によるコード生成と、これまでの実験データに基づく検証・デバッギングを繰り返すことにより進めています。「ウェット研究者視点」を反映させ、ウェット実験による証明へとつながる、新たな発見の種（シーズ）を見つけ出し、仮説構築を強く支援できるようなツールにしたいと考えています。",
@@ -5022,7 +5022,7 @@
       "featured_img": "img/owl_top.png"
     },
     {
-      "id": "topics-expression",
+      "id": "expression",
       "title": "Revising Gene Expression Systems<br>遺伝子発現系の総見直し",
       "summary": "Systems biology-based comprehensive revision of gene expression systems for practical applications / システム生物学ベースの遺伝子発現系の全面的見直しと応用",
       "body_ja": "「植物以外で有用性が確認された新規ゲノム編集ツールを植物に適用してみたが、うまくいかなかった」ということが続いたことと「オープンソースの遺伝子発現最適化ツールでよく機能するものが思いのほか少ない」ということに気付いたことから、「既存の遺伝子発現系を全面的に見直そう」という思いに至って始めたプロジェクト。\n「コドン最適化法の見直し・確立」と「強力なプロモーター・ターミネータの同定・合成」が二大テーマでしたが、コドンについては、「単純線形回帰を用いたコドンの遺伝子発現への影響の推定法が、ヒト・マウス等のモデル生物種も含む広範な生物種に普遍的に有効である」という知見を得ることができました。コドンとリボソームとの間の関係についても新知見が得られました。これらの知見に基づきコドン最適化やリボソーム関連データ閲覧を行うためのウェブブラウザアプリケーションであるCOW-ROCを開発しました。これに基づくコドン最適化は大腸菌において特に有効であり、大腸菌での有用タンパク質生産などに応用できると考えています。様々な後続研究を生み出しうるとも考えています。コドン研究の結果は「タンパク質コード配列だけでもmRNA・タンパク質の蓄積量をある程度予測できる」ということを示しており、これを上述の「強力なプロモーター・ターミネータの同定・合成」にも役立てようとしています。",
@@ -5035,7 +5035,7 @@
       "featured_img": ""
     },
     {
-      "id": "topics-transgene",
+      "id": "transgene",
       "title": "Ultra-fast Evaluation of Gene Functions<br>超高速遺伝子機能評価",
       "summary": "Transgene expression systems using linear DNA and cross-kingdom vectors / 線状DNAとクロスキングダムベクターを利用した外来遺伝子発現システム",
       "body_ja": "植物遺伝子の機能を解析する場合も大腸菌 (細菌界) や酵母 (菌界) を用いた実験系は有用であるため、それらの宿主や目的に合った個別のベクターに目的の遺伝子をクローニングする、という作業が従前から頻繁に行われてきています。しかし、これは多大な時間と労力を要し、原因不明の失敗を伴うこともあります。私達は、この過程をバイパスして遺伝子機能評価を高速化することを目的として、「線状DNA (しばしばPCR産物) による外来遺伝子発現系」と「界を超えて外来遺伝子を発現させることを可能にするベクター (クロスキングダムベクター)」の開発に取り組んでいます。これまでに以下の成果を得ており、それらを拡張すると共に、新規ゲノム編集ツールの評価など、実際の外来遺伝子機能評価に適用したいと考えています。\n1. パーティクルガンを利用した、植物細胞における線状DNAからの遺伝子発現誘導系の確立\n(高感度ルシフェラーゼteLucを使えば遺伝子導入操作～シグナル検出まで1.5時間以内に完結!)\n2. 出芽酵母<i>Kluyveromyces lactis</i>の線状DNAによる形質転換系の確立\n3. 植物用プロモーターへの干渉がない小さな (約80 bp) 大腸菌用プロモーター配列の同定",
@@ -5048,7 +5048,7 @@
       "featured_img": "img/transgene_top.avif"
     },
     {
-      "id": "topics-pm",
+      "id": "pm",
       "title": "Pearl Millet Genomics<br>トウジンビエのゲノミクス",
       "summary": "International project to promote pearl millet genomics and breeding / トウジンビエのゲノミクス促進と育種のための国際プロジェクト",
       "body_ja": "トウジンビエ (pearl millet、<i>Cenchrus americanus</i>、<i>Pennisetum glaucum</i>) は、全世界の作物の中でも最強レベルの耐乾性と耐暑性を持ち、インドやアフリカの半乾燥熱帯地域において主食であるチャパティなどの原料として生産される穀物です。インドの国際研究機関である国際半乾燥熱帯作物研究所 (International Crops Research Institute for Semi-Arid Tropics, ICRISAT) とその共同研究者らにより、2017年にトウジンビエの全ゲノム配列 (約1.8 Gb) が解読・公開され (<a target=\"_blank\" href=\"https://doi.org/10.1038/nbt.3943\">Varshney et al., 2017</a>)、その後、更にその配列の精緻化がなされ、これによりトウジンビエのゲノミクス研究も実施しやすくなりました。しかし、これを利用する基盤は盤石とはいえず、トウジンビエの農業形質・ストレス耐性等に関わる具体的な遺伝子が同定・解析された例は未だに少数です。私達は、それを実現して、トウジンビエ育種と作物の耐暑性・耐乾性の理解と改善に寄与することを目標として、ICRISATと共同で以下の研究に取り組んでいます。\n1. ICRISAT由来の育種・生産用品種の農業形質・ストレス耐性の評価\n2. 1の結果に基づくトランスクリプトーム解析 (RNA-seq)・ゲノムワイド関連解析 (GWAS)\n3. GWASの改良のための遺伝子型データ拡充とリファレンスパネルの構築\n4. RNA-seqとGWASで見出された有用遺伝子の候補の機能解析\n5. 高い完熟種子からのカルスを経ての個体再生を再現性良く行うための組織培養系の確立\n6. トウジンビエを中心とする作物の遺伝子アノテーション・発現データベースの構築",
@@ -5061,7 +5061,7 @@
       "featured_img": ""
     },
     {
-      "id": "topics-fm",
+      "id": "fm",
       "title": "Foxtail Millet Genomics<br>アワのゲノミクス",
       "summary": "International project to identify and utilize genes relevant to foxtail millet stress tolerance / アワのストレス耐性に関わる遺伝子を同定・利用するための国際プロジェクト",
       "body_ja": "アワ (foxtail millet、<i>Setaria italica</i> は日本でも古くから食用に栽培されてきた穀物です。現在は食卓に上ることは少ないものの、栄養豊富で、望ましい消化特性も有しています。400 Mb強と比較的小さなゲノムを持ち、その解読が2012年と比較的早く、自殖性も有し、形質転換も可能であるため、雑穀類のモデル植物と見なされています。私達は、インドネシアのボゴール農科大学の共同研究者と共に、インドネシアのアワ品種のストレス耐性等の向上に向けて、以下の研究を行っています。\n1. ストレス耐性等の形質に関連する遺伝子・DNAバリアントの同定\n2. 1に基づくDNAマーカーの作成と育種",
@@ -5074,7 +5074,7 @@
       "featured_img": "img/fm_top.avif"
     },
     {
-      "id": "topics-vip1",
+      "id": "vip1",
       "title": "Characterizing Plant Mechanical Stress Responses<br>植物の機械的ストレス応答の特徴づけ",
       "summary": "Elucidating the mode of action of the Arabidopsis transcription factor VIP1 and its application to crop studies / シロイヌナズナのVIP1という転写因子の作用機序の解明と作物への展開",
       "body_ja": "シロイヌナズナ (<i>Arabidopsis thaliana</i>) は約150 Mbのゲノムを持つモデル植物であり、植物遺伝子の機能の解析のための材料として有用です。私達は、シロイヌナズナの細胞が接触などの機械的なストレスを受けた際にVIP1という転写因子とそれに似たタンパク質 (ホモログ) 群が一過的に細胞核に蓄積することを見出しました。この現象について追究し、「機械的ストレス→カルシウムイオン濃度上昇→PP2A B''サブユニット活性化→PP2AによるVIP1脱リン酸化→VIP1核蓄積→遺伝子発現変化→地上部の機械的ストレス向上・根の接触屈性抑制」というストレス受容から現象までの一連の経路を解明することができました。これにより、この経路と異なる経路による機械的ストレス応答も生じるということもわかりました。麦類を踏むことによりその収量を増大させるという「麦踏み」は機械的ストレス応答の一種であり、これの分析と育種利用可能性の検討などにもVIP1研究で得られた知見を応用したいと考えています。本研究は、韓国・江原大学校 (Kangwon National University) のHyuk Sung Yoon博士と、中国・淅江農林大学 (Zhejiang A & F University) のShenkui Liu博士と共同で行っています。",
@@ -5087,7 +5087,7 @@
       "featured_img": ""
     },
     {
-      "id": "topics-color",
+      "id": "color",
       "title": "Dominant Suppressor of Anthocyanin Accumulation<br>アントシアニンの蓄積抑制因子",
       "summary": "Identifying and utilizing the garden asparagus-derived gene which dominantly suppresses anthocyanin accumulation / アスパラガス由来のアントシアニン蓄積抑制遺伝子を同定し、利用する",
       "body_ja": "アントシアニンは、多くの植物において見られる青・赤・紫色の色素です。私達は、食用アスパラガスの品種においてアントシアニンが蓄積しないものを見出し、これがアントシアニンの合成を強く抑制することによる、ということを見出しました。このような因子に関してはモデル植物においても報告例がなく、植物の着色をより柔軟に制御することを可能にしうるものとして興味深いと考えており、この因子を同定するための研究を行っています。",
@@ -5100,7 +5100,7 @@
       "featured_img": ""
     },
     {
-      "id": "topics-utility",
+      "id": "utility",
       "title": "Utility Tool Development<br>解析・業務補助ツール開発",
       "summary": "Developing utility tools for batch anlayses and daily tasks / バッチ解析や日常業務のための便利ツール開発",
       "body_ja": "AI援用型プログラミングにより、遺伝子配列のバッチ (複数ファイルを用いるなどの) 解析や日常業務を効率化するため、ブラウザで駆動するアプリケーションを開発しています。自分用という側面が強いものの汎用性も重視しています。多くはRESOURCESから直接お使いいただくことができ、ソースファイル (多くはHTML/JavaScript) をダウンロードいただけばオフライン環境でもお使いいただけます。一度ご覧いただけると嬉しいです。",
@@ -5115,7 +5115,7 @@
   ],
   "events": [
     {
-      "id": "events-icrisat2026",
+      "id": "icrisat2026",
       "date": "2026-10-10",
       "category": "Overseas",
       "title": "ICRISAT Visit 2026 / ICRISAT訪問2026",
@@ -5127,7 +5127,7 @@
       "pic_sub": "img/icrisat2026_gupta.jpg"
     },
     {
-      "id": "events-ipb2026",
+      "id": "ipb2026",
       "date": "2026-07-05",
       "category": "Overseas",
       "title": "IPB Visit 2026 / ボゴール農科大学訪問2026",
@@ -5139,7 +5139,7 @@
       "pic_sub": "img/ipb2026_sub.jpg,img/ipb2026_japan.jpg"
     },
     {
-      "id": "events-gupta2025",
+      "id": "gupta2025",
       "date": "2025-02-18",
       "category": "Invitation",
       "title": "Dr. Shashi Kumar Gupta's Visit to Japan / SKグプタ博士訪日",
@@ -5151,7 +5151,7 @@
       "pic_sub": "img/gupta2025_isas.jpg"
     },
     {
-      "id": "events-sakura2024",
+      "id": "sakura2024",
       "date": "2024-10-20",
       "category": "Invitation",
       "title": "Sakura Science Program 2024 / さくらサイエンスプログラム2024",
@@ -5163,7 +5163,7 @@
       "pic_sub": "img/sakura2024_sub1.jpg,img/sakura2024_sub2.jpg"
     },
     {
-      "id": "events-icrisat2024",
+      "id": "icrisat2024",
       "date": "2024-10-02",
       "category": "Overseas",
       "title": "ICRISAT Visit 2024 / ICRISAT訪問2024",
@@ -5175,7 +5175,7 @@
       "pic_sub": "img/icrisat2024_seminar.jpg"
     },
     {
-      "id": "events-ipb2024",
+      "id": "ipb2024",
       "date": "2024-05-26",
       "category": "Overseas",
       "title": "IPB Visit 2024 / ボゴール農科大学訪問2024",
@@ -5187,7 +5187,7 @@
       "pic_sub": "img/ipb2024_faculty.jpg,img/ipb2024_division.jpg,img/ipb2024_editors.jpg,img/ipb2024_supervision.jpg,img/ipb2024_ProfSyukur.jpg,img/ipb2024_FieldVisit.jpg"
     },
     {
-      "id": "events-liu2024",
+      "id": "liu2024",
       "date": "2024-03-26",
       "category": "Invitation",
       "title": "Dr. Sehnkui Liu's Visit to Japan / 柳参奎先生訪日",
