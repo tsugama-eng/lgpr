@@ -1328,7 +1328,7 @@
           const newsImagesArray = n.news_pic.split(',').map(name => name.trim()).filter(name => name !== '');
           
           if (newsImagesArray.length > 0) {
-            newsImgsHtml = '<div class="detail-sub-image-gallery" style="margin-top: 25px; border-top: 1px dashed #e2e8f0; padding-top: 20px;">';
+            newsImgsHtml = '<div class="detail-sub-image-gallery" style="margin-top: 20px;">';
             newsImagesArray.forEach(fileName => {
               // 💡 GAS側の仕様変更により、すでに「img/ファイル名」としてJSONに入っているためそのままパスを結合
               const imgSrc = fileName.startsWith('img/') ? fileName : 'img/' + fileName;
