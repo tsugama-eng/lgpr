@@ -719,17 +719,34 @@
       }
     }
 
-    // 💡URLのハッシュを見て、正しいページを開くための新しい関数
     function handleHashChange() {
-      // "#papers" から "#" を除いた "papers" を取得。無ければデフォルトの "top"
-      const hash = window.location.hash.replace('#', '') || 'top';
+      let hash = window.location.hash.replace('#', '') || 'top';
+      let detailId = null;
+
+      // URLに「-」が含まれていたら、タブIDと詳細IDに切り分ける
+      if (hash.includes('-')) {
+        const parts = hash.split('-');
+        hash = parts[0];       // 例: "news"
+        detailId = parts[1];   // 例: "20261107-1" などの固有ID
+      }
   
-      // 存在するIDであれば、既存の切り替え処理を実行
       const targetPage = document.getElementById(hash);
       if (targetPage && targetPage.classList.contains('detail')) {
-        switchPage(hash);
+        switchPage(hash); // 該当のタブを開く
+
+        // 💡 詳細IDがあれば、一元化されたデータからfindして詳細画面を展開
+        if (detailId) {
+          if (hash === 'topics') {
+            showTopicDetailPage(detailId);
+          } else if (hash === 'events') {
+            showEventDetailPage(detailId);
+          } else if (hash === 'news') {
+            showNewsDetailPage(detailId); // 👈 Newsも全く同じルールで呼び出せる
+          }
+        }
       }
     }
+
 
     // 1. 各論文の著者立ち位置を判定する関数
     function checkAuthorStatus(paper) {
@@ -1250,13 +1267,13 @@
 
     // 💡 追加：画像クリック時にトピックタブの詳細画面へ直接ワープさせるジャンプ関数
     window.navigateToTopicDetail = function(originalIdx) {
-      if (originalIdx === -1) return;
-      switchPage('topics'); // Topicsタブに切り替え
-      showTopicDetailPage(originalIdx); // 対象トピックの詳細ビューを展開
-      document.getElementById('topics').scrollIntoView({ behavior: 'smooth' }); // スムーズスクロール
+      const t = globalTopicsData[originalIdx];
+      if (!t || !t.id) return;
+      // URLを「#topics-固有ID」に変更する
+      window.location.hash = `topics-${t.id}`;
     };
     
-    // 💡 修正版：Newsデータを一覧カードグリッドに表示（ロゴ廃止・Papers/Peopleのリンク排除・パース補正版）
+    // 💡 Newsデータを一覧カードグリッドに表示（ロゴ廃止・Papers/Peopleのリンク排除・パース補正版）
     function renderNews(newsList) {
       const container = document.getElementById('news-content');
       if (!container) return;
@@ -1272,7 +1289,7 @@
         const catLower = cat.toLowerCase();
         
         const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
-        const clickAttribute = isClickable ? `onclick="showNewsDetailPage(${idx})"` : "";
+        const clickAttribute = isClickable ? `onclick="showNewsDetailPage('${n.id}')"` : "";
         const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
         // const colorStyle = isClickable ? "color: #2C6B37;" : "color: #000;";
         const colorStyle = isClickable ? "color: #000;" : "color: #000;";
@@ -1325,14 +1342,16 @@
       });
     }
 
-    // 💡 Newsの通常ページ風・詳細画面の表示処理（Clickableなカテゴリのみ遷移）
-    // 💡 修正版：News詳細画面で「sns」列の画像を遅延読み込み(Lazy Loading)で下に並べる処理
-    window.showNewsDetailPage = function(idx) {
-      const n = window.globalNewsData[idx];
+    // 💡 修正版：News詳細画面で「news_pic」列の画像を遅延読み込み(Lazy Loading)で下に並べる処理
+    window.showNewsDetailPage = function(newsId) { // 引数を id に変更
+      // 💡 グローバル配列から該当するIDのニュースを検索
+      const n = window.globalNewsData.find(item => String(item.id) === String(newsId));
+      if (!n) return;
+
       const listView = document.getElementById('news-list-view');
       const detailView = document.getElementById('news-detail-page');
 
-      const bodyText = (currentLang === 'ja') ? (n.body_ja || n.summary) : (`${n.body_en}<br><br>${n.body_ja}` || n.summary);
+      const bodyText = (currentLang === 'ja') ? (n.body_ja || n.summary) : (`${n.body_en}<br>${n.body_ja}` || n.summary);
 
       // ==========================================================================
       // 💡 拡張機能：Events由来（またはsns列に画像が指定されている場合）の複数画像レイアウト
@@ -1441,11 +1460,11 @@
       });
     }
 
-    // 🔥 Topページの簡易ニュースをクリックした時に、Newsタブの詳細画面へ直接ワープさせる関数
-    window.navigateToNewsDetail = function(idx) {
-      switchPage('news'); // Newsタブに切り替え
-      showNewsDetailPage(idx); // 詳細ビューを展開
-      document.getElementById('news').scrollIntoView({ behavior: 'smooth' }); // スムーズスクロール
+    // TOPページの簡易ニュースからのジャンプ関数
+    window.navigateToNewsDetail = function(originalIdx) {
+      const n = window.globalNewsData[originalIdx];
+      if (!n || !n.id) return;
+      window.location.hash = `news-${n.id}`; // 👈 URLを書き換えるだけで、あとはhandleHashChangeが自動処理してくれます
     };
     
     // 各種ヘルパー関数群
