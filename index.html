@@ -787,13 +787,13 @@
         return;
       }
 
-      topics.forEach((t, idx) => {
+      topics.forEach((t) => {
         const title = t.title || "No Title";
         const summary = t.summary || ""; 
         const imgSrc = t.pic_thumb || t.pic_main || t.pic_sub || "Turnip.jpg";
 
         container.innerHTML += `
-          <div class="project-card clickable" onclick="showTopicDetailPage(${idx})">
+          <div class="project-card clickable" onclick="showTopicDetailPage('${t.id}')">
             <img loading="lazy" src="${imgSrc}" class="card-thumbnail" alt="Topic Thumbnail">
             <div class="card-content">
               <h3 class="card-title">${title}</h3>
@@ -814,13 +814,13 @@
         return;
       }
 
-      events.forEach((e, idx) => {
+      events.forEach((e) => {
         const title = e.title || "No Title";
         const summary = e.summary || "";
         const imgSrc = e.pic_thumb || e.pic_main || e.pic_sub || "Turnip.jpg";
 
         container.innerHTML += `
-          <div class="project-card clickable" onclick="showEventDetailPage(${idx})">
+          <div class="project-card clickable" onclick="showEventDetailPage('${e.id}')">
             <img loading="lazy" src="${imgSrc}" class="card-thumbnail" alt="Event Thumbnail">
             <div class="card-content">
               <h3 class="card-title">${title}</h3>
@@ -836,8 +836,11 @@
     }
 
     // 💡 修正：Topics詳細（メイン画像全体表示＆サムネ使い回し排除版）
-    window.showTopicDetailPage = function(idx) {
-      const t = globalTopicsData[idx];
+    window.showTopicDetailPage = function(topicId) { // 引数を id に
+      // 💡 配列の中から id が一致するデータを1行で検索
+      const t = globalTopicsData.find(item => String(item.id) === String(topicId));
+      if (!t) return; // 見つからなければ処理しない
+
       const listView = document.getElementById('topics-list-view');
       const detailView = document.getElementById('topics-detail-page');
       
@@ -910,8 +913,10 @@
     };
 
     // 💡 修正：Events詳細（メイン画像全体表示＆サムネ使い回し排除版）
-    window.showEventDetailPage = function(idx) {
-      const e = globalEventsData[idx];
+    window.showEventDetailPage = function(eventId) {
+      const e = globalEventsData.find(item => String(item.id) === String(eventId));
+      if (!e) return; // 見つからなければ処理しない
+
       const listView = document.getElementById('events-list-view');
       const detailView = document.getElementById('events-detail-page');
 
