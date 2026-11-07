@@ -1270,7 +1270,7 @@
       const t = globalTopicsData[originalIdx];
       if (!t || !t.id) return;
       // URLを「#topics-固有ID」に変更する
-      window.location.hash = `topics-${t.id}`;
+      window.location.hash = `${t.id}`;
     };
     
     // 💡 Newsデータを一覧カードグリッドに表示（ロゴ廃止・Papers/Peopleのリンク排除・パース補正版）
