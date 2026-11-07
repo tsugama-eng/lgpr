@@ -1316,30 +1316,30 @@
       // ==========================================================================
       // 💡 拡張機能：Events由来（またはsns列に画像が指定されている場合）の複数画像レイアウト
       // ==========================================================================
-      let snsImgsHtml = '';
+      let newsImgsHtml = '';
       const catLower = (n.category || "").toLowerCase().trim();
       
       // sns列にデータがあり、かつ除外キーワード（yes, y, no, n）ではない場合は画像名として扱う
-      if (n.sns && n.sns.trim() !== '') {
-        const snsValLower = n.sns.toLowerCase().trim();
-        if (snsValLower !== 'yes' && snsValLower !== 'y' && snsValLower !== 'no' && snsValLower !== 'n') {
+      if (n.news_pic && n.news_pic.trim() !== '') {
+        const newsPicValLower = n.news_pic.toLowerCase().trim();
+        if (newsPicValLower !== 'yes' && newsPicValLower !== 'y' && newsPicValLower !== 'no' && newsPicValLower !== 'n') {
           
           // コンマ区切りで複数指定されているケースに対応して配列化
-          const snsImagesArray = n.sns.split(',').map(name => name.trim()).filter(name => name !== '');
+          const newsImagesArray = n.news_pic.split(',').map(name => name.trim()).filter(name => name !== '');
           
-          if (snsImagesArray.length > 0) {
-            snsImgsHtml = '<div class="detail-sub-image-gallery" style="margin-top: 25px; border-top: 1px dashed #e2e8f0; padding-top: 20px;">';
-            snsImagesArray.forEach(fileName => {
+          if (newsImagesArray.length > 0) {
+            newsImgsHtml = '<div class="detail-sub-image-gallery" style="margin-top: 25px; border-top: 1px dashed #e2e8f0; padding-top: 20px;">';
+            newsImagesArray.forEach(fileName => {
               // 💡 GAS側の仕様変更により、すでに「img/ファイル名」としてJSONに入っているためそのままパスを結合
               const imgSrc = fileName.startsWith('img/') ? fileName : 'img/' + fileName;
               
               // 💡 速度対策：loading="lazy" を付与し、画面にスクロールされるまで画像のダウンロードを保留する超軽量化
-              snsImgsHtml += `
+              newsImgsHtml += `
                 <a target="_blank" href="${imgSrc}" class="sub-gallery-img-link">
                   <img src="${imgSrc}" alt="SNS Image" loading="lazy" style="width:100%; height:auto; object-fit:cover; display:block;">
                 </a>`;
             });
-            snsImgsHtml += '</div>';
+            newsImgsHtml += '</div>';
           }
         }
       }
@@ -1354,7 +1354,7 @@
             <span class="category-badge" style="color:#2C6B37; border-color:#2C6B37; background:#f1f5f9;">${n.category || 'General'}</span>
           </div>
           <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
-          ${snsImgsHtml} 
+          ${newsImgsHtml} 
         </div>
       `;
 
