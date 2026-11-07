@@ -1464,7 +1464,7 @@
     window.navigateToNewsDetail = function(originalIdx) {
       const n = window.globalNewsData[originalIdx];
       if (!n || !n.id) return;
-      window.location.hash = `news-${n.id}`; // 👈 URLを書き換えるだけで、あとはhandleHashChangeが自動処理してくれます
+      window.location.hash = `${n.id}`; // 👈 URLを書き換えるだけで、あとはhandleHashChangeが自動処理してくれます
     };
     
     // 各種ヘルパー関数群
