@@ -1288,7 +1288,7 @@
         const catLower = cat.toLowerCase();
         
         const isClickable = !(catLower.includes("paper") || catLower.includes("people"));
-        const clickAttribute = isClickable ? `onclick="showNewsDetailPage('${n.id}')"` : "";
+        const clickAttribute = isClickable ? `onclick="window.location.hash = 'news-${n.id}'"` : "";
         const cursorStyle = isClickable ? "cursor: pointer;" : "cursor: default;";
         // const colorStyle = isClickable ? "color: #2C6B37;" : "color: #000;";
         const colorStyle = isClickable ? "color: #000;" : "color: #000;";
@@ -1463,7 +1463,7 @@
     window.navigateToNewsDetail = function(originalIdx) {
       const n = window.globalNewsData[originalIdx];
       if (!n || !n.id) return;
-      // 💡 URLのハッシュを「#news-固有ID」または「#固有ID」の形にしてhandleHashChangeに渡す
+      // 💡 変更点：余計な遅延や割り込みをせず、URLのハッシュを書き換えるだけに統一（これで完璧に動作します）
       window.location.hash = `news-${n.id}`;
     };
     
