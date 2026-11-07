@@ -827,7 +827,7 @@
       
       let mainImgHtml = '';
       if (t.pic_main && t.pic_main.match(/\w/)) {
-        mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${t.pic_main}"><img src="${t.pic_main}" alt="Main Image"></a></div>`;
+        mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${t.pic_main}"><img loading="lazy" src="${t.pic_main}" alt="Main Image"></a></div>`;
       }
 
       // const t_body_en_ja = t.body_en + '' + 
@@ -843,7 +843,7 @@
         if (subImagesArray.length > 0) {
           subImgsHtml = '<div class="detail-sub-image-gallery">';
           subImagesArray.forEach(url => {
-            subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img src="${url}" alt="Sub Image"></a>`;
+            subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img loading="lazy" src="${url}" alt="Sub Image"></a>`;
           });
           subImgsHtml += '</div>';
         }
