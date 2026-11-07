@@ -1305,12 +1305,45 @@
     }
 
     // 💡 Newsの通常ページ風・詳細画面の表示処理（Clickableなカテゴリのみ遷移）
+    // 💡 修正版：News詳細画面で「sns」列の画像を遅延読み込み(Lazy Loading)で下に並べる処理
     window.showNewsDetailPage = function(idx) {
       const n = window.globalNewsData[idx];
       const listView = document.getElementById('news-list-view');
       const detailView = document.getElementById('news-detail-page');
 
-      const bodyText = (currentLang === 'ja') ? (n.body_ja || n.summary) : (`${n.body_en}<br>${n.body_ja}` || n.summary);
+      const bodyText = (currentLang === 'ja') ? (n.body_ja || n.summary) : (`${n.body_en}<br><br>${n.body_ja}` || n.summary);
+
+      // ==========================================================================
+      // 💡 拡張機能：Events由来（またはsns列に画像が指定されている場合）の複数画像レイアウト
+      // ==========================================================================
+      let snsImgsHtml = '';
+      const catLower = (n.category || "").toLowerCase().trim();
+      
+      // sns列にデータがあり、かつ除外キーワード（yes, y, no, n）ではない場合は画像名として扱う
+      if (n.sns && n.sns.trim() !== '') {
+        const snsValLower = n.sns.toLowerCase().trim();
+        if (snsValLower !== 'yes' && snsValLower !== 'y' && snsValLower !== 'no' && snsValLower !== 'n') {
+          
+          // コンマ区切りで複数指定されているケースに対応して配列化
+          const snsImagesArray = n.sns.split(',').map(name => name.trim()).filter(name => name !== '');
+          
+          if (snsImagesArray.length > 0) {
+            snsImgsHtml = '<div class="detail-sub-image-gallery" style="margin-top: 25px; border-top: 1px dashed #e2e8f0; padding-top: 20px;">';
+            snsImagesArray.forEach(fileName => {
+              // 💡 GAS側の仕様変更により、すでに「img/ファイル名」としてJSONに入っているためそのままパスを結合
+              const imgSrc = fileName.startsWith('img/') ? fileName : 'img/' + fileName;
+              
+              // 💡 速度対策：loading="lazy" を付与し、画面にスクロールされるまで画像のダウンロードを保留する超軽量化
+              snsImgsHtml += `
+                <a target="_blank" href="${imgSrc}" class="sub-gallery-img-link">
+                  <img src="${imgSrc}" alt="SNS Image" loading="lazy" style="width:100%; height:auto; object-fit:cover; display:block;">
+                </a>`;
+            });
+            snsImgsHtml += '</div>';
+          }
+        }
+      }
+      // ==========================================================================
 
       detailView.innerHTML = `
         <div class="detail-page-view">
@@ -1320,7 +1353,8 @@
             <span class="date-badge">${n.date || ''}</span>
             <span class="category-badge" style="color:#2C6B37; border-color:#2C6B37; background:#f1f5f9;">${n.category || 'General'}</span>
           </div>
-          <div class="detail-page-text"><p>${bodyText}</p></div>
+          <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
+          ${snsImgsHtml} 
         </div>
       `;
 
