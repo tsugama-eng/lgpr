@@ -778,7 +778,7 @@
 
         container.innerHTML += `
           <div class="project-card clickable" onclick="showTopicDetailPage(${idx})">
-            <img src="${imgSrc}" class="card-thumbnail" alt="Topic Thumbnail">
+            <img loading="lazy" src="${imgSrc}" class="card-thumbnail" alt="Topic Thumbnail">
             <div class="card-content">
               <h3 class="card-title">${title}</h3>
               <p class="card-summary">${summary}</p>
@@ -805,7 +805,7 @@
 
         container.innerHTML += `
           <div class="project-card clickable" onclick="showEventDetailPage(${idx})">
-            <img src="${imgSrc}" class="card-thumbnail" alt="Event Thumbnail">
+            <img loading="lazy" src="${imgSrc}" class="card-thumbnail" alt="Event Thumbnail">
             <div class="card-content">
               <h3 class="card-title">${title}</h3>
               <div class="card-meta">
