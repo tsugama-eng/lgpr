@@ -689,17 +689,12 @@
 
     // 💡 修正：メニュークリック時に詳細画面をリセットして一覧（List View）に戻す
     function switchPage(pageId) {
-      // 💡 詳細画面が開いているURL（#topics-xxxなど）の時は、手動でハッシュを上書きしないように判定を追加
-      if (window.location.hash !== '#' + pageId && !window.location.hash.startsWith('#' + pageId + '-')) {
-        window.location.hash = pageId;
-      }
-      
       const pages = document.querySelectorAll('.detail');
       pages.forEach(page => page.style.display = 'none');
 
       const targetPage = document.getElementById(pageId);
       if (targetPage) targetPage.style.display = 'block';
-  　　
+  
       const menuLinks = document.querySelectorAll('.menu a');
       menuLinks.forEach(link => link.classList.remove('current'));
 
@@ -709,7 +704,7 @@
       // 詳細表示をリセット
       if (pageId === 'topics') hideTopicDetailPage();
       if (pageId === 'events') hideEventDetailPage();
-      if (pageId === 'news')   hideNewsDetailPage(); // 💡追記
+      if (pageId === 'news')   hideNewsDetailPage();
 
       if (pageId === 'papers') {
         if (!isPapersDashboardRendered && globalPapersData.length > 0) {
@@ -724,25 +719,21 @@
       let hash = window.location.hash.replace('#', '') || 'top';
       let detailId = null;
 
-      // 💡 NewsのID（2026-11-07-Events-1など）にハイフンが含まれるため、最初のハイフンでタブとIDに切り分ける
+      // URLに「-」が含まれていたら、タブIDと詳細IDに切り分ける
       if (hash.includes('-') && !hash.startsWith('20')) { 
-        // topics-xxx や events-xxx のパターン
         const firstDashIdx = hash.indexOf('-');
         detailId = hash.substring(firstDashIdx + 1);
         hash = hash.substring(0, firstDashIdx);
       } else if (hash.startsWith('20')) {
-        // 💡 Newsの固有ID（日付スタート）が直接URLに入った場合の対応
         detailId = hash;
         hash = 'news';
       }
   
       const targetPage = document.getElementById(hash);
       if (targetPage && targetPage.classList.contains('detail')) {
-        // switchPageの無限ループを防ぐため、一時的にhashchangeイベントを外して切り替える
-        window.removeEventListener('hashchange', handleHashChange);
-        switchPage(hash);
-        window.addEventListener('hashchange', handleHashChange);
+        switchPage(hash); // 該当のタブ（一覧）を開く
 
+        // 詳細IDがあれば、詳細画面を割り込み展開する
         if (detailId) {
           if (hash === 'topics') {
             showTopicDetailPage(detailId);
@@ -817,7 +808,8 @@
         const imgSrc = t.pic_thumb || t.pic_main || t.pic_sub || "Turnip.jpg";
 
         container.innerHTML += `
-          <div class="project-card clickable" onclick="showTopicDetailPage('${t.id}')">
+          <!-- 💡 変更：onclickで直接関数を呼ばず、URLのハッシュを書き換えるだけにする -->
+          <div class="project-card clickable" onclick="window.location.hash = 'topics-${t.id}'">
             <img loading="lazy" src="${imgSrc}" class="card-thumbnail" alt="Topic Thumbnail">
             <div class="card-content">
               <h3 class="card-title">${title}</h3>
@@ -844,7 +836,8 @@
         const imgSrc = e.pic_thumb || e.pic_main || e.pic_sub || "Turnip.jpg";
 
         container.innerHTML += `
-          <div class="project-card clickable" onclick="showEventDetailPage('${e.id}')">
+          <!-- 💡 変更：onclickで直接関数を呼ばず、URLのハッシュを書き換えるだけにする -->
+          <div class="project-card clickable" onclick="window.location.hash = 'events-${e.id}'">
             <img loading="lazy" src="${imgSrc}" class="card-thumbnail" alt="Event Thumbnail">
             <div class="card-content">
               <h3 class="card-title">${title}</h3>
@@ -918,7 +911,7 @@
 
       detailView.innerHTML = `
         <div class="detail-page-view">
-          <button class="detail-page-back-btn" onclick="hideTopicDetailPage()" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 0px;">&larr; Back to List</button>
+          <button class="detail-page-back-btn" onclick="window.location.hash = 'topics'" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 0px;">&larr; Back to List</button>
           <h2 style="margin-top:0; padding-bottom:10px; margin-bottom:20px; font-size:1.5rem;">${t.title || ''}</h2>
           ${mainImgHtml}
           <div class="detail-page-text"><p style="white-space:pre-wrap;">${bodyText}</p></div>
@@ -966,7 +959,7 @@
 
       detailView.innerHTML = `
         <div class="detail-page-view">
-          <button class="detail-page-back-btn" onclick="hideEventDetailPage()" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 0px;">&larr; Back to List</button>
+          <button class="detail-page-back-btn" onclick="window.location.hash = 'events'" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 0px;">&larr; Back to List</button>
           <h2 style="margin-top:0; padding-bottom:10px; margin-bottom:10px; font-size:1.5rem;">${e.title || ''}</h2>
           <div class="card-meta" style="margin-bottom:20px;">
             <span class="date-badge">${e.date || ''}</span>
@@ -1393,7 +1386,7 @@
 
       detailView.innerHTML = `
         <div class="detail-page-view">
-          <button class="detail-page-back-btn" onclick="hideNewsDetailPage()" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 0px;">&larr; Back to List</button>
+          <button class="detail-page-back-btn" onclick="window.location.hash = 'news'" style="border: none; background-color: #ffffff; color: #000; font-weight: bold; text-decoration: underline; cursor: pointer; padding: 8px 0px;">&larr; Back to List</button>
           <h2 style="margin-top:0; padding-bottom:10px; margin-bottom:15px; font-size:1.5rem;">${n.title || ''}</h2>
           <div class="card-meta" style="margin-bottom:20px;">
             <span class="date-badge">${n.date || ''}</span>
