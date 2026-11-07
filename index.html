@@ -689,7 +689,8 @@
 
     // 💡 修正：メニュークリック時に詳細画面をリセットして一覧（List View）に戻す
     function switchPage(pageId) {
-      if (window.location.hash !== '#' + pageId) {
+      // 💡 詳細画面が開いているURL（#topics-xxxなど）の時は、手動でハッシュを上書きしないように判定を追加
+      if (window.location.hash !== '#' + pageId && !window.location.hash.startsWith('#' + pageId + '-')) {
         window.location.hash = pageId;
       }
       
@@ -723,30 +724,36 @@
       let hash = window.location.hash.replace('#', '') || 'top';
       let detailId = null;
 
-      // URLに「-」が含まれていたら、タブIDと詳細IDに切り分ける
-      if (hash.includes('-')) {
-        const parts = hash.split('-');
-        hash = parts[0];       // 例: "news"
-        detailId = parts[1];   // 例: "20261107-1" などの固有ID
+      // 💡 NewsのID（2026-11-07-Events-1など）にハイフンが含まれるため、最初のハイフンでタブとIDに切り分ける
+      if (hash.includes('-') && !hash.startsWith('20')) { 
+        // topics-xxx や events-xxx のパターン
+        const firstDashIdx = hash.indexOf('-');
+        detailId = hash.substring(firstDashIdx + 1);
+        hash = hash.substring(0, firstDashIdx);
+      } else if (hash.startsWith('20')) {
+        // 💡 Newsの固有ID（日付スタート）が直接URLに入った場合の対応
+        detailId = hash;
+        hash = 'news';
       }
   
       const targetPage = document.getElementById(hash);
       if (targetPage && targetPage.classList.contains('detail')) {
-        switchPage(hash); // 該当のタブを開く
+        // switchPageの無限ループを防ぐため、一時的にhashchangeイベントを外して切り替える
+        window.removeEventListener('hashchange', handleHashChange);
+        switchPage(hash);
+        window.addEventListener('hashchange', handleHashChange);
 
-        // 💡 詳細IDがあれば、一元化されたデータからfindして詳細画面を展開
         if (detailId) {
           if (hash === 'topics') {
             showTopicDetailPage(detailId);
           } else if (hash === 'events') {
             showEventDetailPage(detailId);
           } else if (hash === 'news') {
-            showNewsDetailPage(detailId); // 👈 Newsも全く同じルールで呼び出せる
+            showNewsDetailPage(detailId);
           }
         }
       }
     }
-
 
     // 1. 各論文の著者立ち位置を判定する関数
     function checkAuthorStatus(paper) {
@@ -1265,12 +1272,11 @@
       });
     }
 
-    // 💡 追加：画像クリック時にトピックタブの詳細画面へ直接ワープさせるジャンプ関数
     window.navigateToTopicDetail = function(originalIdx) {
       const t = globalTopicsData[originalIdx];
       if (!t || !t.id) return;
-      // URLを「#topics-固有ID」に変更する
-      window.location.hash = `${t.id}`;
+      // 💡 URLのハッシュを「#topics-固有ID」の形式に修正
+      window.location.hash = `topics-${t.id}`;
     };
     
     // 💡 Newsデータを一覧カードグリッドに表示（ロゴ廃止・Papers/Peopleのリンク排除・パース補正版）
@@ -1464,7 +1470,8 @@
     window.navigateToNewsDetail = function(originalIdx) {
       const n = window.globalNewsData[originalIdx];
       if (!n || !n.id) return;
-      window.location.hash = `${n.id}`; // 👈 URLを書き換えるだけで、あとはhandleHashChangeが自動処理してくれます
+      // 💡 URLのハッシュを「#news-固有ID」または「#固有ID」の形にしてhandleHashChangeに渡す
+      window.location.hash = `news-${n.id}`;
     };
     
     // 各種ヘルパー関数群
