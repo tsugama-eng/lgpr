@@ -689,6 +689,10 @@
 
     // 💡 修正：メニュークリック時に詳細画面をリセットして一覧（List View）に戻す
     function switchPage(pageId) {
+      if (window.location.hash !== '#' + pageId) {
+        window.location.hash = pageId;
+      }
+      
       const pages = document.querySelectorAll('.detail');
       pages.forEach(page => page.style.display = 'none');
 
@@ -712,6 +716,18 @@
           isPapersDashboardRendered = true;
         }
         setTimeout(() => { if(currentNetwork) currentNetwork.fit(); }, 200);
+      }
+    }
+
+    // 💡URLのハッシュを見て、正しいページを開くための新しい関数
+    function handleHashChange() {
+      // "#papers" から "#" を除いた "papers" を取得。無ければデフォルトの "top"
+      const hash = window.location.hash.replace('#', '') || 'top';
+  
+      // 存在するIDであれば、既存の切り替え処理を実行
+      const targetPage = document.getElementById(hash);
+      if (targetPage && targetPage.classList.contains('detail')) {
+        switchPage(hash);
       }
     }
 
@@ -1611,7 +1627,15 @@
       }).join('');
     }
     
-    window.onload = loadLabData;
+    // 💡イベントリスナーの形式に変更して初期化処理を拡張
+    window.addEventListener('DOMContentLoaded', async () => {
+      // 1. まずデータをすべてロードする
+      await loadLabData();
+        // 2. ロード完了後、URLのハッシュをチェックして該当ページを表示する
+      handleHashChange();
+    });
+    // 💡ブラウザの「戻る」「進む」ボタンや、URLの直接書き換えに対応するイベントを追加
+    window.addEventListener('hashchange', handleHashChange);
     
   </script>
 </body>
