@@ -901,7 +901,7 @@
 
       let mainImgHtml = '';
       if (e.pic_main && e.pic_main.match(/\w/)) {
-        mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${e.pic_main}"><img src="${e.pic_main}"></a></div>`;
+        mainImgHtml = `<div class="detail-page-main-image-wrapper"><a target="_blank" href="${e.pic_main}"><img loading="lazy" src="${e.pic_main}"></a></div>`;
       }
 
       const bodyText = (currentLang === 'ja') ? (e.body_ja || e.summary) : (`${e.body_en}<br><br>${e.body_ja}` || e.summary);
@@ -913,7 +913,7 @@
         if (subImagesArray.length > 0) {
           subImgsHtml = '<div class="detail-sub-image-gallery">';
           subImagesArray.forEach(url => {
-            subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img src="${url}"></a>`;
+            subImgsHtml += `<a target="_blank" href="${url}" class="sub-gallery-img-link"><img loading="lazy" src="${url}"></a>`;
           });
           subImgsHtml += '</div>';
         }
