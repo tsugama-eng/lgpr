@@ -319,6 +319,34 @@
       display: block;
     }
     
+    .social-icons {
+      text-align: center;
+      margin-top: 15px; /* 上の文字との間に少し余白を作ります */
+    }
+    
+    .social-icons a {
+      display: inline-block; /* 浮き上がるアニメーション(transform)を正常に動かすために必要 */
+      color: #555;
+      font-size: 2rem; /* サイズ調整 */
+      margin: 0 12px;
+      transition: all 0.2s ease;
+      line-height: 1;
+    }
+    
+    /* SVGアイコンそのものの大きさや色をaタグに連動させる設定 */
+    .social-icons a svg {
+      width: 1em;
+      height: 1em;
+      fill: currentColor; /* これにより、aタグのcolor（#555や#2C6B37）がそのままSVGの色になります */
+      vertical-align: middle;
+    }
+    
+    /* ホバー時の挙動 */
+    .social-icons a:hover {
+      color: #2C6B37; /* フォレストグリーン */
+      transform: translateY(-4px); /* -2pxから-4pxにすると、より「浮いた感」がはっきり出ておすすめです */
+    }
+    
   </style>
 </head>
 
