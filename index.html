@@ -319,32 +319,33 @@
       display: block;
     }
     
-    .social-icons {
-      text-align: center;
-      margin-top: 15px; /* 上の文字との間に少し余白を作ります */
+    /* 親要素からしっかり指定して、他のCSSに負けないようにします */
+    div.social-icons {
+      text-align: center !important;
+      margin-top: 15px !important;
     }
     
-    .social-icons a {
-      display: inline-block; /* 浮き上がるアニメーション(transform)を正常に動かすために必要 */
-      color: #555;
-      font-size: 2rem; /* サイズ調整 */
-      margin: 0 12px;
-      transition: all 0.2s ease;
-      line-height: 1;
+    div.social-icons a {
+      display: inline-block !important;
+      color: #555555 !important; /* 初期の色（グレー） */
+      margin: 0 12px !important;
+      transition: transform 0.2s ease, color 0.2s ease !important;
+      line-height: 1 !important;
+      text-decoration: none !important;
     }
     
-    /* SVGアイコンそのものの大きさや色をaタグに連動させる設定 */
-    .social-icons a svg {
-      width: 1em;
-      height: 1em;
-      fill: currentColor; /* これにより、aタグのcolor（#555や#2C6B37）がそのままSVGの色になります */
-      vertical-align: middle;
+    div.social-icons a svg {
+      width: 28px !important;
+      height: 28px !important;
+      fill: currentColor !important; /* これでaタグのcolorがSVGに強制適用されます */
+      vertical-align: middle !important;
+      pointer-events: none; /* マウスの反応をaタグに集中させます */
     }
     
-    /* ホバー時の挙動 */
-    .social-icons a:hover {
-      color: #2C6B37; /* フォレストグリーン */
-      transform: translateY(-4px); /* -2pxから-4pxにすると、より「浮いた感」がはっきり出ておすすめです */
+    /* 🔥 ホバー時の設定（!important で絶対に上書きします） */
+    div.social-icons a:hover {
+      color: #2C6B37 !important; /* フォレストグリーン */
+      transform: translateY(-4px) !important; /* 上に4px浮く */
     }
     
   </style>
