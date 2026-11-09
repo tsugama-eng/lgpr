@@ -319,6 +319,13 @@
       display: block;
     }
     
+    .social-icons {
+        display:flex;
+        justify-content:center;
+        gap:24px;
+        flex-wrap:wrap;
+    }
+    
     /* 親要素からしっかり指定して、他のCSSに負けないようにします */
     div.social-icons {
       text-align: center !important;
@@ -335,8 +342,8 @@
     }
     
     div.social-icons a svg {
-      width: 28px !important;
-      height: 28px !important;
+      width: 40px !important;
+      height: 40px !important;
       fill: currentColor !important; /* これでaタグのcolorがSVGに強制適用されます */
       vertical-align: middle !important;
       pointer-events: none; /* マウスの反応をaタグに集中させます */
