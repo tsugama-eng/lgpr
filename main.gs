@@ -1956,3 +1956,88 @@ function testLinkedInWebhook() {
     res.getContentText()
   );
 }
+
+function sendSnsLinksEmail() {
+  const props = PropertiesService.getScriptProperties().getProperties();
+  const ssId = props['HP_SS_ID'];
+  
+  if (!ssId) {
+    Logger.log('エラー: スクリプトプロパティ "HP_SS_ID" が見つかりません。');
+    return;
+  }
+  
+  const ss = SpreadsheetApp.openById(ssId);
+  const sheet = ss.getSheetByName('News');
+  if (!sheet) {
+    Logger.log('エラー: "News" シートが見つかりません。');
+    return;
+  }
+
+  const data = sheet.getDataRange().getValues();
+  const headers = data[0]; 
+  
+  // 列の位置を特定
+  const idxId = headers.indexOf('id');
+  const idxTitle = headers.indexOf('title');
+  const idxXLink = headers.indexOf('x_link');
+  const idxFbLink = headers.indexOf('fb_link'); 
+  
+  if (idxXLink === -1 || idxFbLink === -1) {
+    Logger.log('エラー: x_link または fb_link 列が見つかりません。');
+    return;
+  }
+
+  let emailBody = "";
+  let matchCount = 0;
+
+  // 2行目からループ処理してリンクがある行を抽出
+  for (let i = 1; i < data.length; i++) {
+    const row = data[i];
+    const xLink = String(row[idxXLink]).trim();
+    const fbLink = String(row[idxFbLink]).trim();
+    
+    // XまたはFBのどちらかにリンクが存在する場合のみ抽出
+    if (xLink !== "" || fbLink !== "") {
+      matchCount++;
+      
+      const idVal = idxId !== -1 ? row[idxId] : `行 ${i + 1}`;
+      const titleVal = idxTitle !== -1 ? row[idxTitle] : "タイトルなし";
+      
+      // 📝 1件分のブロックを組み立て
+      emailBody += `========================================\n`;
+      emailBody += `【管理ID】: ${idVal}\n`;
+      emailBody += `【タイトル】: ${titleVal}\n\n`;
+      
+      if (xLink !== "") {
+        emailBody += `🐤 X (Twitter) 投稿リンク:\n${xLink}\n\n`;
+      } else {
+        emailBody += `🐤 X (Twitter): (リンクなし)\n\n`;
+      }
+      
+      if (fbLink !== "") {
+        emailBody += `📘 Facebook 投稿リンク:\n${fbLink}\n\n`;
+      } else {
+        emailBody += `📘 Facebook: (リンクなし)\n\n`;
+      }
+      
+      emailBody += `\n\n`;
+    }
+  }
+
+  // リンク付きのデータが1件でも見つかった場合のみメール送信
+  if (matchCount > 0) {
+    // 💡 Session.getActiveUser().getEmail() で、このGASを実行しているあなたのGmailアドレスへ自動送信されます
+    const myEmail = Session.getActiveUser().getEmail();
+    const subject = `SNS投稿リンク一覧 (${matchCount}件)`;
+    
+    MailApp.sendEmail({
+      to: myEmail,
+      subject: subject,
+      body: emailBody
+    });
+    
+    Logger.log(`成功: ${matchCount}件のリンクを ${myEmail} 宛にメール送信しました。`);
+  } else {
+    Logger.log("通知: 抽出対象（x_link または fb_link がある行）は見つかりませんでした。");
+  }
+}
