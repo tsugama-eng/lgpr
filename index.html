@@ -257,6 +257,7 @@
     .news-badge-papers { background: var(--color-cyber-blue); color: white; }
     .news-badge-people { background: #9c27b0; color: white; }
     .news-badge-events { background: var(--color-neon-green); color: black; }
+    .news-badge-highlights { background: #00A896; color: black; }
     .news-badge-general { background: #2C6B37; color: white; }
 
     .news-summary-text.clickable { color: #2C6B37; text-decoration: underline; }
@@ -1379,6 +1380,7 @@
         if(catLower.includes("paper")) badgeClass = "news-badge-papers";
         if(catLower.includes("people")) badgeClass = "news-badge-people";
         if(catLower.includes("event")) badgeClass = "news-badge-events";
+        if(catLower.includes("highlight") || catLower.includes("app")) badgeClass = "news-badge-highlights";
 
         let summaryHtml = n.summary || "";
         if (summaryHtml.includes('[{"name":')) {
