@@ -592,6 +592,10 @@
      <div id="news" class="detail" style="display:none;">
        <div id="news-list-view">
          <div class="subhead"><p><span><b>NEWS</b></span></p></div>
+         
+         <!-- 🏷️ JSから動的にボタンを挿入するためのコンテナ -->
+         <div class="filter-tags" id="news-filter-tags" style="margin-left: 15px; margin-bottom: 20px;"></div>
+
          <div id="news-content" class="news-list-timeline">Loading News...</div>
        </div>
        <!-- 通常ページ風の詳細画面用コンテナ -->
@@ -1306,12 +1310,13 @@
         if (hasAffiliations && document.getElementById('links-affiliations-container')) document.getElementById('links-affiliations-container').style.display = 'block';
         if (hasExternal && document.getElementById('links-external-container')) document.getElementById('links-external-container').style.display = 'block'; // ★追加
 
-        // --- 💡 新設コンポーネントの初期描画を実行 ---
+        // --- 💡 初期描画を実行 ---
         renderTopics(globalTopicsData, globalPapersData);
         renderEvents(globalEventsData);
         renderNews(window.globalNewsData);
         renderTopRecentNews(window.globalNewsData); 
         renderFeaturedGallery(globalTopicsData);
+        generateNewsFilterUI(window.globalNewsData);
         
       } catch (error) {
         console.error("データの読み込みに失敗しました:", error);
@@ -1422,6 +1427,53 @@
           </div>
         `;
       });
+    }
+
+        // 💡 【新規追加】データからカテゴリを重複なく抽出して、フィルターボタンを自動生成する関数
+    function generateNewsFilterUI(newsList) {
+      const filterContainer = document.getElementById('news-filter-tags');
+      if (!filterContainer) return;
+
+      // 1. 全データから category を集めて、重複を取り除く（空文字は除外）
+      const categories = new Set();
+      newsList.forEach(n => {
+        if (n.category && n.category.trim() !== '') {
+          categories.add(n.category.trim());
+        }
+      });
+
+      // 2. HTMLの組み立て（まずは #All ボタンを設置）
+      let html = `<strong>Filter by Category:</strong>`;
+      html += `<button class="tag-btn active" onclick="filterNewsByCategory('all', this)">#All</button>`;
+
+      // 3. データに存在したカテゴリをループしてボタンを追加
+      categories.forEach(cat => {
+        // アルファベットの大文字小文字を区別せず絞り込めるように、引数には小文字化した値を渡す
+        html += `<button class="tag-btn" onclick="filterNewsByCategory('${cat.toLowerCase()}', this)">#${cat}</button>`;
+      });
+
+      filterContainer.innerHTML = html;
+    }
+
+    // 💡 【新規追加】動的フィルター用の絞り込み実行関数
+    function filterNewsByCategory(targetCategory, btnElement) {
+      // クリックされたボタンをアクティブ（黒背景）にする
+      const btns = document.querySelectorAll('#news-filter-tags .tag-btn');
+      btns.forEach(btn => btn.classList.remove('active'));
+      if (btnElement) btnElement.classList.add('active');
+
+      let filtered = window.globalNewsData || [];
+      
+      // 'all' 以外の場合は、カテゴリ名（小文字比較）が含まれるかフィルターをかける
+      if (targetCategory !== 'all') {
+        filtered = filtered.filter(n => {
+          const catLower = (n.category || "General").toLowerCase().trim();
+          return catLower.includes(targetCategory);
+        });
+      }
+      
+      // ニュースタイムラインを再描画
+      renderNews(filtered);
     }
 
     // 💡 修正版：News詳細画面で「news_pic」列の画像を遅延読み込み(Lazy Loading)で下に並べる処理
