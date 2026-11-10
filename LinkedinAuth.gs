@@ -67,7 +67,7 @@ function sendLinkedInAuthMail() {
       .getEmail();
   
   // An additional email address can be added as follows
-  // me = me + ', YDDITIONAL EMAIL ADDRESS';
+  // me = me + ', ADDITIONAL EMAIL ADDRESS';
 
   MailApp.sendEmail({
     to: me,
