@@ -62,7 +62,7 @@ function sendLinkedInAuthMail() {
   const authUrl =
     service.getAuthorizationUrl();
 
-  const me =
+  let me =
     Session.getEffectiveUser()
       .getEmail();
   
