@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="img/lgpr_system.avif" alt="System Icon" width="90%" style="vertical-align: middle;" />
+  <img src="img/lgpr_system.jpg" alt="System Icon" width="90%" style="vertical-align: middle;" />
 </p>
 
 # Automated Website Generation & Update System
