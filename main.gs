@@ -1302,7 +1302,7 @@ function runSnsPublisher() {
             // 【画像あり】新しく分離した専用関数で個別投稿
           let fbSummary = summary
           if (catLower.includes('paper')) {
-            fbSummary = fbSummary.replace('!', "!\n");
+            fbSummary = fbSummary.replace('。', "。\n");
           }
           publishToFacebookImageSecure(metaConfig, fbSummary, githubUrls);
           fbSuccess = true;
