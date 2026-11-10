@@ -1342,7 +1342,10 @@ function runSnsPublisher() {
       const lastCol = sheet.getLastColumn();
       sheet.getRange(i + 1, lastCol + 1).setValue(`[${getJstTimestamp()}] ERROR -> ${error.message}`);
     }
-
+    if (i < data.length - 1) {
+      Logger.log("20秒間待機します...");
+      Utilities.sleep(20000); 
+    }
   }
 }
 
