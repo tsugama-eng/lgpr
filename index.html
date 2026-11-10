@@ -981,7 +981,7 @@
         }).sort((a, b) => (b["publication_date"] || "").localeCompare(a["publication_date"] || ""));
 
         if (matched.length > 0) {
-          refPapersHtml = `<div class="card-references" style="margin-top:30px; padding:20px; font-size:1rem;"><h4 style="font-size:1.1rem; margin-bottom:12px;">▼ Related Publications (Auto-Matched)</h4><ol style="padding-left:20px;">`;
+          refPapersHtml = `<div class="card-references" style="margin-top:30px; padding:20px; font-size:1rem;"><h4 style="font-size:1.1rem; margin-bottom:12px;">▼ Related Publications</h4><ol style="padding-left:20px;">`;
           matched.forEach(p => {
             const pTitle = p["paper_title.en"] || p["paper_title.ja"] || "";
             const pAuthors = parseNames(p["authors.en"] || p["authors.ja"]);
@@ -989,7 +989,7 @@
             const pVolume = p["volume"] ? ` Vol. ${p["volume"]}` : "";
             const pPages = p["starting_page"] ? `, pp. ${p["starting_page"]}-${p["ending_page"] || p["starting_page"]}` : "";
             let year = (p["publication_date"] || "").substring(0, 4);
-            refPapersHtml += `<li style="margin-bottom:12px; line-height:1.5;"><strong>${pTitle}</strong><br><span style="color:#555; font-size:0.9rem;">${pAuthors}</span><br><span style="color:#777; font-style:italic; font-size:0.9rem;">${pJournal}</span>${pVolume}${pPages}${year ? ` (${year})` : ''}.${formatDoi(p["identifiers.doi"])}</li>`;
+            refPapersHtml += `<li style="margin-bottom:12px; line-height:1.5;"><strong>${pTitle}</strong><br><span style="color:#555; font-size:0.9rem;">${pAuthors}</span><br><span style="color:#555; font-style:italic; font-size:0.9rem;">${pJournal}</span><span style="color:#555; font-size:0.9rem;">${pVolume}${pPages}${year ? ` (${year})` : ''}.${formatDoi(p["identifiers.doi"])}</span></li>`;
           });
           refPapersHtml += `</ol></div>`;
         }
