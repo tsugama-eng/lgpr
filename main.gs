@@ -1234,14 +1234,15 @@ function runSnsPublisher() {
       try {
       
         const liUrl = props['LI_WEBAPP_URL'];
-      
+        const liBodyEn = bodyEn.replace('!', "!\n");
+
         if (liUrl) {
       
           UrlFetchApp.fetch(liUrl, {
             method: 'post',
             payload: {
               secret: props['LI_SHARED_SECRET'],
-              text: bodyEn,
+              text: liBodyEn,
               imageUrls: JSON.stringify(githubUrls)
             },
             muteHttpExceptions: true
@@ -1295,7 +1296,8 @@ function runSnsPublisher() {
         // --- B. Facebookの投稿処理 (画像あり/なしで自動分岐・IGの成否に関わらず必ず実行される) ---
         try {
             // 【画像あり】新しく分離した専用関数で個別投稿
-            publishToFacebookImageSecure(metaConfig, summary, githubUrls);
+            const fbSummary = summary.replace('!', "!\n");
+            publishToFacebookImageSecure(metaConfig, fbSummary, githubUrls);
             fbSuccess = true;
             reportStatus.push("FB: OK (Image)");
         } catch (fbError) {
