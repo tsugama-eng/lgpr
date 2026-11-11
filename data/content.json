@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "11/10/2026",
+  "lastUpdate": "11/11/2026",
   "members": [
     {
       "name_en": "Daisuke Tsugama",
@@ -53,7 +53,7 @@
       "grade": "D2",
       "title_en": "D2",
       "title_ja": "博士2年",
-      "intro1": "",
+      "intro1": "Like：Tea, Take a walk， Horticulture",
       "intro2": "2025-present -- Ph.D. candidate. Working to develop web browser apps for sequence data analysis for democratizing NGS data.",
       "pic1": "img/China.png",
       "pic2": "img/No_image.png",
@@ -5030,7 +5030,7 @@
       "pic_thumb": "img/expression_thumb.avif",
       "pic_main": "img/expression_thumb.avif",
       "pic_sub": "img/expression_abstract.jpg",
-      "references": "",
+      "references": "codon,polymerase",
       "featured_order": null,
       "featured_img": ""
     },
