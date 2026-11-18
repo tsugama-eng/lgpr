@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "11/11/2026",
+  "lastUpdate": "11/18/2026",
   "members": [
     {
       "name_en": "Daisuke Tsugama",
@@ -5115,6 +5115,18 @@
   ],
   "events": [
     {
+      "id": "sakura2026",
+      "date": "2026-11-17",
+      "category": "Visitor",
+      "title": "Sakura Science Program 2026 / さくらサイエンスプログラム2026",
+      "summary": "Participated in the Sakura Science Program 2026 to interact with invited overseas young scientists / さくらサイエンスプログラム2026に参加し、招へいされた海外の若手研究者と交流しました",
+      "body_ja": "アジアセンターを中心とする農学生命科学研究科のメンバーと共に、科学技術振興機構 (JST) が支援するさくらサイエンスプログラム「生物生産環境の保全と修復に資する生物資源の評価・利活用技術の実践研修」 (11/17-24) に参加し、5か国・9機関から招へいした12名の学生・若手研究者と交流しています。今年は代表を務めていることもあり、楽しく有意義な交流活動を安全に進められると良いという思いが強いです。1・2日目と8・9日目は「共通研修」ということで、日本における生物資源の分析・活用例を紹介します。その他の日は、招へい者はいずれかの受入研究者の研究室において活動し、自身の興味・専門に合った具体的な技術を習得すると共に、将来の交流・研究活動への展開の可能性を探ります。ひとまず無事に全員で初日を終えることができ、良かったと感じています。",
+      "body_en": "With other members from ARC-BRES and the Graduate School, we are running the Sakura Science Program, supported by the Japan Science and Technology Agency (JST), titled \"Practical Training on Evaluation and Utilization Technologies of Bioresources Contributing to the Conservation and Restoration of Bioproduction Environments\" (November 17–24). Through this program, we are interacting with 12 students and young researchers invited from 9 institutions across 5 countries. As I am serving as the program representative this year, I feel a stronger responsibility and hope to carry out these enjoyable and meaningful exchange activities safely. On Days 1, 2, 8, and 9, we hold \"joint training\" sessions to introduce examples of how bioresources are analyzed and utilized in Japan. On the remaining days, the invited participants conduct activities in the laboratories of their respective host researchers, where they learn specific techniques tailored to their interests and specialties while exploring possibilities for future exchange and research collaborations. For now, I am glad that everyone was able to safely complete the first day.",
+      "pic_thumb": "img/sakura2026_thumb.jpg",
+      "pic_main": "img/sakura2026_thumb.jpg",
+      "pic_sub": "img/sakura2026_yasuda1.jpg,img/sakura2026_yasuda2.jpg"
+    },
+    {
       "id": "icrisat2026",
       "date": "2026-10-10",
       "category": "Overseas",
@@ -5155,7 +5167,7 @@
       "date": "2024-10-20",
       "category": "Visitor",
       "title": "Sakura Science Program 2024 / さくらサイエンスプログラム2024",
-      "summary": "Participated in the Sakura Science Program to interact with invited overseas young scientists / さくらサイエンスプログラムに参加し、招へいされた海外の若手研究者と交流しました",
+      "summary": "Participated in the Sakura Science Program 2024 to interact with invited overseas young scientists / さくらサイエンスプログラム2024に参加し、招へいされた海外の若手研究者と交流しました",
       "body_ja": "科学技術振興機構 (JST) が支援するさくらサイエンスプログラム「生物資源環境学と社会分断の修復」 (10/21-25) に参加し、7か国・11機関から招へいした14名の学生・若手研究者と交流しました。招へい者の滞在期間は短かったものの、楽しんでもらえたとのことで良かったと考えています。",
       "body_en": "We participated in the Sakura Science Program titled \"Bio-resource and Environmental Sciences & restoration of divided societies\" (October 21–25), supported by the Japan Science and Technology Agency (JST), and interacted with 14 students and young researchers invited from 11 institutions across 7 countries. Although their stay was brief, we are delighted to know that the invitees thoroughly enjoyed their time with us.",
       "pic_thumb": "img/sakura2024_thumb.jpg",
